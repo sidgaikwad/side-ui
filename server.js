@@ -1,6 +1,6 @@
 /**
  * server.js
- * The SSH2 server that powers TermUI.
+ * The SSH2 server that powers side-ui.
  */
 
 "use strict";
@@ -158,7 +158,7 @@ const server = new Server({ hostKeys: [hostKey] }, function onConnection(
 
 console.log("");
 console.log("  ╔══════════════════════════════════════════╗");
-console.log("  ║        TermUI — SSH Component Demo       ║");
+console.log("  ║        side-ui — SSH Component Demo       ║");
 console.log("  ╚══════════════════════════════════════════╝");
 console.log("");
 
