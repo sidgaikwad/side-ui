@@ -6,9 +6,8 @@
 
 "use strict";
 
-const { colors, bg } = require("../ansi");
+const { colors, bg, padEnd } = require("../ansi");
 const { centerBlock } = require("../components/center");
-const { drawBox } = require("../components/border");
 
 // ─── BADGE RENDERERS ──────────────────────────────────────────────────────────
 
@@ -37,12 +36,6 @@ function outlinedBadge(label, colorFn) {
 // Dot badge (just a colored dot + label)
 function dotBadge(label, colorFn, dotChar = "●") {
   return colorFn(dotChar) + " " + colorFn(label);
-}
-
-// Pill badge (rounded feel using box chars)
-function pillBadge(label, colorFn) {
-  return colorFn(`╭─╮ ${label} ╭─╮`).replace(/╭─╮/g, colorFn("◓"));
-  // Simplified pill:
 }
 
 // ─── SCREEN DEFINITION ────────────────────────────────────────────────────────
@@ -155,6 +148,7 @@ module.exports = {
     ];
 
     for (const item of statusItems) {
+      // Use ANSI-aware padEnd here if needed, but since label is plain text, standard padEnd works.
       const labelPadded = item.label.padEnd(18);
       const statusBadge = outlinedBadge(item.status, item.color);
       const row =
@@ -190,10 +184,13 @@ module.exports = {
     ];
 
     for (const ver of versionTags) {
+      // FIX: Use ANSI-aware padEnd helper for the colored tag string
+      const coloredTag = ver.color(colors.bold(`[${ver.tag}]`));
+
       const row =
         "    " +
         colors.bold(colors.white(ver.label.padEnd(10))) +
-        ver.color(colors.bold(`[${ver.tag}]`)).padEnd(20) +
+        padEnd(coloredTag, 20) + // Fixed alignment
         ver.color(
           "─".repeat(
             ver.tag === "deprecated"
@@ -215,6 +212,6 @@ module.exports = {
     lines.push(centerBlock([colors.dim(colors.gray("─".repeat(44)))], cols)[0]);
     lines.push(centerBlock([colors.dim(colors.gray("q Back"))], cols)[0]);
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
