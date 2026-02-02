@@ -6,8 +6,7 @@
 
 "use strict";
 
-const { colors, bg, visibleLength, padEnd } = require("../ansi");
-const { drawBox } = require("../components/border");
+const { colors, bg } = require("../ansi");
 const { centerBlock } = require("../components/center");
 
 // ─── BUTTON DEFINITIONS ──────────────────────────────────────────────────────
@@ -123,12 +122,18 @@ module.exports = {
         break;
 
       case "ENTER":
+      // Fallthrough to handle press logic
       case "CHAR":
-        if (event.type === "CHAR" && event.char === " ") {
-          // Space also acts as press
-        } else if (event.type === "CHAR") {
-          break;
+        if (event.type === "CHAR") {
+          if (event.char === "q" || event.char === "Q") {
+            session.navigate("menu");
+            return;
+          }
+          if (event.char !== " ") {
+            break; // Only space triggers button press
+          }
         }
+
         // "Press" the button — show pressed state briefly
         state.pressed = state.selected;
         state.history.push(BUTTONS[state.selected].label);
@@ -144,12 +149,6 @@ module.exports = {
         }, 150);
         break;
 
-      case "CHAR":
-        if (event.char === "q" || event.char === "Q") {
-          session.navigate("menu");
-        }
-        break;
-
       case "ESCAPE":
         session.navigate("menu");
         break;
@@ -157,11 +156,6 @@ module.exports = {
       case "CTRL_C":
         session.destroy();
         break;
-    }
-
-    // Handle 'q' explicitly
-    if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
-      session.navigate("menu");
     }
   },
 
@@ -243,6 +237,6 @@ module.exports = {
       )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
