@@ -26,12 +26,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/termui.git"
+    "url": "https://github.com/sidgaikwad/side-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/termui/issues"
+    "url": "https://github.com/sidgaikwad/side-ui/issues"
   },
-  "homepage": "https://github.com/yourusername/termui#readme",
+  "homepage": "https://github.com/sidgaikwad/side-ui#readme",
   "dependencies": {
     "ssh2": "^1.15.0"
   },
