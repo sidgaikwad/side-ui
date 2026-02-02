@@ -1,7 +1,6 @@
 /**
  * ansi.js
- * All ANSI escape code primitives. Nothing else in the project
- * should ever write raw escape sequences — everything goes through here.
+ * All ANSI escape code primitives.
  */
 
 "use strict";
@@ -12,7 +11,6 @@ const ESC = "\x1b";
 const CSI = ESC + "[";
 
 // ─── FOREGROUND COLORS ────────────────────────────────────────────────────────
-// Uses 256-color mode for richer palette
 
 const FG = {
   black: 30,
@@ -94,7 +92,6 @@ const bg = {
 };
 
 // ─── COMBINED STYLE HELPERS ──────────────────────────────────────────────────
-// These let you compose fg + bg + style in one call
 
 function style(opts, str) {
   let open = "";
@@ -127,30 +124,30 @@ const cursor = {
 // ─── SCREEN CONTROL ──────────────────────────────────────────────────────────
 
 const screen = {
-  clear: () => `${CSI}2J${CSI}H`, // Clear entire screen + move to top-left
-  clearLine: () => `${CSI}2K`, // Clear current line
-  clearBelow: () => `${CSI}J`, // Clear from cursor to bottom
+  clear: () => `${CSI}2J${CSI}H`,
+  clearLine: () => `${CSI}2K`,
+  clearBelow: () => `${CSI}J`,
   saveCursor: () => `${CSI}s`,
   restCursor: () => `${CSI}u`,
 };
 
 // ─── ALTERNATE SCREEN BUFFER ─────────────────────────────────────────────────
-// Switches to a clean screen on enter, restores the original on exit
 
 const alt = {
   enter: () => `${ESC}[?1049h`,
   exit: () => `${ESC}[?1049l`,
 };
 
-// ─── UTILITY: strip ANSI codes to get visible string length ──────────────────
+// ─── UTILITY: strip ANSI codes ───────────────────────────────────────────────
 
-const ANSI_REGEX = /\x1b\[[0-9;]*m/g;
+// Improved Regex: Catches [parameters][letter] which covers colors AND cursor codes
+const ANSI_REGEX = /\x1b\[[\d;?]*[a-zA-Z]/g;
 
 function visibleLength(str) {
   return str.replace(ANSI_REGEX, "").length;
 }
 
-// ─── UTILITY: pad a string to exact visible width ────────────────────────────
+// ─── UTILITY: pad a string ───────────────────────────────────────────────────
 
 function padEnd(str, width, char = " ") {
   const vLen = visibleLength(str);
