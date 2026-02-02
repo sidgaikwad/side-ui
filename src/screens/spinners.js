@@ -162,9 +162,13 @@ module.exports = {
       // Label column (padded)
       const labelPadded = sp.label.padEnd(18);
 
+      // Increase padding to 10 to accommodate the wide 'Pulse' spinner (8 chars)
+      // This prevents the label column from jittering between rows.
+      const framePadded = frame.padEnd(10);
+
       const row =
         "    " +
-        sp.color(colors.bold(frame.padEnd(6))) + // The animated spinner frame
+        sp.color(colors.bold(framePadded)) + // The animated spinner frame
         "  " +
         colors.white(labelPadded) + // What it's "doing"
         colors.dim(colors.cyan(namePadded)) + // Spinner name
@@ -183,6 +187,6 @@ module.exports = {
     lines.push("");
     lines.push(centerBlock([colors.dim(colors.gray("q Back"))], cols)[0]);
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
