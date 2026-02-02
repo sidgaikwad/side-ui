@@ -1,4 +1,4 @@
-# TermUI — Installation & Usage Guide
+# side-ui — Installation & Usage Guide
 
 Complete guide to setting up and running your SSH-accessible Terminal UI Component Library.
 
@@ -6,7 +6,7 @@ Complete guide to setting up and running your SSH-accessible Terminal UI Compone
 
 ## 📦 What You're Getting
 
-**TermUI** is a full terminal UI component library that users access via SSH. No web browser needed — just a terminal.
+**side-ui** is a full terminal UI component library that users access via SSH. No web browser needed — just a terminal.
 
 - **23 files** — Complete, production-ready codebase
 - **13 interactive demos** — Buttons, tables, trees, charts, forms, and more
@@ -20,8 +20,8 @@ Complete guide to setting up and running your SSH-accessible Terminal UI Compone
 
 ```bash
 # 1. Extract the archive
-tar -xzf termui.tar.gz
-cd termui
+tar -xzf side-ui.tar.gz
+cd side-ui
 
 # 2. Install the single dependency (ssh2)
 npm install
@@ -54,17 +54,17 @@ ssh -p 2222 demo@localhost
 
 ### Step 1: Extract the Files
 
-If you have the **termui.tar.gz** file:
+If you have the **side-ui.tar.gz** file:
 
 ```bash
-tar -xzf termui.tar.gz
-cd termui
+tar -xzf side-ui.tar.gz
+cd side-ui
 ```
 
 Or if you have the individual files, create this structure:
 
 ```
-termui/
+side-ui/
 ├── package.json
 ├── README.md
 ├── .gitignore
@@ -124,7 +124,7 @@ You should see:
 
 ```
   ╔══════════════════════════════════════════╗
-  ║        TermUI — SSH Component Demo       ║
+  ║        side-ui — SSH Component Demo       ║
   ╚══════════════════════════════════════════╝
 
   ✓ Listening on port 2222
@@ -316,7 +316,7 @@ npm install
 ## 📂 Project Structure
 
 ```
-termui/
+side-ui/
 ├── package.json              # Dependencies & scripts
 ├── README.md                 # Overview
 ├── .gitignore                # Git exclusions
@@ -444,32 +444,32 @@ Each session is completely isolated. Each user can navigate independently.
 npm install -g pm2
 
 # Start as a service
-pm2 start server.js --name termui
+pm2 start server.js --name side-ui
 
 # Auto-start on boot
 pm2 startup
 pm2 save
 
 # View logs
-pm2 logs termui
+pm2 logs side-ui
 
 # Stop
-pm2 stop termui
+pm2 stop side-ui
 ```
 
 ### Using systemd (Linux)
 
-Create `/etc/systemd/system/termui.service`:
+Create `/etc/systemd/system/side-ui.service`:
 
 ```ini
 [Unit]
-Description=TermUI SSH Server
+Description=side-ui SSH Server
 After=network.target
 
 [Service]
 Type=simple
 User=youruser
-WorkingDirectory=/path/to/termui
+WorkingDirectory=/path/to/side-ui
 ExecStart=/usr/bin/node server.js
 Restart=always
 
@@ -480,9 +480,9 @@ WantedBy=multi-user.target
 Then:
 
 ```bash
-sudo systemctl enable termui
-sudo systemctl start termui
-sudo systemctl status termui
+sudo systemctl enable side-ui
+sudo systemctl start side-ui
+sudo systemctl status side-ui
 ```
 
 ---
@@ -560,4 +560,4 @@ A: 100%. Every component is in its own file — edit freely.
 
 ---
 
-**Enjoy building with TermUI!**
+**Enjoy building with side-ui!**
