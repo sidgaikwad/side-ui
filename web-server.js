@@ -4,124 +4,156 @@
  * Run alongside the SSH server or standalone
  */
 
-'use strict';
+"use strict";
 
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
 const PORT = 3000;
 
 // ─── COMPONENT METADATA ───────────────────────────────────────────────────────
 
 const COMPONENTS = [
-  { 
-    id: 'progress', 
-    name: 'Progress Bar', 
-    category: 'Animated',
-    description: 'Animated progress bars with multiple styles and color transitions',
-    files: ['src/screens/progress.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "progress",
+    name: "Progress Bar",
+    category: "Animated",
+    description:
+      "Animated progress bars with multiple styles and color transitions",
+    files: [
+      "src/screens/progress.js",
+      "src/ansi.js",
+      "src/components/center.js",
+    ],
     dependencies: [],
-    preview: '[████████░░░░░░░░] 60%'
+    preview: "[████████░░░░░░░░] 60%",
   },
-  { 
-    id: 'spinners', 
-    name: 'Spinners', 
-    category: 'Animated',
-    description: '8 different loading spinner animations',
-    files: ['src/screens/spinners.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "spinners",
+    name: "Spinners",
+    category: "Animated",
+    description: "8 different loading spinner animations",
+    files: [
+      "src/screens/spinners.js",
+      "src/ansi.js",
+      "src/components/center.js",
+    ],
     dependencies: [],
-    preview: '⠋ Loading...'
+    preview: "⠋ Loading...",
   },
-  { 
-    id: 'buttons', 
-    name: 'Buttons', 
-    category: 'Interactive',
-    description: '6 styled button variants with press animations',
-    files: ['src/screens/buttons.js', 'src/ansi.js', 'src/components/border.js', 'src/components/center.js'],
+  {
+    id: "buttons",
+    name: "Buttons",
+    category: "Interactive",
+    description: "6 styled button variants with press animations",
+    files: [
+      "src/screens/buttons.js",
+      "src/ansi.js",
+      "src/components/border.js",
+      "src/components/center.js",
+    ],
     dependencies: [],
-    preview: '[ ◉ Primary ]'
+    preview: "[ ◉ Primary ]",
   },
-  { 
-    id: 'table', 
-    name: 'Data Table', 
-    category: 'Display',
-    description: 'Scrollable data table with row selection and sorting',
-    files: ['src/screens/table.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "table",
+    name: "Data Table",
+    category: "Display",
+    description: "Scrollable data table with row selection and sorting",
+    files: ["src/screens/table.js", "src/ansi.js", "src/components/center.js"],
     dependencies: [],
-    preview: '│ Row 1 │ Data │'
+    preview: "│ Row 1 │ Data │",
   },
-  { 
-    id: 'select', 
-    name: 'Select List', 
-    category: 'Interactive',
-    description: 'Single-select dropdown list with keyboard navigation',
-    files: ['src/screens/select.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "select",
+    name: "Select List",
+    category: "Interactive",
+    description: "Single-select dropdown list with keyboard navigation",
+    files: ["src/screens/select.js", "src/ansi.js", "src/components/center.js"],
     dependencies: [],
-    preview: '▸ Option 1'
+    preview: "▸ Option 1",
   },
-  { 
-    id: 'multiselect', 
-    name: 'Multi-Select', 
-    category: 'Interactive',
-    description: 'Checkbox multi-select with select all/none',
-    files: ['src/screens/multiselect.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "multiselect",
+    name: "Multi-Select",
+    category: "Interactive",
+    description: "Checkbox multi-select with select all/none",
+    files: [
+      "src/screens/multiselect.js",
+      "src/ansi.js",
+      "src/components/center.js",
+    ],
     dependencies: [],
-    preview: '☑ Item A'
+    preview: "☑ Item A",
   },
-  { 
-    id: 'textinput', 
-    name: 'Text Input', 
-    category: 'Interactive',
-    description: 'Live text input field with cursor and validation',
-    files: ['src/screens/textinput.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "textinput",
+    name: "Text Input",
+    category: "Interactive",
+    description: "Live text input field with cursor and validation",
+    files: [
+      "src/screens/textinput.js",
+      "src/ansi.js",
+      "src/components/center.js",
+    ],
     dependencies: [],
-    preview: '│ Type here... ▌'
+    preview: "│ Type here... ▌",
   },
-  { 
-    id: 'tree', 
-    name: 'Tree View', 
-    category: 'Interactive',
-    description: 'Collapsible file system hierarchy',
-    files: ['src/screens/tree.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "tree",
+    name: "Tree View",
+    category: "Interactive",
+    description: "Collapsible file system hierarchy",
+    files: ["src/screens/tree.js", "src/ansi.js", "src/components/center.js"],
     dependencies: [],
-    preview: '├── folder/'
+    preview: "├── folder/",
   },
-  { 
-    id: 'chart', 
-    name: 'Bar Chart', 
-    category: 'Animated',
-    description: 'Live updating ASCII bar chart',
-    files: ['src/screens/chart.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "chart",
+    name: "Bar Chart",
+    category: "Animated",
+    description: "Live updating ASCII bar chart",
+    files: ["src/screens/chart.js", "src/ansi.js", "src/components/center.js"],
     dependencies: [],
-    preview: '▄▆█▅▃'
+    preview: "▄▆█▅▃",
   },
-  { 
-    id: 'cards', 
-    name: 'Cards', 
-    category: 'Display',
-    description: 'Dashboard card/panel layouts',
-    files: ['src/screens/cards.js', 'src/ansi.js', 'src/components/border.js', 'src/components/center.js'],
+  {
+    id: "cards",
+    name: "Cards",
+    category: "Display",
+    description: "Dashboard card/panel layouts",
+    files: [
+      "src/screens/cards.js",
+      "src/ansi.js",
+      "src/components/border.js",
+      "src/components/center.js",
+    ],
     dependencies: [],
-    preview: '╭─Card─╮'
+    preview: "╭─Card─╮",
   },
-  { 
-    id: 'badges', 
-    name: 'Badges', 
-    category: 'Display',
-    description: 'Status badges and tags in various styles',
-    files: ['src/screens/badges.js', 'src/ansi.js', 'src/components/center.js', 'src/components/border.js'],
+  {
+    id: "badges",
+    name: "Badges",
+    category: "Display",
+    description: "Status badges and tags in various styles",
+    files: [
+      "src/screens/badges.js",
+      "src/ansi.js",
+      "src/components/center.js",
+      "src/components/border.js",
+    ],
     dependencies: [],
-    preview: '[ Active ]'
+    preview: "[ Active ]",
   },
-  { 
-    id: 'tabs', 
-    name: 'Tabs', 
-    category: 'Interactive',
-    description: 'Tabbed interface with multiple content sections',
-    files: ['src/screens/tabs.js', 'src/ansi.js', 'src/components/center.js'],
+  {
+    id: "tabs",
+    name: "Tabs",
+    category: "Interactive",
+    description: "Tabbed interface with multiple content sections",
+    files: ["src/screens/tabs.js", "src/ansi.js", "src/components/center.js"],
     dependencies: [],
-    preview: '[ Tab 1 ]'
+    preview: "[ Tab 1 ]",
   },
 ];
 
@@ -131,23 +163,22 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
 
   // ── Routes ──
-  if (url.pathname === '/') {
+  if (url.pathname === "/") {
     serveHTML(res);
-  } else if (url.pathname === '/api/components') {
+  } else if (url.pathname === "/api/components") {
     serveJSON(res, COMPONENTS);
-  } else if (url.pathname.startsWith('/api/component/')) {
-    const id = url.pathname.split('/').pop();
+  } else if (url.pathname.startsWith("/api/component/")) {
+    const id = url.pathname.split("/").pop();
     serveComponentCode(res, id);
-  } else if (url.pathname.startsWith('/api/install/')) {
-    const id = url.pathname.split('/').pop();
+  } else if (url.pathname.startsWith("/api/install/")) {
+    const id = url.pathname.split("/").pop();
     serveInstallCommand(res, id);
-  } else if (url.pathname.startsWith('/api/file/')) {
-    // FIX: Added missing route to actually serve the files for curl
-    const filePath = url.pathname.replace('/api/file/', '');
+  } else if (url.pathname.startsWith("/api/file/")) {
+    const filePath = url.pathname.replace("/api/file/", "");
     serveFile(res, filePath);
   } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not Found');
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Not Found");
   }
 });
 
@@ -155,15 +186,17 @@ const server = http.createServer((req, res) => {
 
 function serveFile(res, filePath) {
   // Basic security: prevent directory traversal
-  const safePath = path.normalize(decodeURIComponent(filePath)).replace(/^(\.\.[\/\\])+/, '');
+  const safePath = path
+    .normalize(decodeURIComponent(filePath))
+    .replace(/^(\.\.[\/\\])+/, "");
   const fullPath = path.join(__dirname, safePath);
 
   if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.writeHead(200, { "Content-Type": "text/plain" });
     fs.createReadStream(fullPath).pipe(res);
   } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('File not found');
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("File not found");
   }
 }
 
@@ -185,7 +218,6 @@ function serveHTML(res) {
     }
     .container { max-width: 1400px; margin: 0 auto; }
     
-    /* Header */
     header {
       text-align: center;
       margin-bottom: 60px;
@@ -207,7 +239,6 @@ function serveHTML(res) {
       font-size: 16px;
     }
     
-    /* Tabs */
     .tabs {
       display: flex;
       gap: 10px;
@@ -232,7 +263,6 @@ function serveHTML(res) {
       font-weight: 600;
     }
     
-    /* Component Grid */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -331,7 +361,6 @@ function serveHTML(res) {
       background: rgba(255,255,255,0.12);
     }
     
-    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -390,13 +419,6 @@ function serveHTML(res) {
       color: #00ff88;
       font-size: 13px;
       line-height: 1.6;
-    }
-    
-    .copy-btn {
-      position: relative;
-      float: right;
-      margin-top: -50px;
-      margin-right: 10px;
     }
     
     .ssh-connect {
@@ -482,25 +504,25 @@ function serveHTML(res) {
         ? components 
         : components.filter(c => c.category === activeCategory);
       
-      grid.innerHTML = filtered.map(comp => `
-        <div class="card" onclick="showComponent('${comp.id}')">
-          <div class="card-category">${comp.category}</div>
+      grid.innerHTML = filtered.map(comp => \`
+        <div class="card" onclick="showComponent('\${comp.id}')">
+          <div class="card-category">\${comp.category}</div>
           <div class="card-header">
-            <div class="card-icon">${getIcon(comp.category)}</div>
-            <div class="card-title">${comp.name}</div>
+            <div class="card-icon">\${getIcon(comp.category)}</div>
+            <div class="card-title">\${comp.name}</div>
           </div>
-          <div class="card-desc">${comp.description}</div>
-          <div class="card-preview">${comp.preview}</div>
+          <div class="card-desc">\${comp.description}</div>
+          <div class="card-preview">\${comp.preview}</div>
           <div class="card-actions">
-            <button class="btn btn-primary" onclick="event.stopPropagation(); showInstall('${comp.id}')">
+            <button class="btn btn-primary" onclick="event.stopPropagation(); showInstall('\${comp.id}')">
               📦 Install
             </button>
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); showCode('${comp.id}')">
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); showCode('\${comp.id}')">
               👁 View Code
             </button>
           </div>
         </div>
-      `).join('');
+      \`).join('');
     }
     
     function getIcon(category) {
@@ -522,13 +544,15 @@ function serveHTML(res) {
         .then(r => r.text())
         .then(installCmd => {
           document.getElementById('modalTitle').textContent = comp.name;
+          // FIXED: Used data attribute to pass content to copyFromData
+          // This avoids the confusing nested backtick escapes
           document.getElementById('modalBody').innerHTML = \`
             <h3>Installation</h3>
             <p style="color: rgba(255,255,255,0.6); margin-bottom: 16px;">
               Copy this command to install the \${comp.name} component in your project:
             </p>
-            <pre><code>\${installCmd}</code></pre>
-            <button class="btn btn-primary" onclick="copyToClipboard(\\\`\${installCmd.replace(/\`/g, '\\\\`')}\\\`)">
+            <pre><code>\${escapeHtml(installCmd)}</code></pre>
+            <button class="btn btn-primary" data-copy="\${escapeHtml(installCmd)}" onclick="copyFromData(this)">
               📋 Copy Command
             </button>
             <br><br>
@@ -551,7 +575,7 @@ function serveHTML(res) {
             \${Object.entries(data).map(([file, code]) => \`
               <h3>\${file}</h3>
               <pre><code>\${escapeHtml(code)}</code></pre>
-              <button class="btn btn-secondary" onclick="copyToClipboard(\\\`\${escapeHtml(code).replace(/\`/g, '\\\\`')}\\\`)">
+              <button class="btn btn-secondary" data-copy="\${escapeHtml(code)}" onclick="copyFromData(this)">
                 📋 Copy Code
               </button>
               <br><br>
@@ -565,9 +589,12 @@ function serveHTML(res) {
       document.getElementById('modal').classList.remove('active');
     }
     
-    function copyToClipboard(text) {
+    function copyFromData(btn) {
+      const text = btn.dataset.copy;
       navigator.clipboard.writeText(text).then(() => {
-        alert('✓ Copied to clipboard!');
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        setTimeout(() => btn.textContent = originalText, 2000);
       });
     }
     
@@ -593,68 +620,60 @@ function serveHTML(res) {
   </script>
 </body>
 </html>`;
-  
-  res.writeHead(200, { 'Content-Type': 'text/html' });
+
+  res.writeHead(200, { "Content-Type": "text/html" });
   res.end(html);
 }
 
 function serveJSON(res, data) {
-  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.writeHead(200, { "Content-Type": "application/json" });
   res.end(JSON.stringify(data));
 }
 
 function serveComponentCode(res, id) {
-  const comp = COMPONENTS.find(c => c.id === id);
+  const comp = COMPONENTS.find((c) => c.id === id);
   if (!comp) {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Component not found');
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Component not found");
     return;
   }
-  
+
   const code = {};
   for (const file of comp.files) {
     const fullPath = path.join(__dirname, file);
     if (fs.existsSync(fullPath)) {
-      code[file] = fs.readFileSync(fullPath, 'utf8');
+      code[file] = fs.readFileSync(fullPath, "utf8");
     }
   }
-  
+
   serveJSON(res, code);
 }
 
 function serveInstallCommand(res, id) {
-  const comp = COMPONENTS.find(c => c.id === id);
+  const comp = COMPONENTS.find((c) => c.id === id);
   if (!comp) {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Component not found');
+    res.writeHead(404, { "Content-Type": "text/plain" });
+    res.end("Component not found");
     return;
   }
-  
-  // FIX: Added --create-dirs so curl doesn't fail on missing directories
-  const installCmd = `# Install ${comp.name}
-# Copy these files to your project:
-${comp.files.map(f => `cp ${f} your-project/${f}`).join('\n')}
 
-# Or use curl to download directly from your server:
-${comp.files.map(f => `curl --create-dirs http://localhost:${PORT}/api/file/${f} -o ${f}`).join('\n')}`;
-  
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  // Create dirs flag ensures the target directories exist
+  const installCmd = `# Install ${comp.name}
+# Run this in your project root:
+${comp.files.map((f) => `curl --create-dirs http://localhost:${PORT}/api/file/${f} -o ${f}`).join("\n")}`;
+
+  res.writeHead(200, { "Content-Type": "text/plain" });
   res.end(installCmd);
 }
 
 // ─── START ────────────────────────────────────────────────────────────────────
 
 server.listen(PORT, () => {
-  console.log('');
-  console.log('  ╔════════════════════════════════════════╗');
-  console.log('  ║   TermUI Web Interface                 ║');
-  console.log('  ╚════════════════════════════════════════╝');
-  console.log('');
+  console.log("");
+  console.log("  ╔════════════════════════════════════════╗");
+  console.log("  ║   TermUI Web Interface                 ║");
+  console.log("  ╚════════════════════════════════════════╝");
+  console.log("");
   console.log(`  ✓ Running at http://localhost:${PORT}`);
-  console.log('');
-  console.log('  Open your browser to:');
-  console.log(`  • Browse components`);
-  console.log(`  • Copy installation commands`);
-  console.log(`  • View source code`);
-  console.log('');
+  console.log("");
 });
