@@ -2,14 +2,14 @@
  * screens/progress.js
  * Animated progress bar demo.
  * Shows multiple progress bars auto-filling at different rates.
- * Demonstrates different bar styles and color transitions.
+ * Demonstrates different bar styles including a "Racing" bar.
+ * Includes an interactive installation accordion.
  */
 
 "use strict";
 
-const { colors, visibleLength } = require("../ansi");
+const { colors } = require("../ansi");
 const { centerBlock } = require("../components/center");
-const { drawBox } = require("../components/border");
 
 // ─── PROGRESS BAR CONFIGS ─────────────────────────────────────────────────────
 
@@ -42,6 +42,13 @@ const BARS = [
     style: "block",
     width: 40,
   },
+  {
+    label: "Deployment",
+    speed: 1.5,
+    color: colors.red,
+    style: "racing", // 🏎 Real Car Style
+    width: 40,
+  },
 ];
 
 // ─── BAR RENDERERS ────────────────────────────────────────────────────────────
@@ -70,6 +77,25 @@ function renderBar(pct, width, style, colorFn) {
       emptyStr = "-".repeat(empty);
       left = "[";
       right = "]";
+      break;
+    case "racing":
+      // Racing style:  ═════🏎 -------
+      // We use the real car emoji.
+      // NOTE: On Windows, '🏎' faces LEFT. On Mac/Linux, it faces RIGHT.
+      // We use a '═' trail to visually indicate speed/direction regardless of car orientation.
+      if (filled === 0) {
+        filledStr = "";
+        emptyStr = "─".repeat(empty);
+      } else if (filled >= width) {
+        filledStr = "═".repeat(filled);
+        emptyStr = "";
+      } else {
+        // We subtract 1 from repeat to make room for the car itself
+        filledStr = "═".repeat(Math.max(0, filled - 1)) + "🏎";
+        emptyStr = "─".repeat(Math.max(0, empty - 1));
+      }
+      left = "🏁"; // Start flag
+      right = " ";
       break;
     default:
       filledStr = "█".repeat(filled);
@@ -110,6 +136,7 @@ module.exports = {
       progresses: BARS.map(() => 0), // Current percentage for each bar
       completed: 0, // Count of bars that hit 100%
       tick: 0, // Frame counter
+      accordionOpen: false, // State for the installation accordion
     };
   },
 
@@ -147,6 +174,8 @@ module.exports = {
   },
 
   handleInput(session, event) {
+    const state = session.screenState;
+
     if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
       session.navigate("menu");
       return;
@@ -159,11 +188,16 @@ module.exports = {
       session.destroy();
       return;
     }
-    // 'r' to reset
+    // 'r' to reset animation
     if (event.type === "CHAR" && (event.char === "r" || event.char === "R")) {
-      session.screenState.progresses = BARS.map(() => 0);
-      session.screenState.completed = 0;
-      session.screenState.tick = 0;
+      state.progresses = BARS.map(() => 0);
+      state.completed = 0;
+      state.tick = 0;
+    }
+    // 'i' to toggle installation accordion
+    if (event.type === "CHAR" && (event.char === "i" || event.char === "I")) {
+      state.accordionOpen = !state.accordionOpen;
+      session.render();
     }
   },
 
@@ -244,12 +278,66 @@ module.exports = {
         )[0],
       );
     }
+    lines.push("");
+
+    // ── Installation Accordion ──
+    const arrow = state.accordionOpen ? "▼" : "▶";
+    const accTitle = ` ${arrow}  Get these components `;
+    const accHeader = state.accordionOpen
+      ? colors.bold(colors.cyan(accTitle))
+      : colors.dim(colors.white(accTitle));
+
+    lines.push(centerBlock([accHeader], cols)[0]);
+
+    if (state.accordionOpen) {
+      lines.push(
+        centerBlock(
+          [colors.dim(colors.gray("──────────────────────────────"))],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [colors.white("1. Install: ") + colors.yellow("npm install side-ui")],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [
+            colors.white("2. Import:  ") +
+              colors.green("const { ProgressBar } = require('side-ui')"),
+          ],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [
+            colors.white("3. Use:     ") +
+              colors.cyan("<ProgressBar style='racing' />"),
+          ],
+          cols,
+        )[0],
+      );
+      lines.push("");
+    } else {
+      lines.push(
+        centerBlock(
+          [colors.dim(colors.gray("   (Press 'i' to view installation)"))],
+          cols,
+        )[0],
+      );
+    }
 
     lines.push("");
     lines.push(
-      centerBlock([colors.dim(colors.gray("r Reset   q Back"))], cols)[0],
+      centerBlock(
+        [colors.dim(colors.gray("r Reset   i Install info   q Back"))],
+        cols,
+      )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
