@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Text, useInput } from "ink";
-import Button, { ButtonVariants } from "../components/Button.js";
+import Button, { ButtonVariants } from "../components/button.js";
 import InstallationAccordion from "../components/InstallationAccordion.js";
 import BoxComponent from "../utils/Box.js";
 
