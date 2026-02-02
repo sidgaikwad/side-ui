@@ -1,16 +1,47 @@
 {
-  "name": "termui",
+  "name": "side-ui",
   "version": "1.0.0",
-  "description": "SSH-accessible Terminal UI Component Library",
+  "description": "SSH-accessible Terminal UI Component Library - Interactive components accessible via plain SSH",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "keygen": "node generate-host-key.js"
   },
+  "keywords": [
+    "ssh",
+    "terminal",
+    "tui",
+    "ui",
+    "components",
+    "interactive",
+    "cli",
+    "ansi",
+    "terminal-ui",
+    "ssh-server",
+    "dashboard",
+    "remote",
+    "ascii-art"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/termui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/termui/issues"
+  },
+  "homepage": "https://github.com/yourusername/termui#readme",
   "dependencies": {
     "ssh2": "^1.15.0"
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "files": [
+    "src/",
+    "server.js",
+    "generate-host-key.js",
+    "README.md"
+  ]
 }
