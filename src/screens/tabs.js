@@ -7,7 +7,7 @@
 
 "use strict";
 
-const { colors, visibleLength } = require("../ansi");
+const { colors } = require("../ansi");
 const { centerBlock } = require("../components/center");
 
 // ─── TAB DEFINITIONS ──────────────────────────────────────────────────────────
@@ -36,6 +36,7 @@ const TABS = [
       ];
 
       for (const item of summaryItems) {
+        // Note: item.key is plain text here, so native padEnd is safe
         const keyPadded = item.key.padEnd(12);
         lines.push(
           centerBlock(
@@ -112,7 +113,11 @@ const TABS = [
           label: "Zero dependencies*",
           desc: "Only ssh2 package needed",
         },
-        { icon: "✓", label: "Cross-platform", desc: "Works on any SSH client" },
+        {
+          icon: "✓",
+          label: "Cross-platform",
+          desc: "Works on any SSH client",
+        },
       ];
 
       for (const feat of features) {
@@ -241,6 +246,12 @@ module.exports = {
         session.render();
         break;
 
+      case "CHAR":
+        if (event.char === "q" || event.char === "Q") {
+          session.navigate("menu");
+        }
+        break;
+
       case "ESCAPE":
         session.navigate("menu");
         break;
@@ -248,10 +259,6 @@ module.exports = {
       case "CTRL_C":
         session.destroy();
         break;
-    }
-
-    if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
-      session.navigate("menu");
     }
   },
 
@@ -300,7 +307,8 @@ module.exports = {
     for (let i = 0; i < TABS.length; i++) {
       const tab = TABS[i];
       const isActive = i === state.activeTab;
-      const tabWidth = tab.icon.length + 1 + tab.label.length; // icon + space + label
+      // Calculate visual width: icon (1) + space (1) + label length
+      const tabWidth = tab.icon.length + 1 + tab.label.length;
 
       if (isActive) {
         indicatorLine += colors.cyan("─".repeat(tabWidth));
@@ -333,6 +341,6 @@ module.exports = {
       )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
