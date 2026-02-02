@@ -1,4 +1,4 @@
-# side-ui — SSH Terminal UI Component Library
+# siddcn — SSH Terminal UI Component Library
 
 An interactive terminal UI component library accessible via plain SSH.
 
