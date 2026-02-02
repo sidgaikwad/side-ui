@@ -1,311 +1,157 @@
-# siddcn
+# 🎨 Siddcn - Terminal UI Component Library
 
-**A beautiful, themeable TUI component library built with React Ink** - Inspired by shadcn/ui
-
-Build stunning terminal user interfaces with pre-built, customizable components. Install only what you need, when you need it.
-
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![React Ink](https://img.shields.io/badge/React%20Ink-4.4.1-purple)
-
-## ✨ Features
-
-- 🎨 **12 Component Types** - Buttons, Progress Bars, Spinners, Tables, Cards, Badges, and more
-- 🌈 **6 Built-in Themes** - Ocean, Forest, Sunset, Midnight, Cyber, Monochrome
-- 📦 **Install What You Need** - shadcn-style CLI for selective component installation
-- 🎭 **50+ Variants** - Multiple styles for each component
-- 🚀 **Zero Config** - Works out of the box
-- 🌐 **Web Showcase** - Browse components in your browser
-- 📡 **SSH Support** - Run as an SSH server (coming soon)
-
-## 🚀 Quick Start
-
-### View the Showcase
-
-```bash
-# Run the TUI showcase
-npx siddcn
-
-# Or view components in your browser
-npm run web
-```
-
-### Install in Your Project
-
-```bash
-# Initialize siddcn in your project
-npx siddcn init
-
-# Add individual components
-npx siddcn add button
-npx siddcn add progressbar
-npx siddcn add spinner
-
-# List all available components
-npx siddcn list
-```
-
-## 📦 Components
-
-### Interactive
-
-- **Buttons** - 8 variants (Primary, Secondary, Success, Danger, Warning, Info, Ghost, Outlined)
-- **Select** - Single-select dropdown
-- **Multi-Select** - Checkbox multi-select
-
-### Feedback
-
-- **Progress Bars** - 6 animated styles (Blocks, Arrows, Dots, Lines, Gradient, Smooth)
-- **Spinners** - 17 loading animations
-
-### Display
-
-- **Tables** - 4 layout styles with sorting and selection
-- **Cards** - 4 visual styles
-- **Badges** - 12 status indicator variants
-- **Tree** - Collapsible hierarchy view
-
-### Forms
-
-- **Text Input** - With validation support
-
-### Navigation
-
-- **Tabs** - 4 tab interface styles
-
-### Styling
-
-- **Themes** - 6 color schemes
-
-## 🎨 Usage Example
-
-```javascript
-import React from "react";
-import { render } from "ink";
-import { Button } from "./components/Button";
-import { ProgressBar } from "./components/ProgressBar";
-import { Spinner } from "./components/Spinner";
-
-const App = () => (
-  <Box flexDirection="column" padding={1}>
-    <Button label="Click Me" variant="primary" icon="🚀" />
-
-    <ProgressBar progress={75} style="gradient" label="Loading..." />
-
-    <Spinner style="dots2" label="Processing..." color="#00A8E8" />
-  </Box>
-);
-
-render(<App />);
-```
-
-## 🎯 How to Add a New Component
-
-1. **Create the component file** in `src/components/`:
-
-```javascript
-// src/components/MyComponent.js
-import React from "react";
-import { Box, Text } from "ink";
-
-export const MyComponent = ({ label }) => {
-  return (
-    <Box>
-      <Text>{label}</Text>
-    </Box>
-  );
-};
-```
-
-2. **Create a showcase screen** in `src/screens/`:
-
-```javascript
-// src/screens/MyComponentScreen.js
-import React, { useState } from "react";
-import { Box, Text, useInput } from "ink";
-import MyComponent from "../components/MyComponent.js";
-import InstallationAccordion from "../components/InstallationAccordion.js";
-import BoxComponent from "../utils/Box.js";
-
-export const MyComponentScreen = ({ onBack }) => {
-  const [showInstall, setShowInstall] = useState(false);
-
-  useInput((input, key) => {
-    if (input === "i") {
-      setShowInstall((prev) => !prev);
-    } else if (key.escape || input === "q") {
-      onBack();
-    }
-  });
-
-  return (
-    <Box flexDirection="column" padding={1}>
-      <BoxComponent title="My Component" borderStyle="bold" width={70}>
-        <Box flexDirection="column">
-          <Text>Component description here</Text>
-          <MyComponent label="Example" />
-        </Box>
-      </BoxComponent>
-
-      <InstallationAccordion componentName="MyComponent" isOpen={showInstall} />
-    </Box>
-  );
-};
-```
-
-3. **Add to main menu** in `src/screens/MainMenu.js`:
-
-```javascript
-const MENU_ITEMS = [
-  // ... existing items
-  {
-    key: "mycomponent",
-    label: "My Component",
-    icon: "✨",
-    desc: "Description",
-    color: "#00A8E8",
-  },
-];
-```
-
-4. **Register in main app** in `src/index.js`:
-
-```javascript
-import MyComponentScreen from "./screens/MyComponentScreen.js";
-
-// In the screens object:
-const screens = {
-  // ... existing screens
-  mycomponent: <MyComponentScreen onBack={handleBack} />,
-};
-```
-
-5. **Add to CLI** in `cli/index.js`:
-
-```javascript
-const COMPONENTS = {
-  // ... existing components
-  mycomponent: {
-    name: "MyComponent",
-    files: ["components/MyComponent.js"],
-    dependencies: ["ink", "react"],
-  },
-};
-```
-
-6. **Add to web showcase** in `web/server.js`:
-
-```javascript
-const COMPONENTS = [
-  // ... existing components
-  {
-    id: "mycomponent",
-    name: "My Component",
-    description: "Component description",
-    category: "Display",
-    variants: 1,
-  },
-];
-```
-
-## 🎨 Themes
-
-siddcn comes with 6 built-in themes that can be switched at runtime:
-
-- **Ocean** (Default) - Cool blue tones
-- **Forest** - Natural green palette
-- **Sunset** - Warm orange/red colors
-- **Midnight** - Purple/magenta scheme
-- **Cyber** - Neon green cyberpunk style
-- **Monochrome** - Classic black and white
-
-Change themes programmatically:
-
-```javascript
-import { setTheme } from "./themes/index.js";
-
-setTheme("cyber");
-```
-
-## 🌐 Web Interface
-
-View all components in your browser:
-
-```bash
-npm run web
-```
-
-Open http://localhost:3000 to browse the component library with:
-
-- Component filtering by category
-- Installation commands
-- Live statistics
-- Responsive design
+A beautiful, extensible TUI (Terminal User Interface) component library built with React Ink, accessible via SSH like terminal.shop.
 
 ## 🏗️ Project Structure
 
 ```
-siddcn/
-├── src/
-│   ├── components/          # Component library
-│   │   ├── Button.js
-│   │   ├── ProgressBar.js
-│   │   ├── Spinner.js
-│   │   └── ...
-│   ├── screens/             # Showcase screens
-│   │   ├── Loader.js
-│   │   ├── MainMenu.js
-│   │   ├── ButtonsScreen.js
-│   │   └── ...
-│   ├── utils/               # Utilities
-│   │   ├── Box.js
-│   │   └── animations.js
-│   ├── themes/              # Theme system
-│   │   └── index.js
-│   └── index.js             # Main app
-├── cli/                     # CLI installer
-│   └── index.js
-├── web/                     # Web showcase
-│   └── server.js
-└── package.json
+siddcn-monorepo/
+├── apps/
+│   ├── website/          # Next.js showcase website
+│   └── docs/             # Fumadocs documentation
+├── packages/
+│   └── siddcn/           # Core TUI package with SSH server
+└── shared/
+    └── tsconfig/         # Shared TypeScript configs
 ```
 
-## 🔧 Development
+## 📦 Packages
+
+### `siddcn` (Core Package)
+The main TUI component library built with Ink that includes:
+- 🔌 SSH server integration for remote access
+- 🎯 Component registry system (easily extensible)
+- 🧭 Navigation state machine (Loader → Menu → Category → Detail)
+- 📦 Pre-built components (buttons, progress bars, badges, charts, etc.)
+- 📖 Interactive component documentation with accordions
+
+### `website` (Next.js App)
+Showcase website featuring:
+- Component previews
+- Live demos
+- Installation guides
+- API documentation
+
+### `docs` (Fumadocs)
+Comprehensive documentation with:
+- Getting started guides
+- Component API references
+- SSH connection guides
+- Contribution guidelines
+
+## 🚀 Quick Start
 
 ```bash
 # Install dependencies
 npm install
 
-# Run showcase in development mode
+# Run all apps in development
 npm run dev
 
-# Run web server
-npm run web
-
-# Run both simultaneously
-npm run both
+# Build everything
+npm run build
 ```
 
-## 📝 License
+## 🎮 User Flow
 
-MIT © 2024
+1. **Connect via SSH**: `ssh user@your-server -p 2222`
+2. **Loader Screen**: Animated loader while initializing
+3. **Main Menu**: Browse component categories (buttons, badges, tabs, charts, trees, etc.)
+4. **Category View**: See all variants of selected component type
+5. **Component Detail**: View selected component with:
+   - Live preview
+   - Installation instructions (accordion - press 'i')
+   - Usage examples
+   - Props documentation
 
-## 🙏 Acknowledgments
+## 🎯 Key Features
 
-- Inspired by [shadcn/ui](https://ui.shadcn.com)
-- Built with [React Ink](https://github.com/vadimdemedes/ink)
-- Based on the TermUI project architecture
+### Extensible Architecture
+Adding new component types is simple:
+```typescript
+// packages/siddcn/src/components/registry.ts
+export const componentRegistry = {
+  'progress-bar': {
+    variants: [/* ... */],
+    // ...
+  },
+  // Add your new component type here!
+  'accordion': {
+    variants: [/* ... */],
+    // ...
+  }
+};
+```
+
+### Navigation
+- `↑/↓` or `j/k`: Navigate items
+- `Enter`: Select item
+- `i`: Toggle accordion (in detail view)
+- `Esc` or `q`: Go back
+- `Ctrl+C`: Exit
+
+## 🛠️ Development
+
+### Add a New Component Type
+
+1. Create component files in `packages/siddcn/src/components/[type]/`
+2. Add variants to the registry
+3. Export from the main index
+4. That's it! The navigation system handles the rest
+
+### Project Commands
+
+```bash
+# Development
+npm run dev              # Start all apps
+npm run dev --filter=siddcn  # Start only core package
+
+# Build
+npm run build
+
+# Lint
+npm run lint
+
+# Format
+npm run format
+```
+
+## 📚 Tech Stack
+
+- **Framework**: React + Ink (TUI rendering)
+- **Language**: TypeScript
+- **SSH**: ssh2 (SSH server implementation)
+- **Monorepo**: Turborepo
+- **Website**: Next.js 14
+- **Docs**: Fumadocs
+- **Package Manager**: npm
+
+## 🎨 Component Categories
+
+- **Buttons**: Various button styles and states
+- **Progress Bars**: Linear, circular, multi-step
+- **Badges**: Status indicators, labels
+- **Charts**: Bar, line, pie charts
+- **Trees**: File trees, hierarchical data
+- **Tabs**: Navigation tabs
+- **Tables**: Data tables
+- **Forms**: Inputs, selects, checkboxes
+- **More**: Easily extensible!
+
+## 📖 Documentation
+
+Detailed documentation available at `/apps/docs`
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to:
+We welcome contributions! See our contribution guide in the docs.
 
-- Add new components
-- Create new themes
-- Improve documentation
-- Report bugs
-- Suggest features
+## 📄 License
 
----
+MIT
 
-**Made with ❤️ for the terminal**
+## 🙏 Acknowledgments
+
+- Inspired by [terminal.shop](https://terminal.shop)
+- Built with [Ink](https://github.com/vadimdemedes/ink)
+- Component architecture inspired by [shadcn/ui](https://ui.shadcn.com)

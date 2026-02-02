@@ -1,47 +1,26 @@
 {
-  "name": "siddcn",
-  "version": "1.0.0",
-  "description": "A beautiful, themeable TUI component library built with React Ink - inspired by shadcn",
-  "main": "src/index.js",
-  "type": "module",
-  "bin": {
-    "siddcn": "./cli/index.js"
-  },
-  "scripts": {
-    "start": "tsx src/index.jsx",
-    "dev": "tsx watch src/index.jsx",
-    "web": "node web/server.js",
-    "ssh": "node ssh/server.js",
-    "both": "concurrently \"npm run web\" \"npm run ssh\""
-  },
-  "keywords": [
-    "tui",
-    "terminal",
-    "ui",
-    "components",
-    "react",
-    "ink",
-    "cli",
-    "shadcn"
+  "name": "siddcn-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
   ],
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "chalk": "^5.3.0",
-    "cli-boxes": "^3.0.0",
-    "commander": "^11.1.0",
-    "fs-extra": "^11.2.0",
-    "gradient-string": "^2.0.2",
-    "ink": "^4.4.1",
-    "ink-select-input": "^5.0.0",
-    "ink-spinner": "^5.0.0",
-    "ink-text-input": "^5.0.1",
-    "ora": "^7.0.1",
-    "prompts": "^2.4.2",
-    "react": "^18.2.0"
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "clean": "turbo run clean && rm -rf node_modules"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "tsx": "^4.21.0"
+    "@types/node": "^22.0.0",
+    "prettier": "^3.3.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.5.0"
+  },
+  "packageManager": "npm@10.8.1",
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
