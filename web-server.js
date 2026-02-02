@@ -141,6 +141,10 @@ const server = http.createServer((req, res) => {
   } else if (url.pathname.startsWith('/api/install/')) {
     const id = url.pathname.split('/').pop();
     serveInstallCommand(res, id);
+  } else if (url.pathname.startsWith('/api/file/')) {
+    // FIX: Added missing route to actually serve the files for curl
+    const filePath = url.pathname.replace('/api/file/', '');
+    serveFile(res, filePath);
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Not Found');
@@ -148,6 +152,20 @@ const server = http.createServer((req, res) => {
 });
 
 // ─── HANDLERS ─────────────────────────────────────────────────────────────────
+
+function serveFile(res, filePath) {
+  // Basic security: prevent directory traversal
+  const safePath = path.normalize(decodeURIComponent(filePath)).replace(/^(\.\.[\/\\])+/, '');
+  const fullPath = path.join(__dirname, safePath);
+
+  if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    fs.createReadStream(fullPath).pipe(res);
+  } else {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('File not found');
+  }
+}
 
 function serveHTML(res) {
   const html = `<!DOCTYPE html>
@@ -426,7 +444,6 @@ function serveHTML(res) {
     <div class="grid" id="componentGrid"></div>
   </div>
   
-  <!-- Modal -->
   <div class="modal" id="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -465,25 +482,25 @@ function serveHTML(res) {
         ? components 
         : components.filter(c => c.category === activeCategory);
       
-      grid.innerHTML = filtered.map(comp => \`
-        <div class="card" onclick="showComponent('\${comp.id}')">
-          <div class="card-category">\${comp.category}</div>
+      grid.innerHTML = filtered.map(comp => `
+        <div class="card" onclick="showComponent('${comp.id}')">
+          <div class="card-category">${comp.category}</div>
           <div class="card-header">
-            <div class="card-icon">\${getIcon(comp.category)}</div>
-            <div class="card-title">\${comp.name}</div>
+            <div class="card-icon">${getIcon(comp.category)}</div>
+            <div class="card-title">${comp.name}</div>
           </div>
-          <div class="card-desc">\${comp.description}</div>
-          <div class="card-preview">\${comp.preview}</div>
+          <div class="card-desc">${comp.description}</div>
+          <div class="card-preview">${comp.preview}</div>
           <div class="card-actions">
-            <button class="btn btn-primary" onclick="event.stopPropagation(); showInstall('\${comp.id}')">
+            <button class="btn btn-primary" onclick="event.stopPropagation(); showInstall('${comp.id}')">
               📦 Install
             </button>
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); showCode('\${comp.id}')">
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); showCode('${comp.id}')">
               👁 View Code
             </button>
           </div>
         </div>
-      \`).join('');
+      `).join('');
     }
     
     function getIcon(category) {
@@ -613,12 +630,13 @@ function serveInstallCommand(res, id) {
     return;
   }
   
+  // FIX: Added --create-dirs so curl doesn't fail on missing directories
   const installCmd = `# Install ${comp.name}
 # Copy these files to your project:
 ${comp.files.map(f => `cp ${f} your-project/${f}`).join('\n')}
 
 # Or use curl to download directly from your server:
-${comp.files.map(f => `curl http://localhost:3000/api/file/${f} -o ${f}`).join('\n')}`;
+${comp.files.map(f => `curl --create-dirs http://localhost:${PORT}/api/file/${f} -o ${f}`).join('\n')}`;
   
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end(installCmd);
