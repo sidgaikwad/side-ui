@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Text } from "ink";
-import Spinner from "../components/Spinner.js";
+import Spinner from "../components/spinner.js";
 import gradient from "gradient-string";
 
 export const Loader = ({ onComplete }) => {

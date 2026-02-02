@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Text, useInput } from "ink";
-import Spinner, { SpinnerStyles } from "../components/Spinner.js";
+import Spinner, { SpinnerStyles } from "../components/spinner.js";
 import InstallationAccordion from "../components/InstallationAccordion.js";
 import BoxComponent from "../utils/Box.js";
 
