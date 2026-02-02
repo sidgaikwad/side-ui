@@ -92,6 +92,7 @@ module.exports = {
   initState(session) {
     return {
       selected: 0, // Currently highlighted card (0-3)
+      accordionOpen: false, // Installation info state
     };
   },
 
@@ -130,10 +131,18 @@ module.exports = {
       case "CTRL_C":
         session.destroy();
         break;
-    }
 
-    if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
-      session.navigate("menu");
+      case "CHAR":
+        if (event.char === "q" || event.char === "Q") {
+          session.navigate("menu");
+          return;
+        }
+        if (event.char === "i" || event.char === "I") {
+          state.accordionOpen = !state.accordionOpen;
+          session.render();
+          return;
+        }
+        break;
     }
   },
 
@@ -221,13 +230,68 @@ module.exports = {
       )[0],
     );
     lines.push("");
+
+    // ── Installation Accordion ──
+    const arrow = state.accordionOpen ? "▼" : "▶";
+    const accTitle = ` ${arrow}  How to use Cards `;
+    const accHeader = state.accordionOpen
+      ? colors.bold(colors.cyan(accTitle))
+      : colors.dim(colors.white(accTitle));
+
+    lines.push(centerBlock([accHeader], cols)[0]);
+
+    if (state.accordionOpen) {
+      lines.push(
+        centerBlock(
+          [colors.dim(colors.gray("───────────────────────────────────"))],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [
+            colors.white("1. Import: ") +
+              colors.yellow("const { drawBox } = require('side-ui')"),
+          ],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [
+            colors.white("2. Define: ") +
+              colors.green("const lines = ['Line 1', 'Line 2']"),
+          ],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [
+            colors.white("3. Draw:   ") +
+              colors.cyan("drawBox(lines, { title: 'Box', style: 'round' })"),
+          ],
+          cols,
+        )[0],
+      );
+      lines.push("");
+    } else {
+      lines.push(
+        centerBlock(
+          [colors.dim(colors.gray("   (Press 'i' to view code)"))],
+          cols,
+        )[0],
+      );
+    }
+
+    lines.push("");
     lines.push(
       centerBlock(
-        [colors.dim(colors.gray("↑↓←→ Navigate cards   q Back"))],
+        [colors.dim(colors.gray("↑↓←→ Navigate   i Info   q Back"))],
         cols,
       )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
