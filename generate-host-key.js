@@ -17,11 +17,14 @@ if (fs.existsSync(keyPath)) {
 }
 
 try {
-  // Node 19.0+ has generatePrivateKeyPairSync that can export PEM directly
+  // Generate RSA key pair
   const { privateKey } = crypto.generateKeyPairSync("rsa", {
     modulusLength: 2048,
     publicKeyEncoding: { type: "spki", format: "pem" },
-    privateKeyEncoding: { type: "pkcs8", format: "pem" },
+    privateKeyEncoding: {
+      type: "pkcs1", // Changed from pkcs8 to pkcs1 for ssh2 compatibility
+      format: "pem",
+    },
   });
 
   fs.writeFileSync(keyPath, privateKey, { mode: 0o600 });
