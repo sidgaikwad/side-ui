@@ -27,7 +27,7 @@ const TABS = [
       lines.push("");
 
       const summaryItems = [
-        { key: "Project", value: "sideui", color: colors.cyan },
+        { key: "Project", value: "side-ui", color: colors.cyan },
         { key: "Version", value: "v1.0.0", color: colors.green },
         { key: "License", value: "MIT", color: colors.yellow },
         { key: "Runtime", value: "Node.js 18+", color: colors.blue },

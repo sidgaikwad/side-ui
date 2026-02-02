@@ -298,7 +298,7 @@ module.exports = {
         centerBlock(
           [
             colors.white("1. Import: ") +
-              colors.yellow("const { BarChart } = require('sideui')"),
+              colors.yellow("const { BarChart } = require('side-ui')"),
           ],
           cols,
         )[0],

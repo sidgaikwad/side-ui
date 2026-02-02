@@ -312,7 +312,7 @@ module.exports = {
         centerBlock(
           [
             colors.white("1. Import: ") +
-              colors.yellow("const { Select } = require('sideui')"),
+              colors.yellow("const { Select } = require('side-ui')"),
           ],
           cols,
         )[0],

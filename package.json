@@ -1,5 +1,5 @@
 {
-  "name": "sideui",
+  "name": "side",
   "version": "1.0.0",
   "description": "SSH-accessible Terminal UI Component Library - Interactive components accessible via plain SSH",
   "main": "server.js",
@@ -26,12 +26,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sidgaikwad/sideui.git"
+    "url": "https://github.com/sidgaikwad/side-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/sidgaikwad/sideui/issues"
+    "url": "https://github.com/sidgaikwad/side-ui/issues"
   },
-  "homepage": "https://github.com/sidgaikwad/sideui#readme",
+  "homepage": "https://github.com/sidgaikwad/side-ui#readme",
   "dependencies": {
     "ssh2": "^1.15.0"
   },
