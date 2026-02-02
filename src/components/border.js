@@ -82,15 +82,6 @@ const STYLES = {
 
 /**
  * Wraps an array of content lines in a box border.
- *
- * @param {string[]} lines      - Array of content lines (may contain ANSI codes)
- * @param {object}   options
- * @param {string}   options.style     - Border style: 'round'|'sharp'|'double'|'heavy'|'ascii' (default: 'round')
- * @param {function} options.color     - Color function from ansi.colors, e.g. colors.cyan (default: colors.gray)
- * @param {string}   options.title     - Optional title shown in the top border
- * @param {number}   options.width     - Fixed width. If not set, auto-sizes to the widest content line + padding
- * @param {number}   options.padding   - Horizontal padding inside the border (default: 1)
- * @returns {string[]} Array of fully rendered lines including the border
  */
 function drawBox(lines, options = {}) {
   const styleName = options.style || "round";
@@ -122,8 +113,9 @@ function drawBox(lines, options = {}) {
     const titleStr = ` ${title} `;
     const titleVisLen = visibleLength(titleStr);
     const remaining = innerWidth - titleVisLen;
-    const leftDashes = Math.floor(remaining / 2);
-    const rightDashes = remaining - leftDashes;
+    // Ensure we don't get negative repeat count
+    const leftDashes = Math.max(0, Math.floor(remaining / 2));
+    const rightDashes = Math.max(0, remaining - leftDashes);
     topBorder +=
       chars.horizontal.repeat(leftDashes) +
       titleStr +
@@ -140,7 +132,7 @@ function drawBox(lines, options = {}) {
     const vLen = visibleLength(line);
     const truncated =
       vLen > contentWidth
-        ? line.slice(0, contentWidth) // rough truncation (won't perfectly handle ANSI mid-string)
+        ? line.slice(0, contentWidth) // Note: simple slice may cut ANSI codes.
         : line;
     const rightPad = " ".repeat(
       Math.max(0, contentWidth - visibleLength(truncated)),
@@ -165,14 +157,6 @@ function drawBox(lines, options = {}) {
 
 /**
  * Draw a horizontal divider line that fits inside a box.
- * Useful for separating sections within a bordered panel.
- *
- * @param {number}   innerWidth  - The inner width of the box (total width - 2)
- * @param {object}   options
- * @param {string}   options.style  - Border style name
- * @param {function} options.color  - Color function
- * @param {string}   options.label  - Optional centered label in the divider
- * @returns {string} A single divider line string
  */
 function drawDivider(innerWidth, options = {}) {
   const styleName = options.style || "round";
@@ -184,8 +168,8 @@ function drawDivider(innerWidth, options = {}) {
     const labelStr = ` ${label} `;
     const labelLen = visibleLength(labelStr);
     const remaining = innerWidth - labelLen;
-    const left = Math.floor(remaining / 2);
-    const right = remaining - left;
+    const left = Math.max(0, Math.floor(remaining / 2));
+    const right = Math.max(0, remaining - left);
     return colorFn(
       chars.leftT +
         chars.horizontal.repeat(left) +
