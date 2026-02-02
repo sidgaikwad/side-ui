@@ -34,9 +34,12 @@ function interpolateData(current, target, factor = 0.15) {
 
 // ─── CHART RENDERER ──────────────────────────────────────────────────────────
 
-function renderChart(values, cols) {
+function renderChart(values, style, cols) {
   const lines = [];
   const maxVal = 100; // Scale to 100
+
+  // Bar Character Styles
+  const char = style === "solid" ? "█" : "▒";
 
   // ── Y-axis labels and bars ──
   for (let row = CHART_HEIGHT; row >= 1; row--) {
@@ -68,7 +71,7 @@ function renderChart(values, cols) {
         else if (val >= 20) barColor = colors.blue;
         else barColor = colors.dim;
 
-        rowLine += barColor("█".repeat(BAR_WIDTH));
+        rowLine += barColor(char.repeat(BAR_WIDTH));
       } else {
         // Empty space above bar
         rowLine += " ".repeat(BAR_WIDTH);
@@ -136,12 +139,17 @@ module.exports = {
       target: target, // Target values (what we're interpolating toward)
       tick: 0,
       updateTick: 0, // Counts ticks between data refreshes
+      paused: false,
+      barStyle: "solid", // 'solid' or 'shaded'
+      accordionOpen: false, // Installation info
     };
   },
 
   onMount(session) {
     session.startAnimation(() => {
       const state = session.screenState;
+      if (state.paused) return;
+
       state.tick++;
       state.updateTick++;
 
@@ -159,10 +167,40 @@ module.exports = {
   },
 
   handleInput(session, event) {
-    if (event.type === "CHAR" && (event.char === "q" || event.char === "Q")) {
-      session.navigate("menu");
-      return;
+    const state = session.screenState;
+
+    if (event.type === "CHAR") {
+      if (event.char === "q" || event.char === "Q") {
+        session.navigate("menu");
+        return;
+      }
+      // 'r' to immediately generate new data
+      if (event.char === "r" || event.char === "R") {
+        state.target = generateData();
+        state.updateTick = 0;
+        session.render();
+        return;
+      }
+      // 'p' to pause
+      if (event.char === "p" || event.char === "P") {
+        state.paused = !state.paused;
+        session.render();
+        return;
+      }
+      // 's' to toggle style
+      if (event.char === "s" || event.char === "S") {
+        state.barStyle = state.barStyle === "solid" ? "shaded" : "solid";
+        session.render();
+        return;
+      }
+      // 'i' to toggle accordion
+      if (event.char === "i" || event.char === "I") {
+        state.accordionOpen = !state.accordionOpen;
+        session.render();
+        return;
+      }
     }
+
     if (event.type === "ESCAPE") {
       session.navigate("menu");
       return;
@@ -170,11 +208,6 @@ module.exports = {
     if (event.type === "CTRL_C") {
       session.destroy();
       return;
-    }
-    // 'r' to immediately generate new data
-    if (event.type === "CHAR" && (event.char === "r" || event.char === "R")) {
-      session.screenState.target = generateData();
-      session.screenState.updateTick = 0;
     }
   },
 
@@ -203,7 +236,7 @@ module.exports = {
     // ── Legend ──
     const legend =
       colors.red("█") +
-      colors.dim(colors.gray(" 80-100  ")) +
+      colors.dim(colors.gray(" 80-100   ")) +
       colors.yellow("█") +
       colors.dim(colors.gray(" 60-79   ")) +
       colors.cyan("█") +
@@ -214,7 +247,7 @@ module.exports = {
     lines.push("");
 
     // ── Chart ──
-    const chartLines = renderChart(state.current, cols);
+    const chartLines = renderChart(state.current, state.barStyle, cols);
     const centeredChart = centerBlock(chartLines, cols);
     for (const line of centeredChart) {
       lines.push(line);
@@ -243,12 +276,64 @@ module.exports = {
         cols,
       )[0],
     );
+    lines.push("");
+
+    // ── Installation Accordion ──
+    const arrow = state.accordionOpen ? "▼" : "▶";
+    const accTitle = ` ${arrow}  Get Chart Component `;
+    const accHeader = state.accordionOpen
+      ? colors.bold(colors.cyan(accTitle))
+      : colors.dim(colors.white(accTitle));
+
+    lines.push(centerBlock([accHeader], cols)[0]);
+
+    if (state.accordionOpen) {
+      lines.push(
+        centerBlock(
+          [colors.dim(colors.gray("───────────────────────────────────"))],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [
+            colors.white("1. Import: ") +
+              colors.yellow("const { BarChart } = require('side-ui')"),
+          ],
+          cols,
+        )[0],
+      );
+      lines.push(
+        centerBlock(
+          [
+            colors.white("2. Data:   ") +
+              colors.green("data={[10, 45, 80...]} height={12}"),
+          ],
+          cols,
+        )[0],
+      );
+      lines.push("");
+    } else {
+      lines.push(
+        centerBlock(
+          [colors.dim(colors.gray("   (Press 'i' to view code)"))],
+          cols,
+        )[0],
+      );
+    }
 
     lines.push("");
     lines.push(
-      centerBlock([colors.dim(colors.gray("r New Data   q Back"))], cols)[0],
+      centerBlock(
+        [
+          colors.dim(
+            colors.gray("r Refresh   p Pause   s Style   i Info   q Back"),
+          ),
+        ],
+        cols,
+      )[0],
     );
 
-    return lines.join("\n");
+    return lines.join("\r\n"); // Fixed newline for raw mode
   },
 };
