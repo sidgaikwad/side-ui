@@ -18,12 +18,6 @@ try {
   hostKey = fs.readFileSync(HOST_KEY);
   console.log("✅ Loaded existing host key");
 } catch (err) {
-  console.log("⚠️  No host key found. Generate one with:");
-  console.log(`   ssh-keygen -t rsa -b 4096 -f ${HOST_KEY} -N ""`);
-  console.log(
-    "\n   For development, we'll use a temporary key (not secure for production!)",
-  );
-
   // For development purposes only
   hostKey = Buffer.from(`-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEA3jKWLqRV8VnKN+GWwqJAWZvP6LWxLfpCWB0aF4yqTcQUzKm5
@@ -39,9 +33,7 @@ const server = new Server(
 
     client
       .on("authentication", (ctx) => {
-        // For demo purposes, accept any password
         if (ctx.method === "password") {
-          console.log(`🔐 Auth attempt: ${ctx.username}`);
           ctx.accept();
         } else if (ctx.method === "none") {
           ctx.accept();
@@ -68,16 +60,37 @@ const server = new Server(
             console.log("🐚 Shell requested");
             const stream = accept();
 
-            // Create proper TTY-like stream for Ink
+            // ─── CRITICAL FIX FOR STAIRCASE EFFECT ───
+            // We wrap the stream to force \n -> \r\n conversion
             const wrapStream = (baseStream: any) => {
               const wrapped = Object.create(baseStream);
+
               wrapped.isTTY = true;
               wrapped.columns = cols;
               wrapped.rows = rows;
+
               wrapped.setRawMode = (mode: boolean) => {
                 return wrapped;
               };
-              // Add ref/unref methods that Ink expects
+
+              // Intercept writes to fix line endings
+              wrapped.write = (data: any, encoding?: any, cb?: any) => {
+                let chunk = data;
+
+                // Convert Buffer to string to fix newlines, then back if needed
+                if (Buffer.isBuffer(data)) {
+                  chunk = data.toString("utf8");
+                }
+
+                if (typeof chunk === "string") {
+                  // Replace raw newlines with Carriage Return + Newline
+                  // This fixes the "stepping" distortion
+                  chunk = chunk.replace(/\n/g, "\r\n");
+                }
+
+                return baseStream.write(chunk, encoding, cb);
+              };
+
               wrapped.ref = () => wrapped;
               wrapped.unref = () => wrapped;
               return wrapped;
@@ -107,6 +120,7 @@ const server = new Server(
               session.on("window-change", (accept, reject, info) => {
                 cols = info.cols || 80;
                 rows = info.rows || 24;
+                // Update specific properties Ink looks for
                 stdin.columns = cols;
                 stdin.rows = rows;
                 stdout.columns = cols;
@@ -135,9 +149,6 @@ const server = new Server(
 );
 
 server.listen(PORT, "0.0.0.0", () => {
-  console.log("");
-  console.log("🚀 Siddcn SSH Server Started");
-  console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━");
   console.log(`📡 Listening on port ${PORT}`);
   console.log("");
   console.log("Connect with:");
