@@ -63,30 +63,40 @@ ssh localhost -p 2222
 ## 🎨 Component Categories
 
 ### Buttons
+
 Interactive button components with various styles:
+
 - Simple Button
 - Primary Button
 - Danger Button
 
 ### Progress Bars
+
 Progress indicators and loading states:
+
 - Linear Progress
 - Circular Progress
 - Step Progress
 
 ### Badges
+
 Status indicators and labels:
+
 - Status Badge
 - Count Badge
 - Dot Badge
 
 ### Charts
+
 Data visualization components:
+
 - Bar Chart
 - Line Chart
 
 ### Trees
+
 Hierarchical data structures:
+
 - File Tree
 - Data Tree
 
@@ -203,16 +213,18 @@ SSH_HOST_KEY=/path/to/host.key
 ⚠️ **Important for Production:**
 
 1. **Generate a proper host key:**
+
    ```bash
    ssh-keygen -t rsa -b 4096 -f host.key -N ""
    ```
 
 2. **Implement proper authentication:**
    The demo accepts any password. For production:
+
    ```typescript
    // In server.ts, modify authentication handler
-   client.on('authentication', (ctx) => {
-     if (ctx.method === 'password') {
+   client.on("authentication", (ctx) => {
+     if (ctx.method === "password") {
        // Add your auth logic here
        if (isValidUser(ctx.username, ctx.password)) {
          ctx.accept();
@@ -292,7 +304,7 @@ MIT © [Your Name]
 
 ## 🔗 Links
 
-- [GitHub Repository](https://github.com/yourusername/siddcn)
+- [GitHub Repository](https://github.com/sidgaikwad/siddcn)
 - [Documentation](https://siddcn.dev)
 - [NPM Package](https://www.npmjs.com/package/siddcn)
 - [Contributing Guide](./CONTRIBUTING.md)

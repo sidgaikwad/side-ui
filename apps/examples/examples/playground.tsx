@@ -95,7 +95,9 @@ const Playground = () => {
 
       <Box marginBottom={2}>
         <Box width={30} flexDirection="column" borderStyle="round" paddingX={2} paddingY={1} marginRight={2}>
-          <Text bold marginBottom={1}>Components</Text>
+          <Box marginBottom={1}>
+            <Text bold>Components</Text>
+          </Box>
           {components.map((comp, idx) => (
             <Box key={idx}>
               <Text color={idx === selectedComponent ? 'cyan' : 'white'}>
@@ -106,8 +108,10 @@ const Playground = () => {
           ))}
         </Box>
 
-        <Box flex={1} flexDirection="column" borderStyle="round" paddingX={2} paddingY={1}>
-          <Text bold marginBottom={1}>Preview</Text>
+        <Box flexDirection="column" borderStyle="round" paddingX={2} paddingY={1}>
+          <Box marginBottom={1}>
+            <Text bold>Preview</Text>
+          </Box>
           {renderComponent()}
         </Box>
       </Box>
