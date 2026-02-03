@@ -1,6 +1,6 @@
 @echo off
 echo Building siddcn...
-call npm run build
+call pnpm run build
 if %errorlevel% neq 0 (
     echo Build failed!
     exit /b %errorlevel%
