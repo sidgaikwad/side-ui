@@ -4,6 +4,7 @@
   "description": "Terminal UI component library with SSH access",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "bin": {
     "siddcn": "./dist/cli.js",
     "siddcn-server": "./dist/server.js"
