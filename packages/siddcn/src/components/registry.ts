@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { ComponentRegistry } from '../types';
+import { ComponentRegistry, ComponentCategory, ComponentVariant } from '../types';
 
 // Import component variants
 import { SimpleButton, PrimaryButton, DangerButton } from '../components/buttons';

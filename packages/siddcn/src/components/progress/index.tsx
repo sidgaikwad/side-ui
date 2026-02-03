@@ -154,7 +154,9 @@ export const StepProgress: React.FC = () => {
           </Text>
         ))}
       </Box>
-      <Text dimColor marginTop={1}>Multi-step Progress (Animated)</Text>
+      <Box marginTop={1}>
+        <Text dimColor>Multi-step Progress (Animated)</Text>
+      </Box>
     </Box>
   );
 };
