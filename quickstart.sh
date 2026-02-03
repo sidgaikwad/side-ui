@@ -17,7 +17,7 @@ echo ""
 
 # Install dependencies
 echo "📦 Installing dependencies..."
-npm install
+pnpm install
 
 if [ $? -ne 0 ]; then
     echo "❌ Failed to install dependencies"
@@ -39,7 +39,7 @@ echo ""
 
 # Build the project
 echo "🔨 Building project..."
-npm run build
+pnpm run build
 
 if [ $? -ne 0 ]; then
     echo "❌ Build failed"
@@ -56,11 +56,11 @@ echo "Next steps:"
 echo ""
 echo "1. Run the CLI:"
 echo "   cd packages/siddcn"
-echo "   npm run dev"
+echo "   pnpm run dev"
 echo ""
 echo "2. Run the SSH server:"
 echo "   cd packages/siddcn"
-echo "   npm run dev:server"
+echo "   pnpm run dev:server"
 echo ""
 echo "3. Connect via SSH:"
 echo "   ssh localhost -p 2222"
