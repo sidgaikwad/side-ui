@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Building siddcn..."
-npm run build
+pnpm run build
 
 if [ $? -ne 0 ]; then
     echo "Build failed!"

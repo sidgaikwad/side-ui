@@ -2,10 +2,6 @@
   "name": "siddcn-monorepo",
   "version": "0.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -19,8 +15,9 @@
     "turbo": "^2.0.0",
     "typescript": "^5.5.0"
   },
-  "packageManager": "pnpm@8.8.0",
+  "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
   }
 }

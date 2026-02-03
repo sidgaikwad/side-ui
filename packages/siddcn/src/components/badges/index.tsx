@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Text } from 'ink';
+import { getTheme } from '../../utils/theme';
 
 export interface BadgeProps {
   status?: 'success' | 'warning' | 'error' | 'info';
@@ -8,11 +9,13 @@ export interface BadgeProps {
 }
 
 export const StatusBadge: React.FC<BadgeProps> = ({ status = 'success' }) => {
+  const theme = getTheme();
+  
   const colors = {
-    success: 'green',
-    warning: 'yellow',
-    error: 'red',
-    info: 'blue'
+    success: theme.colors.success,
+    warning: theme.colors.warning,
+    error: theme.colors.error,
+    info: theme.colors.info
   };
 
   const labels = {
@@ -24,7 +27,7 @@ export const StatusBadge: React.FC<BadgeProps> = ({ status = 'success' }) => {
 
   return (
     <Box>
-      <Box borderStyle="round" paddingX={1}>
+      <Box borderStyle={theme.borderStyle} borderColor={colors[status]} paddingX={1}>
         <Text color={colors[status]}>{labels[status]}</Text>
       </Box>
     </Box>
@@ -32,19 +35,22 @@ export const StatusBadge: React.FC<BadgeProps> = ({ status = 'success' }) => {
 };
 
 export const CountBadge: React.FC<BadgeProps> = ({ count = 42 }) => {
+  const theme = getTheme();
   return (
     <Box>
-      <Box borderStyle="round" paddingX={1}>
-        <Text color="cyan" bold>{count}</Text>
+      <Box borderStyle={theme.borderStyle} borderColor={theme.colors.primary} paddingX={1}>
+        <Text color={theme.colors.primary} bold>{count}</Text>
       </Box>
     </Box>
   );
 };
 
-export const DotBadge: React.FC<BadgeProps> = ({ color = 'green' }) => {
+export const DotBadge: React.FC<BadgeProps> = ({ color }) => {
+  const theme = getTheme();
+  const dotColor = color || theme.colors.success;
   return (
     <Box>
-      <Text color={color}>●</Text>
+      <Text color={dotColor}>●</Text>
       <Text> Online</Text>
     </Box>
   );
