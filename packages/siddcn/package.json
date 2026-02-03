@@ -1,6 +1,6 @@
 {
   "name": "siddcn",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Terminal UI component library with SSH access",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
