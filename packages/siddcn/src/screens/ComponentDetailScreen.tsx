@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { getVariant } from '../components/registry';
-import { getTheme, setTheme, getThemeNames } from '../utils/theme';
+import { getTheme, setTheme, themes as themeMap } from '../utils/theme';
+import { TwinklingStars } from '../components/backgrounds';
 
 interface ComponentDetailScreenProps {
   categoryId: string;
@@ -21,10 +22,21 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
   onBack
 }) => {
   const variant = getVariant(categoryId, variantId);
-  const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
-  const [showThemeSelector, setShowThemeSelector] = useState(false);
-  const themes = getThemeNames();
+  const themeEntries = Object.entries(themeMap);
   const theme = getTheme();
+  const [currentThemeIndex, setCurrentThemeIndex] = useState(
+    Math.max(0, themeEntries.findIndex(([_, t]) => t.name === theme.name))
+  );
+  const [showThemeSelector, setShowThemeSelector] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // Reset copied state after 2 seconds
+  useEffect(() => {
+    if (copied) {
+      const timer = setTimeout(() => setCopied(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
 
   useInput((input, key) => {
     if (input === 'i' || input === 'I') {
@@ -32,6 +44,10 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
     }
     if (input === 't' || input === 'T') {
       setShowThemeSelector(prev => !prev);
+    }
+    if (input === 'c' || input === 'C') {
+      // Signal that install command was "copied"
+      setCopied(true);
     }
     if (key.escape) {
       if (showThemeSelector) {
@@ -46,9 +62,10 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
       if (key.upArrow || input === 'k') {
         setCurrentThemeIndex(prev => Math.max(0, prev - 1));
       } else if (key.downArrow || input === 'j') {
-        setCurrentThemeIndex(prev => Math.min(themes.length - 1, prev + 1));
+        setCurrentThemeIndex(prev => Math.min(themeEntries.length - 1, prev + 1));
       } else if (key.return) {
-        setTheme(themes[currentThemeIndex].id);
+        const [themeId] = themeEntries[currentThemeIndex];
+        setTheme(themeId);
         setShowThemeSelector(false);
       }
     }
@@ -65,11 +82,14 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
   const PreviewComponent = variant.preview;
 
   return (
-    <Box flexDirection="column" padding={2}>
+    <Box flexDirection="column" padding={1}>
+      {/* Stars decoration */}
+      <TwinklingStars width={70} density={0.1} />
+      
       {/* Header */}
       <Box 
-        borderStyle={theme.borderStyle} 
-        borderColor={theme.colors.border} 
+        borderStyle="double" 
+        borderColor={theme.colors.primary} 
         justifyContent="center" 
         paddingX={2}
         marginBottom={1}
@@ -79,7 +99,7 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
         </Text>
       </Box>
 
-      <Box marginBottom={2} justifyContent="center">
+      <Box marginBottom={1} justifyContent="center">
         <Text dimColor>{variant.description}</Text>
       </Box>
 
@@ -98,8 +118,8 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
           </Box>
           
           <Box flexDirection="column">
-            {themes.map((t, idx) => (
-              <Box key={t.id}>
+            {themeEntries.map(([themeId, t], idx) => (
+              <Box key={themeId}>
                 <Text 
                   color={idx === currentThemeIndex ? theme.colors.primary : theme.colors.text}
                   bold={idx === currentThemeIndex}
@@ -150,23 +170,39 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
         </Box>
       </Box>
 
-      {/* Accordion Content */}
+      {/* Accordion Content - Installation Info */}
       {accordionOpen && (
-        <Box flexDirection="column" borderStyle="round" borderColor={theme.colors.border} paddingX={2} paddingY={1} marginBottom={2}>
-          {/* Installation */}
+        <Box flexDirection="column" borderStyle="round" borderColor={theme.colors.success} paddingX={2} paddingY={1} marginBottom={2}>
+          {/* Quick Install */}
           <Box flexDirection="column" marginBottom={2}>
-            <Text color={theme.colors.success} bold>Installation</Text>
-            <Box marginTop={1} paddingX={1}>
-              <Text backgroundColor="gray" color="white"> {variant.installCommand} </Text>
+            <Box>
+              <Text color={theme.colors.success} bold>Quick Install</Text>
+              {copied && <Text color={theme.colors.warning}> (Copied!)</Text>}
+            </Box>
+            <Box marginTop={1} borderStyle="single" borderColor={theme.colors.border} paddingX={1}>
+              <Text color={theme.colors.primary}>{variant.installCommand}</Text>
+            </Box>
+            <Box marginTop={1}>
+              <Text dimColor>Press 'c' to copy command</Text>
             </Box>
           </Box>
 
-          {/* Usage */}
+          {/* Usage Example */}
           <Box flexDirection="column" marginBottom={2}>
-            <Text color={theme.colors.success} bold>Usage</Text>
-            <Box marginTop={1} paddingX={1} flexDirection="column">
+            <Text color={theme.colors.info} bold>Usage Example</Text>
+            <Box marginTop={1} paddingX={1} flexDirection="column" borderStyle="single" borderColor={theme.colors.border}>
               {variant.usage.split('\n').map((line, idx) => (
-                <Text key={idx} dimColor={line.trim().startsWith('//')}>{line}</Text>
+                <Text 
+                  key={idx} 
+                  color={
+                    line.trim().startsWith('//') ? theme.colors.dimText :
+                    line.trim().startsWith('import') ? theme.colors.primary :
+                    line.trim().startsWith('<') ? theme.colors.success :
+                    theme.colors.text
+                  }
+                >
+                  {line}
+                </Text>
               ))}
             </Box>
           </Box>
@@ -174,18 +210,18 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
           {/* Props (if available) */}
           {variant.props && Object.keys(variant.props).length > 0 && (
             <Box flexDirection="column">
-              <Text color={theme.colors.success} bold>Props</Text>
-              <Box marginTop={1} flexDirection="column">
+              <Text color={theme.colors.warning} bold>Props</Text>
+              <Box marginTop={1} flexDirection="column" borderStyle="single" borderColor={theme.colors.border} paddingX={1}>
                 {Object.entries(variant.props).map(([propName, propDef], idx) => (
-                  <Box key={idx} marginY={0} paddingX={1}>
-                    <Text color={theme.colors.primary}>{propName}</Text>
+                  <Box key={idx}>
+                    <Text color={theme.colors.primary} bold>{propName}</Text>
                     <Text>: </Text>
-                    <Text color="yellow">{propDef.type}</Text>
-                    {propDef.required && <Text color="red"> *</Text>}
+                    <Text color={theme.colors.secondary}>{propDef.type}</Text>
+                    {propDef.required && <Text color={theme.colors.error}> (required)</Text>}
                     {propDef.default && (
                       <>
                         <Text dimColor> = </Text>
-                        <Text dimColor>{propDef.default}</Text>
+                        <Text dimColor>"{propDef.default}"</Text>
                       </>
                     )}
                   </Box>
@@ -197,11 +233,14 @@ export const ComponentDetailScreen: React.FC<ComponentDetailScreenProps> = ({
       )}
 
       {/* Navigation hints */}
-      <Box marginTop={1}>
+      <Box marginTop={1} borderStyle="single" borderColor={theme.colors.border} paddingX={2}>
         <Text dimColor>
-          Press Esc to go back | Press q to exit
+          Esc back | 'i' toggle install | 't' theme | 'c' copy | 'q' quit
         </Text>
       </Box>
+      
+      {/* Bottom stars */}
+      <TwinklingStars width={70} density={0.08} />
     </Box>
   );
 };

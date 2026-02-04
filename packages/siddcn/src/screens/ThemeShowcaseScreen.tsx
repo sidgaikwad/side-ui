@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Text, useInput } from 'ink';
-import { getTheme, setTheme, getAvailableThemes, Theme } from '../utils/theme';
+import { getTheme, setTheme, getThemeNames, Theme, themes as themeMap } from '../utils/theme';
 import { SimpleButton } from '../components/buttons';
 import { LinearProgress } from '../components/progress';
 import { StatusBadge } from '../components/badges';
@@ -11,22 +11,23 @@ interface ThemeShowcaseScreenProps {
 
 export const ThemeShowcaseScreen: React.FC<ThemeShowcaseScreenProps> = ({ onBack }) => {
   const currentTheme = getTheme();
-  const themes = getAvailableThemes();
+  // Get theme entries with IDs
+  const themeEntries = Object.entries(themeMap);
   const [selectedThemeIndex, setSelectedThemeIndex] = useState(
-    themes.findIndex(t => t.name === currentTheme.name)
+    Math.max(0, themeEntries.findIndex(([_, t]) => t.name === currentTheme.name))
   );
   const [showInstallInfo, setShowInstallInfo] = useState(false);
 
-  const selectedTheme = themes[selectedThemeIndex];
+  const [selectedThemeId, selectedTheme] = themeEntries[selectedThemeIndex];
 
   useInput((input, key) => {
     if (key.upArrow || input === 'k') {
       setSelectedThemeIndex(prev => Math.max(0, prev - 1));
     } else if (key.downArrow || input === 'j') {
-      setSelectedThemeIndex(prev => Math.min(themes.length - 1, prev + 1));
+      setSelectedThemeIndex(prev => Math.min(themeEntries.length - 1, prev + 1));
     } else if (key.return || input === ' ') {
-      // Apply theme
-      setTheme(selectedTheme.name);
+      // Apply theme using the correct ID (e.g., 'default', 'ocean', etc.)
+      setTheme(selectedThemeId);
     } else if (input === 'i' || input === 'I') {
       setShowInstallInfo(!showInstallInfo);
     } else if (key.escape || input === 'q' || input === 'Q') {
@@ -53,12 +54,12 @@ export const ThemeShowcaseScreen: React.FC<ThemeShowcaseScreenProps> = ({ onBack
             <Text bold>Available Themes</Text>
           </Box>
 
-          {themes.map((theme, index) => {
+          {themeEntries.map(([themeId, theme], index) => {
             const isSelected = index === selectedThemeIndex;
             const isCurrent = theme.name === currentTheme.name;
 
             return (
-              <Box key={theme.name} marginBottom={0}>
+              <Box key={themeId} marginBottom={0}>
                 <Text color={isSelected ? 'cyan' : 'white'} bold={isSelected}>
                   {isSelected ? '▸ ' : '  '}
                   {theme.name}
@@ -130,7 +131,7 @@ export const ThemeShowcaseScreen: React.FC<ThemeShowcaseScreenProps> = ({ onBack
           </Box>
           <Box marginTop={1} flexDirection="column">
             <Text color="cyan">import {'{ setTheme }'} from 'siddcn';</Text>
-            <Text color="green">setTheme('{selectedTheme.name}');</Text>
+            <Text color="green">setTheme('{selectedThemeId}');</Text>
           </Box>
           <Box marginTop={1}>
             <Text dimColor>Or in your component:</Text>

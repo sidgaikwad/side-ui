@@ -20,6 +20,13 @@ import { FileTree, DataTree } from "./trees";
 import { Tabs, DashboardTab, AnalyticsTab, SettingsTab } from "./tabs";
 import { Table } from "./table";
 import { MultiSelect } from "./multiselect";
+import { DotsSpinner, BouncingSpinner, PulseSpinner, BarSpinner, WaveSpinner } from "./spinners";
+import { BasicInput, PasswordInput, SearchInput, TextInputPreview } from "./text-input";
+import { BasicCard, InfoCard, WarningCard, SuccessCard, ErrorCard, GlowCard, CardPreview } from "./cards";
+import { BasicSelect, RadioSelect, DropdownSelect, SelectPreview } from "./select";
+import { TwinklingStars, MatrixRain } from "./backgrounds";
+import { TypewriterText, GradientText, PulsingText, LoadingDots, MarqueeText, AnimatedTextPreview } from "./animated-text";
+import { Toast, Banner, InlineNotification, ProgressNotification, NotificationPreview } from "./notifications";
 
 // Preview wrapper components with default props
 const FileTreePreview: React.FC = () => (
@@ -393,6 +400,407 @@ const items = [
 ];
 
 <MultiSelect items={items} maxSelect={2} />`,
+      },
+    ],
+  },
+
+  spinners: {
+    id: "spinners",
+    name: "Spinners",
+    description: "Animated loading indicators",
+    icon: "⟳",
+    variants: [
+      {
+        id: "dots",
+        name: "Dots Spinner",
+        description: "Classic dots animation spinner",
+        preview: DotsSpinner,
+        installCommand: "npx siddcn add spinner-dots",
+        usage: `import { DotsSpinner } from 'siddcn';
+
+<DotsSpinner text="Loading..." />`,
+      },
+      {
+        id: "bounce",
+        name: "Bouncing Spinner",
+        description: "Bouncing animation effect",
+        preview: BouncingSpinner,
+        installCommand: "npx siddcn add spinner-bounce",
+        usage: `import { BouncingSpinner } from 'siddcn';
+
+<BouncingSpinner text="Processing..." />`,
+      },
+      {
+        id: "pulse",
+        name: "Pulse Spinner",
+        description: "Pulsating circle animation",
+        preview: PulseSpinner,
+        installCommand: "npx siddcn add spinner-pulse",
+        usage: `import { PulseSpinner } from 'siddcn';
+
+<PulseSpinner text="Working..." />`,
+      },
+      {
+        id: "bar",
+        name: "Bar Spinner",
+        description: "Animated sliding bar",
+        preview: BarSpinner,
+        installCommand: "npx siddcn add spinner-bar",
+        usage: `import { BarSpinner } from 'siddcn';
+
+<BarSpinner width={20} />`,
+      },
+      {
+        id: "wave",
+        name: "Wave Spinner",
+        description: "Wave animation effect",
+        preview: WaveSpinner,
+        installCommand: "npx siddcn add spinner-wave",
+        usage: `import { WaveSpinner } from 'siddcn';
+
+<WaveSpinner />`,
+      },
+    ],
+  },
+
+  textinput: {
+    id: "textinput",
+    name: "Text Input",
+    description: "Text input fields with various styles",
+    icon: "✎",
+    variants: [
+      {
+        id: "basic",
+        name: "Basic Input",
+        description: "Simple text input with blinking cursor",
+        preview: TextInputPreview,
+        installCommand: "npx siddcn add input-basic",
+        usage: `import { BasicInput } from 'siddcn';
+
+<BasicInput 
+  label="Name"
+  placeholder="Enter your name..."
+  onChange={(value) => console.log(value)}
+/>`,
+      },
+      {
+        id: "password",
+        name: "Password Input",
+        description: "Masked password input",
+        preview: PasswordInput,
+        installCommand: "npx siddcn add input-password",
+        usage: `import { PasswordInput } from 'siddcn';
+
+<PasswordInput 
+  label="Password"
+  onSubmit={(value) => handlePassword(value)}
+/>`,
+      },
+      {
+        id: "search",
+        name: "Search Input",
+        description: "Search-style input with icon",
+        preview: SearchInput,
+        installCommand: "npx siddcn add input-search",
+        usage: `import { SearchInput } from 'siddcn';
+
+<SearchInput 
+  placeholder="Search..."
+  onSubmit={(query) => search(query)}
+/>`,
+      },
+    ],
+  },
+
+  cards: {
+    id: "cards",
+    name: "Cards",
+    description: "Container components for content",
+    icon: "◰",
+    variants: [
+      {
+        id: "basic",
+        name: "Basic Card",
+        description: "Simple card with title and content",
+        preview: CardPreview,
+        installCommand: "npx siddcn add card-basic",
+        usage: `import { BasicCard } from 'siddcn';
+
+<BasicCard title="Card Title" subtitle="Subtitle">
+  <Text>Card content here</Text>
+</BasicCard>`,
+      },
+      {
+        id: "info",
+        name: "Info Card",
+        description: "Card for informational content",
+        preview: InfoCard,
+        installCommand: "npx siddcn add card-info",
+        usage: `import { InfoCard } from 'siddcn';
+
+<InfoCard title="Information">
+  <Text>Important info here</Text>
+</InfoCard>`,
+      },
+      {
+        id: "warning",
+        name: "Warning Card",
+        description: "Animated warning card",
+        preview: WarningCard,
+        installCommand: "npx siddcn add card-warning",
+        usage: `import { WarningCard } from 'siddcn';
+
+<WarningCard title="Warning">
+  <Text>Warning message</Text>
+</WarningCard>`,
+      },
+      {
+        id: "success",
+        name: "Success Card",
+        description: "Success confirmation card",
+        preview: SuccessCard,
+        installCommand: "npx siddcn add card-success",
+        usage: `import { SuccessCard } from 'siddcn';
+
+<SuccessCard title="Success!">
+  <Text>Operation completed</Text>
+</SuccessCard>`,
+      },
+      {
+        id: "error",
+        name: "Error Card",
+        description: "Animated error card",
+        preview: ErrorCard,
+        installCommand: "npx siddcn add card-error",
+        usage: `import { ErrorCard } from 'siddcn';
+
+<ErrorCard title="Error">
+  <Text>Error message</Text>
+</ErrorCard>`,
+      },
+      {
+        id: "glow",
+        name: "Glow Card",
+        description: "Card with animated glowing border",
+        preview: GlowCard,
+        installCommand: "npx siddcn add card-glow",
+        usage: `import { GlowCard } from 'siddcn';
+
+<GlowCard title="Featured">
+  <Text>Highlighted content</Text>
+</GlowCard>`,
+      },
+    ],
+  },
+
+  select: {
+    id: "select",
+    name: "Select",
+    description: "Selection input components",
+    icon: "▽",
+    variants: [
+      {
+        id: "basic",
+        name: "Basic Select",
+        description: "Simple list selection",
+        preview: SelectPreview,
+        installCommand: "npx siddcn add select-basic",
+        usage: `import { BasicSelect } from 'siddcn';
+
+const options = [
+  { value: 'opt1', label: 'Option 1' },
+  { value: 'opt2', label: 'Option 2' }
+];
+
+<BasicSelect options={options} onChange={(v) => setSelected(v)} />`,
+      },
+      {
+        id: "radio",
+        name: "Radio Select",
+        description: "Radio button style selection",
+        preview: RadioSelect,
+        installCommand: "npx siddcn add select-radio",
+        usage: `import { RadioSelect } from 'siddcn';
+
+<RadioSelect 
+  options={options} 
+  label="Choose one"
+  onChange={(v) => setSelected(v)} 
+/>`,
+        props: {
+          options: {
+            type: "SelectOption[]",
+            required: true,
+            description: "Array of options",
+          },
+        },
+      },
+      {
+        id: "dropdown",
+        name: "Dropdown Select",
+        description: "Collapsible dropdown menu",
+        preview: DropdownSelect,
+        installCommand: "npx siddcn add select-dropdown",
+        usage: `import { DropdownSelect } from 'siddcn';
+
+<DropdownSelect 
+  options={options}
+  placeholder="Select..."
+  onChange={(v) => setSelected(v)} 
+/>`,
+      },
+    ],
+  },
+
+  backgrounds: {
+    id: "backgrounds",
+    name: "Backgrounds",
+    description: "Animated background effects",
+    icon: "✧",
+    variants: [
+      {
+        id: "stars",
+        name: "Twinkling Stars",
+        description: "Animated starfield background",
+        preview: TwinklingStars,
+        installCommand: "npx siddcn add bg-stars",
+        usage: `import { TwinklingStars } from 'siddcn';
+
+<TwinklingStars width={60} density={0.15} />`,
+      },
+      {
+        id: "matrix",
+        name: "Matrix Rain",
+        description: "Matrix-style falling characters",
+        preview: MatrixRain,
+        installCommand: "npx siddcn add bg-matrix",
+        usage: `import { MatrixRain } from 'siddcn';
+
+<MatrixRain width={60} height={5} />`,
+      },
+    ],
+  },
+
+  animatedtext: {
+    id: "animatedtext",
+    name: "Animated Text",
+    description: "Text with animation effects",
+    icon: "A",
+    variants: [
+      {
+        id: "typewriter",
+        name: "Typewriter",
+        description: "Character-by-character typing effect",
+        preview: AnimatedTextPreview,
+        installCommand: "npx siddcn add text-typewriter",
+        usage: `import { TypewriterText } from 'siddcn';
+
+<TypewriterText 
+  text="Hello, World!" 
+  speed={50} 
+  onComplete={() => console.log('Done!')}
+/>`,
+      },
+      {
+        id: "gradient",
+        name: "Gradient Text",
+        description: "Animated color cycling gradient",
+        preview: GradientText,
+        installCommand: "npx siddcn add text-gradient",
+        usage: `import { GradientText } from 'siddcn';
+
+<GradientText text="Rainbow Text" />`,
+      },
+      {
+        id: "pulse",
+        name: "Pulsing Text",
+        description: "Fading in and out effect",
+        preview: PulsingText,
+        installCommand: "npx siddcn add text-pulse",
+        usage: `import { PulsingText } from 'siddcn';
+
+<PulsingText text="Pulsing..." />`,
+      },
+      {
+        id: "loading",
+        name: "Loading Dots",
+        description: "Loading text with animated dots",
+        preview: LoadingDots,
+        installCommand: "npx siddcn add text-loading",
+        usage: `import { LoadingDots } from 'siddcn';
+
+<LoadingDots text="Processing" />`,
+      },
+      {
+        id: "marquee",
+        name: "Marquee Text",
+        description: "Scrolling marquee effect",
+        preview: MarqueeText,
+        installCommand: "npx siddcn add text-marquee",
+        usage: `import { MarqueeText } from 'siddcn';
+
+<MarqueeText text="Breaking news!" width={20} />`,
+      },
+    ],
+  },
+
+  notifications: {
+    id: "notifications",
+    name: "Notifications",
+    description: "Alert and notification components",
+    icon: "!",
+    variants: [
+      {
+        id: "toast",
+        name: "Toast",
+        description: "Popup toast notification",
+        preview: NotificationPreview,
+        installCommand: "npx siddcn add notif-toast",
+        usage: `import { Toast } from 'siddcn';
+
+<Toast 
+  type="success"
+  title="Saved!"
+  message="Your changes have been saved"
+  duration={3000}
+/>`,
+      },
+      {
+        id: "banner",
+        name: "Banner",
+        description: "Full-width banner notification",
+        preview: Banner,
+        installCommand: "npx siddcn add notif-banner",
+        usage: `import { Banner } from 'siddcn';
+
+<Banner type="warning" message="Low disk space warning" />`,
+      },
+      {
+        id: "inline",
+        name: "Inline",
+        description: "Inline notification message",
+        preview: InlineNotification,
+        installCommand: "npx siddcn add notif-inline",
+        usage: `import { InlineNotification } from 'siddcn';
+
+<InlineNotification 
+  type="error" 
+  message="Invalid input detected" 
+/>`,
+      },
+      {
+        id: "progress",
+        name: "Progress Notification",
+        description: "Notification with progress bar",
+        preview: ProgressNotification,
+        installCommand: "npx siddcn add notif-progress",
+        usage: `import { ProgressNotification } from 'siddcn';
+
+<ProgressNotification 
+  title="Uploading"
+  progress={45}
+  status="Uploading file.txt..."
+/>`,
       },
     ],
   },

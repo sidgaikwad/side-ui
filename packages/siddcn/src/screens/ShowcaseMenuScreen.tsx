@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { getTheme } from '../utils/theme';
 import { SimpleButton } from '../components/buttons';
 import { LinearProgress } from '../components/progress';
 import { StatusBadge } from '../components/badges';
+import { TwinklingStars } from '../components/backgrounds';
 
 interface ShowcaseItem {
   id: string;
@@ -23,100 +24,129 @@ interface ShowcaseMenuScreenProps {
 export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect, onThemeSelect }) => {
   const theme = getTheme();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollOffset, setScrollOffset] = useState(0);
+  
+  // Maximum visible rows for scrolling
+  const maxVisibleRows = 4;
+  const cols = 3;
 
   const items: ShowcaseItem[] = [
     {
       id: 'buttons',
       title: 'Buttons',
-      subtitle: '[ Primary ]\nStyled variants',
+      subtitle: 'Interactive\nStyled variants',
       icon: '◉',
       preview: <SimpleButton label="Primary" />,
     },
     {
       id: 'themes',
       title: 'Themes',
-      subtitle: '🎨 Preview\n& Install',
-      icon: '🎨',
+      subtitle: 'Preview &\nCustomize',
+      icon: '◐',
       preview: <Text color={theme.colors.primary}>6 Themes</Text>,
     },
     {
       id: 'select',
       title: 'Select',
-      subtitle: '▸ Option 1\nSingle-select',
+      subtitle: 'Single &\nMulti-select',
       icon: '▸',
       preview: <Text>▸ <Text color={theme.colors.primary}>Option 1</Text></Text>,
     },
     {
-      id: 'multi-select',
+      id: 'multiselect',
       title: 'Multi-Select',
-      subtitle: '☑ Item A\nCheckboxes',
+      subtitle: 'Checkboxes\nWith limits',
       icon: '☑',
-      preview: <Text><Text color={theme.colors.primary}>☑</Text> Item A\n<Text dimColor>☐</Text> Item B</Text>,
+      preview: <Text><Text color={theme.colors.primary}>☑</Text> Item A</Text>,
     },
     {
-      id: 'text-input',
+      id: 'textinput',
       title: 'Text Input',
-      subtitle: '│ Type... █\nLive typing',
+      subtitle: 'Forms &\nSearch',
       icon: '✎',
-      preview: <Text dimColor>│ Type... <Text color={theme.colors.primary}>█</Text></Text>,
+      preview: <Text dimColor>Type... <Text color={theme.colors.primary}>█</Text></Text>,
     },
     {
       id: 'trees',
       title: 'Tree',
-      subtitle: '├─ folder/\nHierarchy',
-      icon: '🌳',
+      subtitle: 'File &\nData trees',
+      icon: '├',
       preview: <Text>├─ <Text color={theme.colors.primary}>folder/</Text></Text>,
     },
     {
       id: 'tabs',
       title: 'Tabs',
-      subtitle: '[ Tab 1 ]\nTab interface',
+      subtitle: 'Navigation\nMulti-style',
       icon: '⊟',
       preview: <Text>[ <Text color={theme.colors.primary} bold>Tab 1</Text> ]</Text>,
     },
     {
       id: 'table',
       title: 'Table',
-      subtitle: '│ Row 1 │\nData grid',
+      subtitle: 'Data grid\nScrollable',
       icon: '▦',
       preview: <Text dimColor>│ Row 1 │</Text>,
     },
     {
       id: 'cards',
       title: 'Cards',
-      subtitle: '┌─Card─┐\nPanel layout',
+      subtitle: 'Containers\nAnimated',
       icon: '◈',
       preview: <Text dimColor>┌─Card─┐</Text>,
     },
     {
       id: 'badges',
       title: 'Badges',
-      subtitle: '[ Active ]\nStatus tags',
+      subtitle: 'Status &\nCounts',
       icon: '♦',
       preview: <StatusBadge status="success" />,
     },
     {
       id: 'progress',
       title: 'Progress',
-      subtitle: '[████░] 60%\nProgress bars',
+      subtitle: 'Bars &\nSteps',
       icon: '▪',
       preview: <LinearProgress value={60} max={100} animated={false} />,
     },
     {
       id: 'spinners',
       title: 'Spinners',
-      subtitle: '⠋ Loading...\nAnimations',
-      icon: '○',
+      subtitle: 'Loading\nAnimations',
+      icon: '⟳',
       preview: <Text><Text color={theme.colors.primary}>⠋</Text> Loading...</Text>,
     },
     {
       id: 'charts',
-      title: 'Chart',
-      subtitle: '▂▃▅▇▆▄▂\nLive data',
+      title: 'Charts',
+      subtitle: 'Bar &\nLine charts',
       icon: '▤',
       preview: <Text color={theme.colors.primary}>▂▃▅▇▆▄▂</Text>,
     },
+    {
+      id: 'backgrounds',
+      title: 'Backgrounds',
+      subtitle: 'Animated\nEffects',
+      icon: '✧',
+      preview: <Text color={theme.colors.primary}>*  . +  *</Text>,
+    },
+    {
+      id: 'animatedtext',
+      title: 'Animated Text',
+      subtitle: 'Typewriter\n& Effects',
+      icon: 'A',
+      preview: <Text color={theme.colors.primary}>Typing...</Text>,
+    },
+    {
+      id: 'notifications',
+      title: 'Notifications',
+      subtitle: 'Toasts &\nAlerts',
+      icon: '!',
+      preview: <Text color={theme.colors.success}>[+] Done</Text>,
+    },
   ];
+
+  // Calculate total rows
+  const totalRows = Math.ceil(items.length / cols);
 
   useInput((input, key) => {
     if (key.leftArrow || input === 'h') {
@@ -124,11 +154,10 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
     } else if (key.rightArrow || input === 'l') {
       setSelectedIndex((prev) => Math.min(items.length - 1, prev + 1));
     } else if (key.upArrow || input === 'k') {
-      setSelectedIndex((prev) => Math.max(0, prev - 3));
+      setSelectedIndex((prev) => Math.max(0, prev - cols));
     } else if (key.downArrow || input === 'j') {
-      setSelectedIndex((prev) => Math.min(items.length - 1, prev + 3));
+      setSelectedIndex((prev) => Math.min(items.length - 1, prev + cols));
     } else if (input === 't' || input === 'T') {
-      // Quick access to themes
       onThemeSelect?.();
     } else if (key.return) {
       const selectedItem = items[selectedIndex];
@@ -140,13 +169,25 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
     }
   });
 
-  // Calculate grid position
-  const cols = 3;
+  // Update scroll offset based on selected index
   const selectedRow = Math.floor(selectedIndex / cols);
-  const selectedCol = selectedIndex % cols;
+  useEffect(() => {
+    if (selectedRow < scrollOffset) {
+      setScrollOffset(selectedRow);
+    } else if (selectedRow >= scrollOffset + maxVisibleRows) {
+      setScrollOffset(selectedRow - maxVisibleRows + 1);
+    }
+  }, [selectedRow, scrollOffset]);
+
+  // Calculate visible rows
+  const visibleStartRow = scrollOffset;
+  const visibleEndRow = Math.min(scrollOffset + maxVisibleRows, totalRows);
 
   return (
     <Box flexDirection="column" padding={2}>
+      {/* Animated Stars Background */}
+      <TwinklingStars width={70} density={0.12} />
+      
       {/* Title */}
       <Box
         borderStyle={theme.borderStyle}
@@ -160,64 +201,87 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
         </Text>
       </Box>
 
+      {/* Second row of stars */}
+      <TwinklingStars width={70} density={0.08} />
+
       <Box marginBottom={2} justifyContent="center">
         <Text dimColor>
-          Navigate the grid with arrow keys · Enter to explore
+          Navigate the grid with arrow keys - Enter to explore
         </Text>
       </Box>
 
       <Box marginBottom={2} justifyContent="center" borderStyle="round" borderColor="yellow" paddingX={2}>
-        <Text bold color="yellow">💡 Press 'T' anytime for Theme Showcase (6 themes available)</Text>
+        <Text bold color="yellow">Press 'T' anytime for Theme Showcase (6 themes available)</Text>
       </Box>
 
-      {/* Grid */}
+      {/* Scroll indicator - top */}
+      {scrollOffset > 0 && (
+        <Box justifyContent="center" marginBottom={1}>
+          <Text color={theme.colors.primary}>--- Scroll up for more (k/up) ---</Text>
+        </Box>
+      )}
+
+      {/* Scrollable Grid */}
       <Box flexDirection="column">
-        {[0, 1, 2, 3].map((row) => (
-          <Box key={row} marginBottom={1}>
-            {[0, 1, 2].map((col) => {
-              const index = row * 3 + col;
-              if (index >= items.length) {
-                return <Box key={col} width={30} />;
-              }
+        {Array.from({ length: visibleEndRow - visibleStartRow }).map((_, rowOffset) => {
+          const row = visibleStartRow + rowOffset;
+          return (
+            <Box key={row} marginBottom={1}>
+              {[0, 1, 2].map((col) => {
+                const index = row * cols + col;
+                if (index >= items.length) {
+                  return <Box key={col} width={28} />;
+                }
 
-              const item = items[index];
-              const isSelected = index === selectedIndex;
+                const item = items[index];
+                const isSelected = index === selectedIndex;
 
-              return (
-                <Box
-                  key={col}
-                  width={30}
-                  marginRight={2}
-                  borderStyle={isSelected ? 'bold' : 'single'}
-                  borderColor={isSelected ? theme.colors.primary : theme.colors.border}
-                  paddingX={1}
-                  paddingY={1}
-                  flexDirection="column"
-                >
-                  {/* Title with icon */}
-                  <Box marginBottom={0}>
-                    <Text color={isSelected ? theme.colors.primary : theme.colors.text}>
-                      {item.icon}  <Text bold>{item.title}</Text>
-                    </Text>
+                return (
+                  <Box
+                    key={col}
+                    width={28}
+                    marginRight={1}
+                    borderStyle={isSelected ? 'bold' : 'single'}
+                    borderColor={isSelected ? theme.colors.primary : theme.colors.border}
+                    paddingX={1}
+                    paddingY={0}
+                    flexDirection="column"
+                  >
+                    {/* Title with icon */}
+                    <Box>
+                      <Text color={isSelected ? theme.colors.primary : theme.colors.text}>
+                        {item.icon} <Text bold>{item.title}</Text>
+                      </Text>
+                    </Box>
+
+                    {/* Subtitle/Description */}
+                    <Box>
+                      <Text dimColor wrap="truncate">{item.subtitle.split('\n')[0]}</Text>
+                    </Box>
                   </Box>
-
-                  {/* Subtitle/Description */}
-                  <Box marginTop={0}>
-                    <Text dimColor>{item.subtitle}</Text>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
-        ))}
+                );
+              })}
+            </Box>
+          );
+        })}
       </Box>
+
+      {/* Scroll indicator - bottom */}
+      {scrollOffset + maxVisibleRows < totalRows && (
+        <Box justifyContent="center" marginTop={1}>
+          <Text color={theme.colors.primary}>--- Scroll down for more (j/down) ---</Text>
+        </Box>
+      )}
 
       {/* Footer */}
       <Box marginTop={2} justifyContent="center">
         <Text dimColor>
-          {items.length} components · Arrow keys navigate · Enter select · Ctrl+C quit
+          {items.length} components - Arrow keys navigate - Enter select - Ctrl+C quit
         </Text>
       </Box>
+      
+      {/* Bottom stars decoration */}
+      <TwinklingStars width={70} density={0.1} />
     </Box>
   );
 };
