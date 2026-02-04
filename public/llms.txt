@@ -1,0 +1,114 @@
+# Siddcn - Terminal UI Component Library
+
+> Siddcn is a terminal UI component library built with React Ink that provides beautiful, accessible, and extensible components for building terminal-based applications.
+
+## Overview
+
+Siddcn is designed for developers who want to create beautiful terminal user interfaces using React. It provides a collection of pre-built components that can be browsed and previewed directly in your terminal via SSH or CLI.
+
+## Key Features
+
+- **React Ink Based**: Built on top of React Ink, providing a familiar React development experience for terminal UIs
+- **SSH Access**: Browse and preview components remotely via SSH, similar to terminal.shop
+- **6 Built-in Themes**: Choose from beautiful themes or create your own custom theme
+- **Vim-style Navigation**: Navigate with familiar vim keybindings (h/j/k/l) across all components
+- **Extensible Architecture**: Add new component types in minutes with the simple registry pattern
+
+## Installation
+
+```bash
+# Install globally
+npm install -g siddcn
+
+# Run the interactive CLI
+siddcn
+
+# Or connect via SSH (if server is running)
+ssh localhost -p 2222
+```
+
+## Available Components
+
+### Buttons
+Interactive terminal buttons with various styles including primary, secondary, danger, and outline variants.
+
+### Progress Bars
+- Linear progress bars
+- Circular/spinner progress indicators
+- Step progress indicators
+
+### Badges
+Status indicators and labels for displaying states, tags, and notifications.
+
+### Charts
+- Bar charts for data visualization
+- Line charts for trend analysis
+
+### Trees
+- File trees for displaying hierarchies
+- Data trees for nested structures
+
+### Tabs
+Tabbed navigation with multiple styles for organizing content.
+
+### Table
+Scrollable data grids with selection support and keyboard navigation.
+
+### Multi-Select
+Multiple item selection with configurable limits.
+
+## Architecture
+
+Siddcn uses a monorepo structure with:
+
+- `packages/siddcn`: Core CLI package with components and SSH server
+- `apps/docs`: Documentation site built with Fumadocs
+- `apps/website`: Marketing website with component previews
+- `apps/examples`: Example implementations and demos
+
+## Theming
+
+Siddcn includes 6 built-in themes:
+1. Default - Clean and minimal
+2. Ocean - Blue-based palette
+3. Forest - Green nature tones
+4. Sunset - Warm orange/red colors
+5. Neon - Vibrant cyberpunk style
+6. Monochrome - Black and white
+
+Custom themes can be created by extending the theme configuration.
+
+## Navigation
+
+All components support vim-style navigation:
+- `j` or `↓`: Move down
+- `k` or `↑`: Move up
+- `h` or `←`: Move left
+- `l` or `→`: Move right
+- `Enter`: Select
+- `q`: Quit/Go back
+
+## Adding Custom Components
+
+1. Create component in `src/components/<category>/`
+2. Register in `src/components/registry.tsx`
+3. Add documentation in `apps/docs/content/docs/components/`
+
+## Links
+
+- Documentation: /docs
+- Components: /components
+- GitHub: https://github.com/sidgaikwad/siddcn
+- npm: https://npmjs.com/package/siddcn
+
+## Tech Stack
+
+- React Ink for terminal rendering
+- TypeScript for type safety
+- Fumadocs for documentation
+- Next.js for web applications
+- Tailwind CSS for styling
+
+## License
+
+MIT License

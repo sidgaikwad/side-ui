@@ -1,5 +1,7 @@
 'use client'
 
+import { AnimatedCard } from './AnimatedCard'
+
 export function Features() {
   const features = [
     {
@@ -61,20 +63,17 @@ export function Features() {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {features.map((feature, idx) => (
-        <div 
-          key={idx}
-          className="group rounded-xl border border-white/5 bg-white/[0.02] p-6 transition-all hover:border-white/10 hover:bg-white/[0.04]"
-        >
-          <div className="mb-4 inline-flex rounded-lg border border-white/10 bg-white/5 p-2.5 text-white/70">
+        <AnimatedCard key={idx} className="group">
+          <div className="mb-4 inline-flex rounded-lg border border-white/10 bg-white/5 p-2.5 text-white/70 transition-all duration-300 group-hover:border-blue-500/30 group-hover:text-blue-400">
             {feature.icon}
           </div>
-          <h3 className="mb-2 font-semibold text-white">
+          <h3 className="mb-2 font-semibold text-white group-hover:text-blue-50 transition-colors">
             {feature.title}
           </h3>
-          <p className="text-sm leading-relaxed text-white/50">
+          <p className="text-sm leading-relaxed text-white/50 group-hover:text-white/60 transition-colors">
             {feature.description}
           </p>
-        </div>
+        </AnimatedCard>
       ))}
     </div>
   )
