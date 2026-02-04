@@ -6,6 +6,9 @@ import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { FadeIn } from "@/components/FadeIn";
 import { ShimmerButton } from "@/components/ShimmerButton";
 
+// Define the Docs URL with a fallback for development
+const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL || "http://localhost:3001";
+
 export default function Home() {
   return (
     <main className="min-h-screen relative">
@@ -261,7 +264,7 @@ Exit with q`}</code>
               <ul className="space-y-2 text-sm text-white/50">
                 <li>
                   <a
-                    href="http://localhost:3001/docs"
+                    href={`${DOCS_URL}/docs`}
                     className="hover:text-white transition-colors"
                   >
                     Introduction
@@ -269,7 +272,7 @@ Exit with q`}</code>
                 </li>
                 <li>
                   <a
-                    href="http://localhost:3001/docs/installation"
+                    href={`${DOCS_URL}/docs/installation`}
                     className="hover:text-white transition-colors"
                   >
                     Installation
@@ -301,7 +304,7 @@ Exit with q`}</code>
                 </li>
                 <li>
                   <a
-                    href="http://localhost:3001/docs/adding-components"
+                    href={`${DOCS_URL}/docs/adding-components`}
                     className="hover:text-white transition-colors"
                   >
                     Add Components
