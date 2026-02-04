@@ -23,9 +23,9 @@ import { MultiSelect } from "./multiselect";
 import { DotsSpinner, BouncingSpinner, PulseSpinner, BarSpinner, WaveSpinner } from "./spinners";
 import { BasicInput, PasswordInput, SearchInput, TextInputPreview } from "./text-input";
 import { BasicCard, InfoCard, WarningCard, SuccessCard, ErrorCard, GlowCard, CardPreview } from "./cards";
-import { BasicSelect, RadioSelect, DropdownSelect, SelectPreview } from "./select";
+import { BasicSelect, SelectPreview } from "./select";
 import { TwinklingStars, MatrixRain } from "./backgrounds";
-import { TypewriterText, GradientText, PulsingText, LoadingDots, MarqueeText, AnimatedTextPreview } from "./animated-text";
+import { TypewriterText, LoadingDots, AnimatedTextPreview } from "./animated-text";
 import { Toast, Banner, InlineNotification, ProgressNotification, NotificationPreview } from "./notifications";
 
 // Preview wrapper components with default props
@@ -648,7 +648,7 @@ const options = [
         id: "radio",
         name: "Radio Select",
         description: "Radio button style selection",
-        preview: RadioSelect,
+        preview: SelectPreview,
         installCommand: "npx siddcn add select-radio",
         usage: `import { RadioSelect } from 'siddcn';
 
@@ -669,7 +669,7 @@ const options = [
         id: "dropdown",
         name: "Dropdown Select",
         description: "Collapsible dropdown menu",
-        preview: DropdownSelect,
+        preview: SelectPreview,
         installCommand: "npx siddcn add select-dropdown",
         usage: `import { DropdownSelect } from 'siddcn';
 
@@ -735,7 +735,7 @@ const options = [
         id: "gradient",
         name: "Gradient Text",
         description: "Animated color cycling gradient",
-        preview: GradientText,
+        preview: AnimatedTextPreview,
         installCommand: "npx siddcn add text-gradient",
         usage: `import { GradientText } from 'siddcn';
 
@@ -745,7 +745,7 @@ const options = [
         id: "pulse",
         name: "Pulsing Text",
         description: "Fading in and out effect",
-        preview: PulsingText,
+        preview: AnimatedTextPreview,
         installCommand: "npx siddcn add text-pulse",
         usage: `import { PulsingText } from 'siddcn';
 
@@ -765,7 +765,7 @@ const options = [
         id: "marquee",
         name: "Marquee Text",
         description: "Scrolling marquee effect",
-        preview: MarqueeText,
+        preview: AnimatedTextPreview,
         installCommand: "npx siddcn add text-marquee",
         usage: `import { MarqueeText } from 'siddcn';
 
