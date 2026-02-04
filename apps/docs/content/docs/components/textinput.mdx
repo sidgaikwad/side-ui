@@ -1,0 +1,80 @@
+---
+title: Text Input
+description: Input field components for terminal UIs.
+---
+
+# Text Input
+
+Text input fields for forms and user input in terminal applications.
+
+## Basic Input
+
+Simple text input with blinking cursor and label.
+
+```tsx title="BasicInput"
+import { BasicInput } from 'siddcn';
+
+<BasicInput 
+  label="Name"
+  placeholder="Enter your name..."
+  onChange={(value) => console.log(value)}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `label` | `string` | - | Label above the input |
+| `placeholder` | `string` | - | Placeholder text |
+| `value` | `string` | `""` | Controlled value |
+| `onChange` | `(value: string) => void` | - | Change callback |
+| `onSubmit` | `(value: string) => void` | - | Submit callback (Enter) |
+
+## Password Input
+
+Masked password input that hides characters.
+
+```tsx title="PasswordInput"
+import { PasswordInput } from 'siddcn';
+
+<PasswordInput 
+  label="Password"
+  onSubmit={(value) => handlePassword(value)}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `label` | `string` | `"Password"` | Label text |
+| `maskChar` | `string` | `"*"` | Character used to mask input |
+| `onSubmit` | `(value: string) => void` | - | Submit callback |
+
+## Search Input
+
+Search-style input with search icon prefix.
+
+```tsx title="SearchInput"
+import { SearchInput } from 'siddcn';
+
+<SearchInput 
+  placeholder="Search..."
+  onSubmit={(query) => search(query)}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `placeholder` | `string` | `"Search..."` | Placeholder text |
+| `onSubmit` | `(query: string) => void` | - | Search callback |
+
+## Keyboard Navigation
+
+- `Enter` - Submit the input
+- `Backspace` - Delete character
+- `Ctrl+U` - Clear entire input
+- `Escape` - Cancel/blur input

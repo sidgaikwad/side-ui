@@ -1,0 +1,146 @@
+---
+title: Dashboards
+description: System monitoring dashboard components.
+---
+
+# Dashboards
+
+Pre-built dashboard layouts for system monitoring and data visualization.
+
+## Htop Dashboard
+
+htop-style CPU, memory, and process monitoring dashboard.
+
+```tsx title="HtopDashboard"
+import { HtopDashboard } from 'siddcn';
+
+<HtopDashboard 
+  width={80}
+  cpuCores={4}
+  animated={true}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `width` | `number` | `80` | Dashboard width |
+| `cpuCores` | `number` | `4` | Number of CPU cores to display |
+| `animated` | `boolean` | `true` | Enable live animations |
+
+## Network Dashboard
+
+Network traffic and interface monitoring dashboard.
+
+```tsx title="NetworkDashboard"
+import { NetworkDashboard } from 'siddcn';
+
+<NetworkDashboard 
+  width={70}
+  animated={true}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `width` | `number` | `70` | Dashboard width |
+| `animated` | `boolean` | `true` | Enable live animations |
+
+## Server Dashboard
+
+Server health and metrics dashboard with status indicators.
+
+```tsx title="ServerDashboard"
+import { ServerDashboard } from 'siddcn';
+
+<ServerDashboard 
+  width={75}
+  animated={true}
+/>
+```
+
+### Features
+
+- Server status indicator
+- Uptime counter
+- Request counter
+- Response time monitoring
+- Active connections
+- Error tracking
+
+## Vertical Dashboard
+
+Vertical stacked panels with metric bars.
+
+```tsx title="VerticalDashboard"
+import { VerticalDashboard } from 'siddcn';
+
+<VerticalDashboard 
+  width={50}
+  animated={true}
+/>
+```
+
+## Horizontal Dashboard
+
+Side-by-side service status panels.
+
+```tsx title="HorizontalDashboard"
+import { HorizontalDashboard } from 'siddcn';
+
+<HorizontalDashboard 
+  width={90}
+  animated={true}
+/>
+```
+
+## Paged Dashboard
+
+Auto-rotating flipbook style dashboard with multiple pages.
+
+```tsx title="PagedDashboard"
+import { PagedDashboard } from 'siddcn';
+
+<PagedDashboard 
+  width={80}
+  pageInterval={5000}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `width` | `number` | `80` | Dashboard width |
+| `pageInterval` | `number` | `5000` | Auto-rotate interval in ms |
+
+## Usage Example
+
+```tsx title="System Monitor"
+import { Box } from 'ink';
+import { HtopDashboard, NetworkDashboard } from 'siddcn';
+
+function SystemMonitor() {
+  return (
+    <Box flexDirection="column" gap={1}>
+      <HtopDashboard width={100} cpuCores={8} />
+      <NetworkDashboard width={100} />
+    </Box>
+  );
+}
+```
+
+## Customization
+
+All dashboards support theming through the theme system:
+
+```tsx
+import { ThemeProvider, HtopDashboard } from 'siddcn';
+
+<ThemeProvider theme="tokyo-night">
+  <HtopDashboard />
+</ThemeProvider>
+```

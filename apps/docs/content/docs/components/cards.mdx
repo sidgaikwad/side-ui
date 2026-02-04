@@ -1,0 +1,112 @@
+---
+title: Cards
+description: Container components for organizing content.
+---
+
+# Cards
+
+Container components for organizing and highlighting content in terminal UIs.
+
+## Basic Card
+
+Simple card with title, subtitle, and content area.
+
+```tsx title="BasicCard"
+import { BasicCard } from 'siddcn';
+
+<BasicCard title="Card Title" subtitle="Subtitle">
+  <Text>Card content here</Text>
+</BasicCard>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `title` | `string` | - | Card title |
+| `subtitle` | `string` | - | Optional subtitle |
+| `children` | `ReactNode` | - | Card content |
+| `width` | `number` | `40` | Card width |
+
+## Info Card
+
+Card styled for informational content with cyan theme.
+
+```tsx title="InfoCard"
+import { InfoCard } from 'siddcn';
+
+<InfoCard title="Information">
+  <Text>Important information here</Text>
+</InfoCard>
+```
+
+## Warning Card
+
+Animated warning card with yellow/orange theme.
+
+```tsx title="WarningCard"
+import { WarningCard } from 'siddcn';
+
+<WarningCard title="Warning">
+  <Text>Warning message here</Text>
+</WarningCard>
+```
+
+## Success Card
+
+Success confirmation card with green theme.
+
+```tsx title="SuccessCard"
+import { SuccessCard } from 'siddcn';
+
+<SuccessCard title="Success!">
+  <Text>Operation completed successfully</Text>
+</SuccessCard>
+```
+
+## Error Card
+
+Animated error card with red theme and pulsing border.
+
+```tsx title="ErrorCard"
+import { ErrorCard } from 'siddcn';
+
+<ErrorCard title="Error">
+  <Text>Something went wrong</Text>
+</ErrorCard>
+```
+
+## Glow Card
+
+Card with animated glowing border effect.
+
+```tsx title="GlowCard"
+import { GlowCard } from 'siddcn';
+
+<GlowCard title="Featured">
+  <Text>Highlighted content</Text>
+</GlowCard>
+```
+
+## Usage Example
+
+```tsx title="Dashboard Cards"
+import { Box } from 'ink';
+import { InfoCard, SuccessCard, WarningCard } from 'siddcn';
+
+function Dashboard() {
+  return (
+    <Box flexDirection="row" gap={2}>
+      <SuccessCard title="Active">
+        <Text>12 services running</Text>
+      </SuccessCard>
+      <WarningCard title="Alerts">
+        <Text>3 warnings</Text>
+      </WarningCard>
+      <InfoCard title="Info">
+        <Text>System healthy</Text>
+      </InfoCard>
+    </Box>
+  );
+}
+```

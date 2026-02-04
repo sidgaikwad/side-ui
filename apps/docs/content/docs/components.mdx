@@ -5,112 +5,227 @@ description: Browse all Siddcn components
 
 # Components
 
-Explore the full library of Siddcn terminal UI components.
+Explore the full library of Siddcn terminal UI components. We have 17 component categories with 50+ individual components.
 
 ## Input Components
 
-### Button
+### Buttons
 
-A clickable button component for terminal UIs.
+Interactive button components with 6 variants.
 
 ```tsx
-import { Button } from 'siddcn';
+import { SimpleButton, PrimaryButton, GlowButton } from 'siddcn';
 
-<Button>Click Me</Button>
-<Button variant="primary">Primary</Button>
-<Button variant="secondary">Secondary</Button>
+<SimpleButton label="Click me" />
+<PrimaryButton label="Submit" />
+<GlowButton label="Glow Effect" />
 ```
 
-### Input
+### Text Input
 
-A text input field for terminal applications.
+Text input fields for forms and user input.
 
 ```tsx
-import { Input } from 'siddcn';
+import { BasicInput, PasswordInput, SearchInput } from 'siddcn';
 
-<Input placeholder="Enter text..." />
-<Input label="Username" />
+<BasicInput label="Name" placeholder="Enter name..." />
+<PasswordInput label="Password" />
+<SearchInput placeholder="Search..." />
 ```
 
 ### Select
 
-A dropdown selection component.
+Selection input components with multiple styles.
 
 ```tsx
-import { Select } from 'siddcn';
+import { BasicSelect } from 'siddcn';
 
-<Select
+<BasicSelect
   options={[
     { label: 'Option 1', value: '1' },
     { label: 'Option 2', value: '2' },
   ]}
+  onChange={(v) => setSelected(v)}
 />
 ```
 
-### Checkbox
+### MultiSelect
 
-A checkbox input component.
+Multiple item selection with configurable limits.
 
 ```tsx
-import { Checkbox } from 'siddcn';
+import { MultiSelect } from 'siddcn';
 
-<Checkbox label="Accept terms" />
+<MultiSelect 
+  items={[
+    { value: 'react', label: 'React' },
+    { value: 'vue', label: 'Vue' },
+  ]}
+  maxSelect={2}
+/>
 ```
 
 ## Display Components
 
-### Box
+### Cards
 
-A layout container component.
+Container components with 6 variants: Basic, Info, Warning, Success, Error, Glow.
 
 ```tsx
-import { Box } from 'siddcn';
+import { BasicCard, SuccessCard, GlowCard } from 'siddcn';
 
-<Box padding={1} borderStyle="round">
+<BasicCard title="Card Title">
   Content here
-</Box>
+</BasicCard>
+<SuccessCard title="Success!">
+  Operation completed
+</SuccessCard>
 ```
 
-### Text
+### Trees
 
-Styled text component with various formatting options.
+File trees and data hierarchies with vim navigation.
 
 ```tsx
-import { Text } from 'siddcn';
+import { FileTree } from 'siddcn';
 
-<Text bold>Bold text</Text>
-<Text color="green">Colored text</Text>
+<FileTree data={{
+  name: 'project',
+  type: 'dir',
+  children: [
+    { name: 'src', type: 'dir', children: [] },
+    { name: 'package.json', type: 'file' }
+  ]
+}} />
 ```
 
-### Spinner
+### Tabs
 
-A loading spinner animation.
+Tabbed navigation with modern, rounded, and pill styles.
 
 ```tsx
-import { Spinner } from 'siddcn';
+import { Tabs } from 'siddcn';
 
-<Spinner label="Loading..." />
+<Tabs 
+  tabs={[
+    { id: 'tab1', label: 'Tab 1', content: <Content1 /> },
+    { id: 'tab2', label: 'Tab 2', content: <Content2 /> },
+  ]}
+  style="modern"
+/>
+```
+
+### Table
+
+Scrollable data grids with row selection.
+
+```tsx
+import { Table } from 'siddcn';
+
+<Table
+  columns={[
+    { key: 'name', header: 'Name', width: 20 },
+    { key: 'status', header: 'Status', width: 10 }
+  ]}
+  data={data}
+/>
 ```
 
 ## Feedback Components
 
-### Alert
-
-Display alert messages to users.
-
-```tsx
-import { Alert } from 'siddcn';
-
-<Alert type="success">Operation completed!</Alert>
-<Alert type="error">Something went wrong</Alert>
-```
-
 ### Progress
 
-A progress bar component.
+Linear, circular, and step progress indicators.
 
 ```tsx
-import { Progress } from 'siddcn';
+import { LinearProgress, CircularProgress, StepProgress } from 'siddcn';
 
-<Progress value={75} />
+<LinearProgress value={75} max={100} />
+<CircularProgress percentage={60} />
+<StepProgress currentStep={2} totalSteps={5} />
+```
+
+### Spinners
+
+5 loading spinner variants: Dots, Bouncing, Pulse, Bar, Wave.
+
+```tsx
+import { DotsSpinner, BarSpinner, WaveSpinner } from 'siddcn';
+
+<DotsSpinner text="Loading..." />
+<BarSpinner width={20} />
+<WaveSpinner />
+```
+
+### Badges
+
+Status badges, count badges, and dot indicators.
+
+```tsx
+import { StatusBadge, CountBadge, DotBadge } from 'siddcn';
+
+<StatusBadge status="success" />
+<CountBadge count={42} />
+<DotBadge color="green" />
+```
+
+### Notifications
+
+Toasts, banners, and progress notifications.
+
+```tsx
+import { Toast, Banner, ProgressNotification } from 'siddcn';
+
+<Toast type="success" message="Operation completed!" />
+<Banner type="warning" message="System maintenance" />
+<ProgressNotification message="Uploading..." progress={45} />
+```
+
+## Data Visualization
+
+### Charts
+
+Bar and line charts for data visualization.
+
+```tsx
+import { BarChart, LineChart } from 'siddcn';
+
+<BarChart data={data} />
+<LineChart data={data} />
+```
+
+### Dashboards
+
+6 pre-built dashboard layouts: Htop, Network, Server, Vertical, Horizontal, Paged.
+
+```tsx
+import { HtopDashboard, NetworkDashboard, ServerDashboard } from 'siddcn';
+
+<HtopDashboard width={80} cpuCores={4} />
+<NetworkDashboard width={70} />
+<ServerDashboard width={75} />
+```
+
+## Effects & Animation
+
+### Animated Text
+
+Typewriter, gradient, pulsing, and loading dot animations.
+
+```tsx
+import { TypewriterText, LoadingDots } from 'siddcn';
+
+<TypewriterText text="Hello, World!" speed={50} />
+<Text>Loading<LoadingDots /></Text>
+```
+
+### Backgrounds
+
+Twinkling stars, matrix rain, and animated starfields.
+
+```tsx
+import { TwinklingStars, MatrixRain, AnimatedStars } from 'siddcn';
+
+<TwinklingStars width={60} density={0.15} />
+<MatrixRain width={60} height={5} />
 ```

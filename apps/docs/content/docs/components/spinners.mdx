@@ -1,0 +1,92 @@
+---
+title: Spinners
+description: Animated loading indicators for terminal UIs.
+---
+
+# Spinners
+
+Animated loading indicators to show processing states.
+
+## Dots Spinner
+
+Classic dots animation spinner using braille characters.
+
+```tsx title="DotsSpinner"
+import { DotsSpinner } from 'siddcn';
+
+<DotsSpinner text="Loading..." />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `text` | `string` | `"Loading..."` | Text to display next to spinner |
+
+## Bouncing Spinner
+
+Bouncing animation effect with vertical movement.
+
+```tsx title="BouncingSpinner"
+import { BouncingSpinner } from 'siddcn';
+
+<BouncingSpinner text="Processing..." />
+```
+
+## Pulse Spinner
+
+Pulsating circle animation that grows and shrinks.
+
+```tsx title="PulseSpinner"
+import { PulseSpinner } from 'siddcn';
+
+<PulseSpinner text="Working..." />
+```
+
+## Bar Spinner
+
+Animated sliding bar that moves back and forth.
+
+```tsx title="BarSpinner"
+import { BarSpinner } from 'siddcn';
+
+<BarSpinner width={20} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `width` | `number` | `20` | Width of the spinner bar |
+
+## Wave Spinner
+
+Wave animation effect with multiple characters.
+
+```tsx title="WaveSpinner"
+import { WaveSpinner } from 'siddcn';
+
+<WaveSpinner />
+```
+
+## Usage Example
+
+```tsx title="Loading State"
+import { DotsSpinner } from 'siddcn';
+import { useState, useEffect } from 'react';
+
+function LoadingComponent() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <DotsSpinner text="Fetching data..." />;
+  }
+
+  return <Text>Data loaded!</Text>;
+}
+```

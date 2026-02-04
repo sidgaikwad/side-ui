@@ -5,7 +5,7 @@ description: Interactive button components for terminal UIs.
 
 # Buttons
 
-Interactive button components for terminal UIs.
+Interactive button components for terminal UIs. 6 variants available.
 
 ## Simple Button
 
@@ -26,11 +26,50 @@ import { SimpleButton } from 'siddcn';
 | ---- | ---- | ------- | ----------- |
 | `label` | `string` | - | Button label text |
 | `onPress` | `() => void` | - | Callback when pressed |
-| `disabled` | `boolean` | `false` | Disable the button |
+
+## Primary Button
+
+A styled primary action button with theme colors.
+
+```tsx title="PrimaryButton"
+import { PrimaryButton } from 'siddcn';
+
+<PrimaryButton label="Submit" />
+```
+
+## Danger Button
+
+A button for destructive actions with red styling.
+
+```tsx title="DangerButton"
+import { DangerButton } from 'siddcn';
+
+<DangerButton label="Delete" />
+```
+
+## Glow Button
+
+Animated glowing border button with pulsing effect.
+
+```tsx title="GlowButton"
+import { GlowButton } from 'siddcn';
+
+<GlowButton label="Glow Effect" />
+```
+
+## Pulse Button
+
+Pulsating animated button that draws attention.
+
+```tsx title="PulseButton"
+import { PulseButton } from 'siddcn';
+
+<PulseButton label="Pulse" />
+```
 
 ## Icon Button
 
-A button with an icon prefix.
+A button with a leading icon character.
 
 ```tsx title="IconButton"
 import { IconButton } from 'siddcn';
@@ -38,7 +77,6 @@ import { IconButton } from 'siddcn';
 <IconButton 
   icon=">" 
   label="Continue" 
-  onPress={() => {}} 
 />
 ```
 
@@ -48,41 +86,6 @@ import { IconButton } from 'siddcn';
 | ---- | ---- | ------- | ----------- |
 | `icon` | `string` | - | Icon character |
 | `label` | `string` | - | Button label text |
-| `onPress` | `() => void` | - | Callback when pressed |
-
-## Loading Button
-
-A button that shows a loading spinner.
-
-```tsx title="LoadingButton"
-import { LoadingButton } from 'siddcn';
-
-<LoadingButton 
-  label="Submitting..." 
-  loading={true} 
-/>
-```
-
-### Props
-
-| Prop | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| `label` | `string` | - | Button label text |
-| `loading` | `boolean` | `false` | Show loading spinner |
-| `onPress` | `() => void` | - | Callback when pressed |
-
-## Outline Button
-
-A button with an outline border style.
-
-```tsx title="OutlineButton"
-import { OutlineButton } from 'siddcn';
-
-<OutlineButton 
-  label="Cancel" 
-  onPress={() => {}} 
-/>
-```
 
 ## Keyboard Navigation
 

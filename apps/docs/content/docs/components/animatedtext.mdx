@@ -1,0 +1,104 @@
+---
+title: Animated Text
+description: Text components with animation effects.
+---
+
+# Animated Text
+
+Text components with various animation effects for dynamic terminal UIs.
+
+## Typewriter
+
+Character-by-character typing effect like a typewriter.
+
+```tsx title="TypewriterText"
+import { TypewriterText } from 'siddcn';
+
+<TypewriterText 
+  text="Hello, World!" 
+  speed={50} 
+  onComplete={() => console.log('Done!')}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `text` | `string` | - | Text to type out |
+| `speed` | `number` | `50` | Milliseconds per character |
+| `onComplete` | `() => void` | - | Callback when complete |
+| `cursor` | `string` | `"_"` | Cursor character |
+
+## Gradient Text
+
+Text with animated color cycling gradient effect.
+
+```tsx title="GradientText"
+import { GradientText } from 'siddcn';
+
+<GradientText text="Rainbow Text" />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `text` | `string` | - | Text to display |
+| `colors` | `string[]` | Theme colors | Color array to cycle |
+
+## Pulsing Text
+
+Text that pulses between bright and dim states.
+
+```tsx title="PulsingText"
+import { PulsingText } from 'siddcn';
+
+<PulsingText text="Important!" speed={500} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `text` | `string` | - | Text to display |
+| `speed` | `number` | `500` | Pulse interval in ms |
+
+## Loading Dots
+
+Animated ellipsis that cycles through dots.
+
+```tsx title="LoadingDots"
+import { LoadingDots } from 'siddcn';
+
+<Text>Loading<LoadingDots /></Text>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `maxDots` | `number` | `3` | Maximum number of dots |
+| `speed` | `number` | `300` | Animation speed in ms |
+
+## Usage Example
+
+```tsx title="Welcome Screen"
+import { TypewriterText } from 'siddcn';
+import { useState } from 'react';
+
+function WelcomeScreen() {
+  const [showMenu, setShowMenu] = useState(false);
+
+  return (
+    <Box flexDirection="column">
+      <TypewriterText 
+        text="Welcome to the Terminal"
+        speed={80}
+        onComplete={() => setShowMenu(true)}
+      />
+      {showMenu && <Menu />}
+    </Box>
+  );
+}
+```

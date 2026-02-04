@@ -26,13 +26,13 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
   
-  // Screen dimensions for full screen background
-  const screenWidth = 100;
-  const screenHeight = 30;
+  // Screen dimensions for full screen background - use full terminal width
+  const screenWidth = process.stdout.columns || 120;
+  const screenHeight = process.stdout.rows || 30;
   
-  // Maximum visible rows for scrolling
-  const maxVisibleRows = 4;
-  const cols = 3;
+  // Only 2 columns per page for better component display
+  const maxVisibleRows = 3;
+  const cols = 2;
 
   const items: ShowcaseItem[] = [
     {
@@ -237,16 +237,18 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
         </Box>
       )}
 
-      {/* Scrollable Grid with more spacing */}
+      {/* Scrollable Grid with more spacing - 2 columns, full width */}
       <Box flexDirection="column">
         {Array.from({ length: visibleEndRow - visibleStartRow }).map((_, rowOffset) => {
           const row = visibleStartRow + rowOffset;
+          // Calculate dynamic column width based on screen size
+          const colWidth = Math.floor((screenWidth - 12) / 2);
           return (
             <Box key={row} marginBottom={2}>
-              {[0, 1, 2].map((col) => {
+              {[0, 1].map((col) => {
                 const index = row * cols + col;
                 if (index >= items.length) {
-                  return <Box key={col} width={30} />;
+                  return <Box key={col} width={colWidth} />;
                 }
 
                 const item = items[index];
@@ -255,7 +257,7 @@ export const ShowcaseMenuScreen: React.FC<ShowcaseMenuScreenProps> = ({ onSelect
                 return (
                   <Box
                     key={col}
-                    width={30}
+                    width={colWidth}
                     marginRight={2}
                     borderStyle={isSelected ? 'double' : 'single'}
                     borderColor={isSelected ? theme.colors.primary : theme.colors.border}

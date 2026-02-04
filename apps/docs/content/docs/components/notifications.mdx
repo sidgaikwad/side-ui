@@ -1,0 +1,125 @@
+---
+title: Notifications
+description: Toast and alert notification components.
+---
+
+# Notifications
+
+Notification components for displaying messages, alerts, and feedback.
+
+## Toast
+
+Temporary notification that appears and can auto-dismiss.
+
+```tsx title="Toast"
+import { Toast } from 'siddcn';
+
+<Toast 
+  type="success"
+  message="Operation completed!"
+  duration={3000}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `type` | `'success' \| 'error' \| 'warning' \| 'info'` | `'info'` | Toast type |
+| `message` | `string` | - | Message to display |
+| `duration` | `number` | `3000` | Auto-dismiss time in ms |
+| `onDismiss` | `() => void` | - | Dismiss callback |
+
+## Banner
+
+Full-width notification banner for important messages.
+
+```tsx title="Banner"
+import { Banner } from 'siddcn';
+
+<Banner 
+  type="warning"
+  message="System maintenance scheduled"
+  dismissible
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `type` | `'success' \| 'error' \| 'warning' \| 'info'` | `'info'` | Banner type |
+| `message` | `string` | - | Message to display |
+| `dismissible` | `boolean` | `false` | Show dismiss button |
+| `onDismiss` | `() => void` | - | Dismiss callback |
+
+## Inline Notification
+
+Compact inline notification for contextual feedback.
+
+```tsx title="InlineNotification"
+import { InlineNotification } from 'siddcn';
+
+<InlineNotification 
+  type="error"
+  message="Invalid input"
+/>
+```
+
+## Progress Notification
+
+Notification with a progress bar for long-running operations.
+
+```tsx title="ProgressNotification"
+import { ProgressNotification } from 'siddcn';
+
+<ProgressNotification 
+  message="Uploading files..."
+  progress={45}
+  total={100}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `message` | `string` | - | Message to display |
+| `progress` | `number` | - | Current progress value |
+| `total` | `number` | `100` | Total/maximum value |
+
+## Type Variants
+
+Each notification type has distinct styling:
+
+- **success** - Green with checkmark icon
+- **error** - Red with X icon  
+- **warning** - Yellow/orange with exclamation
+- **info** - Cyan/blue with info icon
+
+## Usage Example
+
+```tsx title="Notification Manager"
+import { useState } from 'react';
+import { Toast } from 'siddcn';
+
+function App() {
+  const [notifications, setNotifications] = useState([]);
+
+  const addNotification = (type, message) => {
+    const id = Date.now();
+    setNotifications(prev => [...prev, { id, type, message }]);
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== id));
+    }, 3000);
+  };
+
+  return (
+    <Box flexDirection="column">
+      {notifications.map(n => (
+        <Toast key={n.id} type={n.type} message={n.message} />
+      ))}
+    </Box>
+  );
+}
+```

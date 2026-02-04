@@ -125,9 +125,9 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-white sm:text-4xl">
                 Component Library
               </h2>
-              <p className="mt-4 text-lg text-white/60">
-                5 categories, 13 components, infinitely extensible
-              </p>
+            <p className="mt-4 text-lg text-white/60">
+                17 categories, 50+ components, infinitely extensible
+            </p>
             </div>
           </FadeIn>
           <FadeIn delay={200} direction="up">

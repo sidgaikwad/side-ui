@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Text } from "ink";
 import Spinner from "ink-spinner";
 import gradient from "gradient-string";
-import { DiagonalFallingStars } from '../components/backgrounds';
+import { StaticDiagonalPattern } from '../components/backgrounds';
 
 interface LoaderScreenProps {
   onComplete: () => void;
@@ -61,13 +61,12 @@ export const LoaderScreen: React.FC<LoaderScreenProps> = ({ onComplete }) => {
 
   return (
     <Box flexDirection="column" width={screenWidth} minHeight={screenHeight}>
-      {/* Full Screen Diagonal Falling Stars Background */}
+      {/* Full Screen Static Background Pattern - No animation to prevent rerenders */}
       <Box position="absolute" marginTop={0} marginLeft={0}>
-        <DiagonalFallingStars 
+        <StaticDiagonalPattern 
           width={screenWidth} 
           height={screenHeight} 
-          starCount={15}
-          fps={10}
+          density={0.06}
         />
       </Box>
       

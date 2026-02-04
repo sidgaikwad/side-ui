@@ -1,0 +1,89 @@
+---
+title: Select
+description: Selection input components for terminal UIs.
+---
+
+# Select
+
+Selection input components for choosing from a list of options.
+
+## Basic Select
+
+Simple list selection with arrow key navigation.
+
+```tsx title="BasicSelect"
+import { BasicSelect } from 'siddcn';
+
+const options = [
+  { value: 'opt1', label: 'Option 1' },
+  { value: 'opt2', label: 'Option 2' },
+  { value: 'opt3', label: 'Option 3' }
+];
+
+<BasicSelect 
+  options={options} 
+  onChange={(value) => setSelected(value)} 
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `options` | `SelectOption[]` | - | Array of options |
+| `value` | `string` | - | Currently selected value |
+| `onChange` | `(value: string) => void` | - | Selection callback |
+| `label` | `string` | - | Optional label |
+
+### SelectOption Type
+
+```tsx
+interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+```
+
+## Radio Select
+
+Radio button style selection with visual indicators.
+
+```tsx title="RadioSelect"
+import { RadioSelect } from 'siddcn';
+
+<RadioSelect 
+  options={options}
+  label="Choose one"
+  onChange={(value) => setSelected(value)} 
+/>
+```
+
+## Dropdown Select
+
+Collapsible dropdown menu that expands on focus.
+
+```tsx title="DropdownSelect"
+import { DropdownSelect } from 'siddcn';
+
+<DropdownSelect 
+  options={options}
+  placeholder="Select an option..."
+  onChange={(value) => setSelected(value)} 
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `options` | `SelectOption[]` | - | Array of options |
+| `placeholder` | `string` | `"Select..."` | Placeholder text |
+| `onChange` | `(value: string) => void` | - | Selection callback |
+
+## Keyboard Navigation
+
+- `j` / `Down Arrow` - Move selection down
+- `k` / `Up Arrow` - Move selection up
+- `Enter` - Confirm selection
+- `Escape` - Close dropdown (for dropdown select)

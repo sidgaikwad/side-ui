@@ -23,11 +23,12 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollOffset, setScrollOffset] = useState(0);
   
-  // Screen dimensions for full screen background
-  const screenWidth = 100;
-  const screenHeight = 30;
+  // Screen dimensions for full screen background - use full terminal width
+  const screenWidth = process.stdout.columns || 120;
+  const screenHeight = process.stdout.rows || 30;
   
-  const maxVisibleRows = 3;
+  // Only 2 columns per page for better component display
+  const maxVisibleRows = 2;
   const cols = 2;
 
   useInput((input, key) => {
@@ -124,18 +125,21 @@ export const CategoryScreen: React.FC<CategoryScreenProps> = ({
               {Array.from({ length: cols }).map((_, colIndex) => {
                 const index = rowIndex * cols + colIndex;
                 if (index >= category.variants.length) {
-                  return <Box key={colIndex} width={45} />;
+                  return <Box key={colIndex} width={Math.floor((screenWidth - 10) / 2)} />;
                 }
 
                 const variant = category.variants[index];
                 const isSelected = index === selectedIndex;
                 const PreviewComponent = variant.preview;
+                
+                // Calculate dynamic column width based on screen size
+                const colWidth = Math.floor((screenWidth - 10) / 2);
 
                 return (
                   <Box
                     key={colIndex}
-                    width={45}
-                    marginRight={3}
+                    width={colWidth}
+                    marginRight={2}
                     borderStyle={isSelected ? 'double' : 'single'}
                     borderColor={isSelected ? theme.colors.primary : theme.colors.border}
                     paddingX={2}
