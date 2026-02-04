@@ -1,14 +1,18 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
+**/node_modules
 
 # next.js
-/.next/
+.next
+**/.next
 /out/
 
 # production
 /build
+dist
+**/dist
 
 # debug
 npm-debug.log*
@@ -25,3 +29,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# turbo
+.turbo
+**/.turbo
+
+# pnpm
+pnpm-lock.yaml
