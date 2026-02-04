@@ -1,0 +1,101 @@
+---
+title: Tabs
+description: Tabbed navigation components for terminal UIs.
+---
+
+# Tabs
+
+Tabbed navigation components for terminal UIs.
+
+## Basic Tabs
+
+Simple tabbed navigation.
+
+```tsx title="Tabs"
+import { Tabs, TabList, Tab, TabPanel } from 'siddcn';
+
+<Tabs defaultTab="overview">
+  <TabList>
+    <Tab value="overview">Overview</Tab>
+    <Tab value="features">Features</Tab>
+    <Tab value="api">API</Tab>
+  </TabList>
+  
+  <TabPanel value="overview">
+    Overview content here...
+  </TabPanel>
+  <TabPanel value="features">
+    Features content here...
+  </TabPanel>
+  <TabPanel value="api">
+    API content here...
+  </TabPanel>
+</Tabs>
+```
+
+### Props
+
+#### Tabs
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `defaultTab` | `string` | - | Initially active tab |
+| `onChange` | `(tab: string) => void` | - | Tab change callback |
+
+#### Tab
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `value` | `string` | - | Tab identifier |
+| `disabled` | `boolean` | `false` | Disable the tab |
+
+## Vertical Tabs
+
+Tabs displayed vertically.
+
+```tsx title="Vertical Tabs"
+import { Tabs, TabList, Tab, TabPanel } from 'siddcn';
+
+<Tabs defaultTab="general" orientation="vertical">
+  <TabList>
+    <Tab value="general">General</Tab>
+    <Tab value="appearance">Appearance</Tab>
+    <Tab value="keyboard">Keyboard</Tab>
+  </TabList>
+  
+  <TabPanel value="general">
+    General settings...
+  </TabPanel>
+  {/* ... */}
+</Tabs>
+```
+
+## Keyboard Navigation
+
+| Key | Action |
+| --- | ------ |
+| `←` / `h` | Previous tab |
+| `→` / `l` | Next tab |
+| `Home` | First tab |
+| `End` | Last tab |
+
+## Styled Tabs
+
+Different tab styles:
+
+```tsx title="Tab Styles"
+// Underline style (default)
+<Tabs variant="underline">
+  {/* ... */}
+</Tabs>
+
+// Boxed style
+<Tabs variant="boxed">
+  {/* ... */}
+</Tabs>
+
+// Pills style
+<Tabs variant="pills">
+  {/* ... */}
+</Tabs>
+```

@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/style.css';
+
+:root {
+  --fd-background-default: oklch(1 0 0);
+  --fd-foreground-default: oklch(0.145 0 0);
+  --fd-primary: oklch(0.205 0 0);
+  --fd-primary-foreground: oklch(0.985 0 0);
+  --fd-secondary: oklch(0.97 0 0);
+  --fd-muted: oklch(0.97 0 0);
+  --fd-muted-foreground: oklch(0.556 0 0);
+  --fd-accent: oklch(0.97 0 0);
+  --fd-accent-foreground: oklch(0.205 0 0);
+  --fd-border: oklch(0.922 0 0);
+}
+
+.dark {
+  --fd-background-default: oklch(0.1 0 0);
+  --fd-foreground-default: oklch(0.985 0 0);
+  --fd-primary: oklch(0.985 0 0);
+  --fd-primary-foreground: oklch(0.205 0 0);
+  --fd-secondary: oklch(0.2 0 0);
+  --fd-muted: oklch(0.2 0 0);
+  --fd-muted-foreground: oklch(0.708 0 0);
+  --fd-accent: oklch(0.2 0 0);
+  --fd-accent-foreground: oklch(0.985 0 0);
+  --fd-border: oklch(0.269 0 0);
+}

@@ -1,0 +1,92 @@
+---
+title: Buttons
+description: Interactive button components for terminal UIs.
+---
+
+# Buttons
+
+Interactive button components for terminal UIs.
+
+## Simple Button
+
+A basic button with label and optional callback.
+
+```tsx title="SimpleButton"
+import { SimpleButton } from 'siddcn';
+
+<SimpleButton 
+  label="Click me" 
+  onPress={() => console.log('Pressed!')} 
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `label` | `string` | - | Button label text |
+| `onPress` | `() => void` | - | Callback when pressed |
+| `disabled` | `boolean` | `false` | Disable the button |
+
+## Icon Button
+
+A button with an icon prefix.
+
+```tsx title="IconButton"
+import { IconButton } from 'siddcn';
+
+<IconButton 
+  icon=">" 
+  label="Continue" 
+  onPress={() => {}} 
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `icon` | `string` | - | Icon character |
+| `label` | `string` | - | Button label text |
+| `onPress` | `() => void` | - | Callback when pressed |
+
+## Loading Button
+
+A button that shows a loading spinner.
+
+```tsx title="LoadingButton"
+import { LoadingButton } from 'siddcn';
+
+<LoadingButton 
+  label="Submitting..." 
+  loading={true} 
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `label` | `string` | - | Button label text |
+| `loading` | `boolean` | `false` | Show loading spinner |
+| `onPress` | `() => void` | - | Callback when pressed |
+
+## Outline Button
+
+A button with an outline border style.
+
+```tsx title="OutlineButton"
+import { OutlineButton } from 'siddcn';
+
+<OutlineButton 
+  label="Cancel" 
+  onPress={() => {}} 
+/>
+```
+
+## Keyboard Navigation
+
+All buttons respond to:
+- `Enter` - Activate the button
+- `Space` - Activate the button
+- `l` - Activate (vim-style)

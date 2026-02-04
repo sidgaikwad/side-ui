@@ -1,0 +1,15 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "---Getting Started---",
+    "installation",
+    "quickstart",
+    "ssh-setup",
+    "---Components---",
+    "components/...",
+    "---Customization---",
+    "themes",
+    "adding-components"
+  ]
+}

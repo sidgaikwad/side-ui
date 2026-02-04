@@ -1,7 +1,223 @@
-"use client"
+import Link from "next/link";
+import { ComponentGrid } from "./components/ComponentGrid";
+import { TerminalDemo } from "./components/TerminalDemo";
+import { Features } from "./components/Features";
+import { Navigation } from "./components/Navigation";
 
-import { ComponentGrid } from "../apps/website/components/ComponentGrid"
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-background grid-pattern">
+      <Navigation />
+      <main>
+        {/* Hero Section */}
+        <section className="relative overflow-hidden px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
+              Now available on npm
+            </div>
 
-export default function SyntheticV0PageForDeployment() {
-  return <ComponentGrid />
+            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl">
+              Build terminal UIs
+              <br />
+              <span className="gradient-text-blue">with React</span>
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
+              Beautiful, extensible TUI components built with React Ink. 
+              Browse and preview components directly in your terminal via SSH or CLI.
+            </p>
+
+            {/* Quick Start Commands */}
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <div className="code-block flex items-center gap-3 px-6 py-3">
+                <span className="text-white/40">$</span>
+                <code className="font-mono text-white">npm install -g siddcn</code>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link
+                href="/docs"
+                className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3 text-sm font-medium text-black transition-all hover:bg-white/90"
+              >
+                Get Started
+                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+
+              <Link
+                href="/components"
+                className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white transition-all hover:bg-white/10"
+              >
+                Browse Components
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Terminal Demo */}
+        <section className="border-y border-white/5 px-4 py-24 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                See it in action
+              </h2>
+              <p className="mt-4 text-lg text-white/60">
+                Experience the beautiful TUI interface
+              </p>
+            </div>
+            <TerminalDemo />
+          </div>
+        </section>
+
+        {/* Features */}
+        <section className="px-4 py-24 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                Why siddcn?
+              </h2>
+              <p className="mt-4 text-lg text-white/60">
+                Built for developers who love the terminal
+              </p>
+            </div>
+            <Features />
+          </div>
+        </section>
+
+        {/* Component Preview */}
+        <section className="border-y border-white/5 px-4 py-24 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-12 text-center">
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                Component Library
+              </h2>
+              <p className="mt-4 text-lg text-white/60">
+                5 categories, 13 components, infinitely extensible
+              </p>
+            </div>
+            <ComponentGrid />
+
+            <div className="mt-12 text-center">
+              <Link
+                href="/components"
+                className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white transition-all hover:bg-white/10"
+              >
+                View All Components
+                <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* SSH Connection Guide */}
+        <section className="px-4 py-24 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+              Connect anywhere
+            </h2>
+            <p className="mt-4 text-lg text-white/60">
+              Browse components remotely via SSH
+            </p>
+
+            <div className="code-block mt-8 overflow-hidden text-left">
+              <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-3 w-3 rounded-full bg-white/10" />
+                  <div className="h-3 w-3 rounded-full bg-white/10" />
+                  <div className="h-3 w-3 rounded-full bg-white/10" />
+                </div>
+                <span className="ml-2 font-mono text-xs text-white/40">terminal</span>
+              </div>
+
+              <pre className="overflow-x-auto p-6 font-mono text-sm">
+                <code className="text-white/80">{`$ ssh localhost -p 2222
+
+Component Categories
+━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Buttons
+  Progress Bars
+  Badges
+  Charts
+  Trees
+
+Navigate with arrow keys
+Select with Enter
+Exit with q`}</code>
+              </pre>
+            </div>
+
+            <div className="mt-8 flex justify-center gap-4">
+              <Link
+                href="/docs/ssh-setup"
+                className="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-white/10"
+              >
+                Setup Guide
+              </Link>
+              <Link
+                href="/docs/quickstart"
+                className="inline-flex items-center justify-center rounded-lg bg-white px-5 py-2.5 text-sm font-medium text-black transition-all hover:bg-white/90"
+              >
+                Quick Start
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="border-t border-white/5 px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="grid gap-8 md:grid-cols-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <div className="flex h-6 w-6 items-center justify-center rounded bg-white">
+                    <span className="text-sm font-bold text-black">S</span>
+                  </div>
+                  <span className="font-semibold text-white">siddcn</span>
+                </div>
+                <p className="mt-4 text-sm text-white/50">
+                  Terminal UI components for modern developers
+                </p>
+              </div>
+
+              <div>
+                <h4 className="mb-4 text-sm font-semibold text-white">Documentation</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li><Link href="/docs" className="hover:text-white">Introduction</Link></li>
+                  <li><Link href="/docs/installation" className="hover:text-white">Installation</Link></li>
+                  <li><Link href="/components" className="hover:text-white">Components</Link></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="mb-4 text-sm font-semibold text-white">Resources</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li><Link href="/components" className="hover:text-white">Component Library</Link></li>
+                  <li><Link href="/docs/adding-components" className="hover:text-white">Add Components</Link></li>
+                  <li><Link href="/themes" className="hover:text-white">Themes</Link></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="mb-4 text-sm font-semibold text-white">Community</h4>
+                <ul className="space-y-2 text-sm text-white/50">
+                  <li><a href="https://github.com/sidgaikwad/siddcn" className="hover:text-white">GitHub</a></li>
+                  <li><a href="https://npmjs.com/package/siddcn" className="hover:text-white">npm</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-12 border-t border-white/5 pt-8 text-center text-sm text-white/40">
+              <p>Built with React Ink. MIT License.</p>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
+  );
 }

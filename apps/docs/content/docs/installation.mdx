@@ -1,0 +1,92 @@
+---
+title: Installation
+description: Learn how to install siddcn and add components to your project.
+---
+
+# Installation
+
+Learn how to install siddcn and add components to your project.
+
+## Global Installation
+
+Install siddcn globally to use the interactive CLI browser:
+
+```bash title="Terminal"
+npm install -g siddcn
+```
+
+After installation, run `siddcn` to launch the interactive component browser.
+
+## Project Installation
+
+To use siddcn components in your project:
+
+<Tabs items={['npm', 'yarn', 'pnpm']}>
+  <Tab value="npm">
+    ```bash
+    npm install siddcn ink react
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add siddcn ink react
+    ```
+  </Tab>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add siddcn ink react
+    ```
+  </Tab>
+</Tabs>
+
+## Adding Individual Components
+
+You can add individual components using the CLI:
+
+```bash title="Terminal"
+# Add a button component
+npx siddcn add button-simple
+
+# Add a progress bar
+npx siddcn add progress-linear
+
+# Add a file tree
+npx siddcn add tree-file
+```
+
+## Peer Dependencies
+
+Siddcn requires the following peer dependencies:
+
+| Package | Version |
+| ------- | ------- |
+| `react` | >= 18.0.0 |
+| `ink`   | >= 4.0.0 |
+
+## TypeScript Support
+
+Siddcn is written in TypeScript and includes type definitions out of the box. No additional configuration is required.
+
+```tsx title="App.tsx"
+// Types are automatically included
+import { SimpleButton, LinearProgress, FileTree } from 'siddcn';
+
+// All props are fully typed
+<SimpleButton label="Click me" />
+<LinearProgress value={50} max={100} />
+<FileTree data={treeData} />
+```
+
+## Project Structure
+
+A typical project using siddcn looks like this:
+
+```text title="Project Structure"
+my-tui-app/
+├── src/
+│   ├── index.tsx        # Entry point
+│   ├── App.tsx          # Main component
+│   └── components/      # Your custom components
+├── package.json
+└── tsconfig.json
+```

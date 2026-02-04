@@ -1,0 +1,87 @@
+---
+title: Progress
+description: Progress indicators for terminal UIs.
+---
+
+# Progress
+
+Progress indicators for terminal UIs, including linear, circular, and step variants.
+
+## Linear Progress
+
+A horizontal progress bar.
+
+```tsx title="LinearProgress"
+import { LinearProgress } from 'siddcn';
+
+<LinearProgress value={75} max={100} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `value` | `number` | - | Current progress value |
+| `max` | `number` | `100` | Maximum value |
+| `width` | `number` | `30` | Width in characters |
+| `showPercentage` | `boolean` | `true` | Show percentage label |
+
+## Circular Progress
+
+A circular/spinner progress indicator.
+
+```tsx title="CircularProgress"
+import { CircularProgress } from 'siddcn';
+
+<CircularProgress value={50} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `value` | `number` | - | Current progress (0-100) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size of the indicator |
+
+## Step Progress
+
+A multi-step progress indicator.
+
+```tsx title="StepProgress"
+import { StepProgress } from 'siddcn';
+
+<StepProgress 
+  steps={['Setup', 'Configure', 'Install', 'Done']} 
+  currentStep={2} 
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `steps` | `string[]` | - | Array of step labels |
+| `currentStep` | `number` | - | Current step index (0-based) |
+| `showLabels` | `boolean` | `true` | Show step labels |
+
+## Animated Progress
+
+Progress bars can be animated:
+
+```tsx title="Animated Progress"
+import { useState, useEffect } from 'react';
+import { LinearProgress } from 'siddcn';
+
+function AnimatedProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress(p => (p >= 100 ? 0 : p + 5));
+    }, 200);
+    return () => clearInterval(timer);
+  }, []);
+
+  return <LinearProgress value={progress} />;
+}
+```

@@ -1,0 +1,94 @@
+---
+title: Trees
+description: Tree and hierarchy components for terminal UIs.
+---
+
+# Trees
+
+Tree and hierarchy components for terminal UIs.
+
+## File Tree
+
+A file system tree view.
+
+```tsx title="FileTree"
+import { FileTree } from 'siddcn';
+
+const files = {
+  name: 'project',
+  type: 'folder',
+  children: [
+    {
+      name: 'src',
+      type: 'folder',
+      children: [
+        { name: 'index.tsx', type: 'file' },
+        { name: 'App.tsx', type: 'file' },
+      ],
+    },
+    { name: 'package.json', type: 'file' },
+    { name: 'README.md', type: 'file' },
+  ],
+};
+
+<FileTree data={files} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `data` | `TreeNode` | - | Tree data structure |
+| `defaultExpanded` | `boolean` | `true` | Expand all by default |
+| `onSelect` | `(node: TreeNode) => void` | - | Selection callback |
+| `showIcons` | `boolean` | `true` | Show file/folder icons |
+
+## Data Tree
+
+A generic tree for any hierarchical data.
+
+```tsx title="DataTree"
+import { DataTree } from 'siddcn';
+
+const data = {
+  label: 'Root',
+  children: [
+    { label: 'Child 1', children: [{ label: 'Grandchild' }] },
+    { label: 'Child 2' },
+    { label: 'Child 3' },
+  ],
+};
+
+<DataTree data={data} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `data` | `DataNode` | - | Tree data |
+| `indent` | `number` | `2` | Indentation spaces |
+| `connector` | `string` | `'├── '` | Branch connector |
+
+## Interactive Tree
+
+Trees support keyboard navigation:
+
+| Key | Action |
+| --- | ------ |
+| `j` / `↓` | Move down |
+| `k` / `↑` | Move up |
+| `l` / `→` | Expand / Enter |
+| `h` / `←` | Collapse / Back |
+| `Enter` | Select item |
+
+```tsx title="Interactive Tree"
+import { FileTree } from 'siddcn';
+
+<FileTree 
+  data={files} 
+  onSelect={(node) => {
+    console.log('Selected:', node.name);
+  }}
+/>
+```

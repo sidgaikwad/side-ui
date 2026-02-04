@@ -1,0 +1,107 @@
+---
+title: Table
+description: Data table components for terminal UIs.
+---
+
+# Table
+
+Data table components for terminal UIs with scrolling and selection.
+
+## Basic Table
+
+A simple data table.
+
+```tsx title="Table"
+import { Table } from 'siddcn';
+
+const columns = [
+  { key: 'name', header: 'Name', width: 20 },
+  { key: 'role', header: 'Role', width: 15 },
+  { key: 'status', header: 'Status', width: 10 },
+];
+
+const data = [
+  { name: 'Alice', role: 'Developer', status: 'Active' },
+  { name: 'Bob', role: 'Designer', status: 'Active' },
+  { name: 'Charlie', role: 'Manager', status: 'Away' },
+];
+
+<Table columns={columns} data={data} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `columns` | `Column[]` | - | Column definitions |
+| `data` | `Record<string, any>[]` | - | Table data |
+| `maxHeight` | `number` | `10` | Max visible rows |
+| `selectable` | `boolean` | `false` | Enable row selection |
+| `onSelect` | `(row) => void` | - | Selection callback |
+
+## Scrollable Table
+
+Tables automatically scroll when data exceeds `maxHeight`:
+
+```tsx title="Scrollable Table"
+<Table 
+  columns={columns} 
+  data={largeDataset} 
+  maxHeight={15}
+/>
+```
+
+Scroll indicators appear when there's more content:
+
+```
+┌────────────────────────────────────────┐
+│ Name       │ Role      │ Status       │
+├────────────────────────────────────────┤
+│ Alice      │ Developer │ Active       │
+│ Bob        │ Designer  │ Active       │
+│ Charlie    │ Manager   │ Away         │
+│ ... more rows below ↓                  │
+└────────────────────────────────────────┘
+```
+
+## Selectable Table
+
+Enable row selection:
+
+```tsx title="Selectable Table"
+<Table 
+  columns={columns} 
+  data={data} 
+  selectable
+  onSelect={(row) => {
+    console.log('Selected:', row);
+  }}
+/>
+```
+
+## Keyboard Navigation
+
+| Key | Action |
+| --- | ------ |
+| `j` / `↓` | Move down |
+| `k` / `↑` | Move up |
+| `Enter` | Select row |
+| `g` | Go to first row |
+| `G` | Go to last row |
+
+## Custom Cell Rendering
+
+Customize how cells are rendered:
+
+```tsx title="Custom Cells"
+const columns = [
+  { key: 'name', header: 'Name' },
+  { 
+    key: 'status', 
+    header: 'Status',
+    render: (value) => (
+      <StatusBadge status={value === 'Active' ? 'success' : 'warning'} label={value} />
+    )
+  },
+];
+```

@@ -1,0 +1,95 @@
+---
+title: Charts
+description: Data visualization components for terminal UIs.
+---
+
+# Charts
+
+Data visualization components for terminal UIs.
+
+## Bar Chart
+
+A horizontal bar chart.
+
+```tsx title="BarChart"
+import { BarChart } from 'siddcn';
+
+const data = [
+  { label: 'Mon', value: 12 },
+  { label: 'Tue', value: 19 },
+  { label: 'Wed', value: 15 },
+  { label: 'Thu', value: 22 },
+  { label: 'Fri', value: 18 },
+];
+
+<BarChart data={data} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `data` | `{ label: string; value: number }[]` | - | Chart data |
+| `width` | `number` | `40` | Chart width |
+| `barChar` | `string` | `'█'` | Character for bars |
+| `showValues` | `boolean` | `true` | Show value labels |
+
+## Line Chart
+
+An ASCII line chart.
+
+```tsx title="LineChart"
+import { LineChart } from 'siddcn';
+
+const data = [3, 7, 4, 9, 2, 8, 5, 10, 6, 4];
+
+<LineChart data={data} height={8} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `data` | `number[]` | - | Data points |
+| `height` | `number` | `10` | Chart height |
+| `width` | `number` | `40` | Chart width |
+
+## Sparkline
+
+A minimal inline chart.
+
+```tsx title="Sparkline"
+import { Sparkline } from 'siddcn';
+
+<Sparkline data={[1, 4, 2, 8, 5, 7, 3]} />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `data` | `number[]` | - | Data points |
+| `min` | `number` | `auto` | Minimum value |
+| `max` | `number` | `auto` | Maximum value |
+
+## Real-time Charts
+
+Update charts with live data:
+
+```tsx title="Real-time Chart"
+import { useState, useEffect } from 'react';
+import { LineChart } from 'siddcn';
+
+function LiveChart() {
+  const [data, setData] = useState<number[]>([]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setData(prev => [...prev.slice(-20), Math.random() * 100]);
+    }, 500);
+    return () => clearInterval(timer);
+  }, []);
+
+  return <LineChart data={data} height={10} />;
+}
+```

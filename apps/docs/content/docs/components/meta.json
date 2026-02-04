@@ -1,0 +1,14 @@
+{
+  "title": "Components",
+  "pages": [
+    "index",
+    "buttons",
+    "progress",
+    "badges",
+    "charts",
+    "trees",
+    "tabs",
+    "table",
+    "multiselect"
+  ]
+}

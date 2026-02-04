@@ -1,0 +1,117 @@
+---
+title: MultiSelect
+description: Multiple item selection components for terminal UIs.
+---
+
+# MultiSelect
+
+Multiple item selection components for terminal UIs.
+
+## Basic MultiSelect
+
+Select multiple items from a list.
+
+```tsx title="MultiSelect"
+import { MultiSelect } from 'siddcn';
+
+const options = [
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Angular', value: 'angular' },
+  { label: 'Svelte', value: 'svelte' },
+];
+
+<MultiSelect 
+  options={options}
+  onChange={(selected) => {
+    console.log('Selected:', selected);
+  }}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `options` | `Option[]` | - | Available options |
+| `defaultValue` | `string[]` | `[]` | Initially selected values |
+| `onChange` | `(values: string[]) => void` | - | Selection change callback |
+| `maxSelect` | `number` | `Infinity` | Maximum selections |
+| `minSelect` | `number` | `0` | Minimum selections |
+
+## Limited Selection
+
+Limit the number of selections:
+
+```tsx title="Limited Selection"
+<MultiSelect 
+  options={options}
+  maxSelect={3}
+  onChange={handleChange}
+/>
+```
+
+When the limit is reached, additional items cannot be selected.
+
+## Pre-selected Items
+
+Start with items already selected:
+
+```tsx title="Pre-selected"
+<MultiSelect 
+  options={options}
+  defaultValue={['react', 'svelte']}
+  onChange={handleChange}
+/>
+```
+
+## Keyboard Navigation
+
+| Key | Action |
+| --- | ------ |
+| `j` / `↓` | Move down |
+| `k` / `↑` | Move up |
+| `Space` | Toggle selection |
+| `Enter` | Confirm selection |
+| `a` | Select all |
+| `n` | Select none |
+
+## Visual Indicators
+
+Selected items are marked with a checkbox:
+
+```
+┌─ Select frameworks ──────────────────┐
+│ [x] React                            │
+│ [ ] Vue                              │
+│ [x] Angular                          │
+│ [ ] Svelte                           │
+│                                      │
+│ 2 of 4 selected (max: 3)             │
+└──────────────────────────────────────┘
+```
+
+## Grouped Options
+
+Group options by category:
+
+```tsx title="Grouped MultiSelect"
+const options = [
+  { 
+    group: 'Frontend',
+    items: [
+      { label: 'React', value: 'react' },
+      { label: 'Vue', value: 'vue' },
+    ]
+  },
+  { 
+    group: 'Backend',
+    items: [
+      { label: 'Node.js', value: 'node' },
+      { label: 'Python', value: 'python' },
+    ]
+  },
+];
+
+<MultiSelect options={options} grouped />
+```

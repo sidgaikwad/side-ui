@@ -1,0 +1,173 @@
+---
+title: Adding Components
+description: Learn how to add new components to siddcn.
+---
+
+# Adding Components
+
+Learn how to contribute new components to the siddcn library.
+
+## Component Structure
+
+Each component in siddcn follows a consistent structure:
+
+```text title="Component Structure"
+src/components/
+└── category-name/
+    └── index.tsx      # Component implementations
+```
+
+## Creating a New Component
+
+### 1. Define the Component
+
+Create your component in the appropriate category folder:
+
+```tsx title="src/components/buttons/index.tsx"
+import React from 'react';
+import { Box, Text } from 'ink';
+
+export interface MyButtonProps {
+  label: string;
+  variant?: 'primary' | 'secondary' | 'outline';
+  onPress?: () => void;
+}
+
+export function MyButton({ 
+  label, 
+  variant = 'primary',
+  onPress 
+}: MyButtonProps) {
+  const colors = {
+    primary: { bg: 'cyan', fg: 'black' },
+    secondary: { bg: 'gray', fg: 'white' },
+    outline: { bg: undefined, fg: 'cyan' },
+  };
+
+  const style = colors[variant];
+
+  return (
+    <Box
+      borderStyle={variant === 'outline' ? 'single' : undefined}
+      borderColor={variant === 'outline' ? 'cyan' : undefined}
+    >
+      <Text
+        backgroundColor={style.bg}
+        color={style.fg}
+        bold
+      >
+        {` ${label} `}
+      </Text>
+    </Box>
+  );
+}
+```
+
+### 2. Register in the Registry
+
+Add your component to the component registry:
+
+```tsx title="src/components/registry.tsx"
+import { MyButton } from './buttons';
+
+export const componentRegistry = {
+  buttons: {
+    'my-button': {
+      name: 'My Button',
+      component: MyButton,
+      description: 'A customizable button component',
+      props: {
+        label: 'Click me',
+        variant: 'primary',
+      },
+    },
+    // ... other components
+  },
+};
+```
+
+### 3. Add Preview Data
+
+Create sample data for the component preview:
+
+```tsx title="src/components/buttons/index.tsx"
+export const myButtonPreviewData = {
+  default: {
+    label: 'Primary Button',
+    variant: 'primary' as const,
+  },
+  secondary: {
+    label: 'Secondary Button',
+    variant: 'secondary' as const,
+  },
+  outline: {
+    label: 'Outline Button',
+    variant: 'outline' as const,
+  },
+};
+```
+
+## Best Practices
+
+### Theme Compatibility
+
+Always use theme colors for consistency:
+
+```tsx
+import { useTheme } from 'siddcn';
+
+function MyComponent() {
+  const theme = useTheme();
+  
+  return (
+    <Text color={theme.primary}>
+      Themed text
+    </Text>
+  );
+}
+```
+
+### Keyboard Accessibility
+
+Support keyboard navigation where appropriate:
+
+```tsx
+import { useInput } from 'ink';
+
+function MyComponent({ onSelect }) {
+  useInput((input, key) => {
+    if (key.return || input === 'l') {
+      onSelect?.();
+    }
+  });
+  
+  // ...
+}
+```
+
+### TypeScript
+
+Export proper TypeScript interfaces:
+
+```tsx
+export interface MyComponentProps {
+  /** The label to display */
+  label: string;
+  /** Optional callback when pressed */
+  onPress?: () => void;
+}
+```
+
+## Testing
+
+Test your component in the CLI:
+
+```bash title="Terminal"
+# Run the dev server
+pnpm dev
+
+# In another terminal, test the CLI
+pnpm siddcn
+```
+
+Navigate to your component and verify it renders correctly with all variants.

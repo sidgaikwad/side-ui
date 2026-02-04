@@ -1,0 +1,117 @@
+---
+title: Themes
+description: Customize the look and feel of siddcn components with themes.
+---
+
+# Themes
+
+Siddcn comes with 6 beautiful built-in themes and supports custom theming.
+
+## Built-in Themes
+
+| Theme | Description |
+| ----- | ----------- |
+| **Tokyo Night** | Dark theme with purple and cyan accents |
+| **Catppuccin** | Warm pastel theme with soft colors |
+| **Dracula** | Classic dark theme with vibrant accents |
+| **Nord** | Cool, arctic-inspired color palette |
+| **Gruvbox** | Retro groove theme with warm colors |
+| **One Dark** | Atom-inspired dark theme |
+
+## Switching Themes
+
+### In the CLI
+
+Press `t` while in the CLI to cycle through themes, or navigate to the Theme Selector from the main menu.
+
+### Programmatically
+
+```tsx title="App.tsx"
+import { ThemeProvider, useTheme } from 'siddcn';
+
+function App() {
+  return (
+    <ThemeProvider theme="tokyo-night">
+      <YourComponent />
+    </ThemeProvider>
+  );
+}
+
+// Access theme in components
+function YourComponent() {
+  const theme = useTheme();
+  
+  return (
+    <Text color={theme.primary}>
+      Hello, themed world!
+    </Text>
+  );
+}
+```
+
+## Theme Structure
+
+Each theme provides these color values:
+
+```ts title="theme.ts"
+interface Theme {
+  // Base colors
+  background: string;
+  foreground: string;
+  
+  // Accent colors
+  primary: string;
+  secondary: string;
+  accent: string;
+  
+  // State colors
+  success: string;
+  warning: string;
+  error: string;
+  info: string;
+  
+  // UI colors
+  border: string;
+  muted: string;
+}
+```
+
+## Creating Custom Themes
+
+Create your own theme by defining the color values:
+
+```tsx title="custom-theme.ts"
+import { defineTheme } from 'siddcn';
+
+export const myTheme = defineTheme({
+  name: 'my-theme',
+  colors: {
+    background: '#1a1b26',
+    foreground: '#c0caf5',
+    primary: '#7dcfff',
+    secondary: '#bb9af7',
+    accent: '#9ece6a',
+    success: '#9ece6a',
+    warning: '#e0af68',
+    error: '#f7768e',
+    info: '#7aa2f7',
+    border: '#414868',
+    muted: '#565f89',
+  },
+});
+```
+
+Use your custom theme:
+
+```tsx title="App.tsx"
+import { ThemeProvider } from 'siddcn';
+import { myTheme } from './custom-theme';
+
+function App() {
+  return (
+    <ThemeProvider theme={myTheme}>
+      <YourComponent />
+    </ThemeProvider>
+  );
+}
+```

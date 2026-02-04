@@ -1,0 +1,73 @@
+---
+title: Components Overview
+description: Browse the complete siddcn component library.
+---
+
+# Components
+
+Siddcn provides a growing library of terminal UI components. Each component is designed to be accessible, themeable, and easy to use.
+
+## Component Categories
+
+<Cards>
+  <Card title="Buttons" href="/docs/components/buttons">
+    Interactive buttons with various styles and states.
+  </Card>
+  <Card title="Progress" href="/docs/components/progress">
+    Linear, circular, and step progress indicators.
+  </Card>
+  <Card title="Badges" href="/docs/components/badges">
+    Status indicators and labels.
+  </Card>
+  <Card title="Charts" href="/docs/components/charts">
+    Bar and line charts for data visualization.
+  </Card>
+  <Card title="Trees" href="/docs/components/trees">
+    File trees and data hierarchies.
+  </Card>
+  <Card title="Tabs" href="/docs/components/tabs">
+    Tabbed navigation with multiple styles.
+  </Card>
+  <Card title="Table" href="/docs/components/table">
+    Scrollable data grids with selection.
+  </Card>
+  <Card title="MultiSelect" href="/docs/components/multiselect">
+    Multiple item selection with limits.
+  </Card>
+</Cards>
+
+## Usage Pattern
+
+All components follow a consistent usage pattern:
+
+```tsx title="Example"
+import { ComponentName } from 'siddcn';
+
+function App() {
+  return (
+    <ComponentName
+      prop1="value"
+      prop2={42}
+      onEvent={() => console.log('Event!')}
+    />
+  );
+}
+```
+
+## Theming
+
+All components automatically support theming:
+
+```tsx title="Themed Component"
+import { ThemeProvider, SimpleButton } from 'siddcn';
+
+function App() {
+  return (
+    <ThemeProvider theme="tokyo-night">
+      <SimpleButton label="Themed Button" />
+    </ThemeProvider>
+  );
+}
+```
+
+See the [Themes](/docs/themes) page for more information.

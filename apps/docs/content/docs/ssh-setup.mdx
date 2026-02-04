@@ -1,0 +1,96 @@
+---
+title: SSH Setup
+description: Browse and preview siddcn components remotely via SSH.
+---
+
+# SSH Setup
+
+Browse and preview siddcn components remotely via SSH, just like terminal.shop.
+
+## Quick Connect
+
+Connect to the demo server:
+
+```bash title="Terminal"
+ssh demo@siddcn.dev -p 2222
+```
+
+## Running Your Own Server
+
+You can run your own siddcn SSH server:
+
+### Start the Server
+
+```bash title="Terminal"
+# Using the CLI
+siddcn --server
+
+# Or with a custom port
+siddcn --server --port 2222
+```
+
+### Generate SSH Keys
+
+If you need to generate new host keys:
+
+```bash title="Terminal"
+# Generate RSA key
+ssh-keygen -t rsa -b 4096 -f host.key -N ""
+
+# Generate ED25519 key (recommended)
+ssh-keygen -t ed25519 -f host.key -N ""
+```
+
+### Configuration Options
+
+| Option | Default | Description |
+| ------ | ------- | ----------- |
+| `--port` | 2222 | SSH server port |
+| `--host` | 0.0.0.0 | Bind address |
+| `--key` | host.key | Path to host key |
+
+## Client Configuration
+
+Add this to your `~/.ssh/config` for convenience:
+
+```text title="~/.ssh/config"
+Host siddcn
+    HostName localhost
+    Port 2222
+    User demo
+```
+
+Then connect with:
+
+```bash title="Terminal"
+ssh siddcn
+```
+
+## Features
+
+When connected via SSH, you can:
+
+- **Browse Components** - Navigate the full component library
+- **Live Preview** - See components render in real-time
+- **Theme Selection** - Switch between 6 built-in themes
+- **Copy Code** - Get component code for your project
+- **Vim Navigation** - Use familiar keybindings
+
+## Troubleshooting
+
+### Connection Refused
+
+Make sure the server is running and the port is correct:
+
+```bash title="Terminal"
+# Check if server is listening
+netstat -an | grep 2222
+```
+
+### Host Key Verification Failed
+
+If you're running locally and the host key changed:
+
+```bash title="Terminal"
+ssh-keygen -R "[localhost]:2222"
+```

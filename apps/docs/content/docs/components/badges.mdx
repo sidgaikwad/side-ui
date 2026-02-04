@@ -1,0 +1,77 @@
+---
+title: Badges
+description: Status indicators and labels for terminal UIs.
+---
+
+# Badges
+
+Status indicators and labels for terminal UIs.
+
+## Simple Badge
+
+A basic badge with text.
+
+```tsx title="SimpleBadge"
+import { SimpleBadge } from 'siddcn';
+
+<SimpleBadge label="New" />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `label` | `string` | - | Badge text |
+| `variant` | `'default' \| 'success' \| 'warning' \| 'error'` | `'default'` | Badge style |
+
+## Status Badge
+
+A badge that indicates status with color.
+
+```tsx title="StatusBadge"
+import { StatusBadge } from 'siddcn';
+
+<StatusBadge status="success" label="Active" />
+<StatusBadge status="warning" label="Pending" />
+<StatusBadge status="error" label="Failed" />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `status` | `'success' \| 'warning' \| 'error' \| 'info'` | - | Status type |
+| `label` | `string` | - | Badge text |
+
+## Dot Badge
+
+A minimal dot indicator.
+
+```tsx title="DotBadge"
+import { DotBadge } from 'siddcn';
+
+<DotBadge color="green" />
+<DotBadge color="yellow" />
+<DotBadge color="red" />
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `color` | `string` | `'cyan'` | Dot color |
+
+## Badge Group
+
+Display multiple badges together:
+
+```tsx title="Badge Group"
+import { Box } from 'ink';
+import { SimpleBadge, StatusBadge } from 'siddcn';
+
+<Box gap={1}>
+  <SimpleBadge label="v1.0.0" />
+  <StatusBadge status="success" label="Stable" />
+  <SimpleBadge label="MIT" />
+</Box>
+```

@@ -1,0 +1,98 @@
+---
+title: Quick Start
+description: Get up and running with siddcn in minutes.
+---
+
+# Quick Start
+
+Get up and running with siddcn in minutes.
+
+## Using the CLI Browser
+
+The easiest way to explore siddcn is through the interactive CLI browser:
+
+```bash title="Terminal"
+# Install and run
+npm install -g siddcn
+siddcn
+```
+
+This launches an interactive TUI where you can:
+- Browse all available components
+- Preview components with live data
+- Copy component code to your project
+- Switch between different themes
+
+## Keyboard Navigation
+
+Siddcn supports vim-style keyboard navigation:
+
+| Key | Action |
+| --- | ------ |
+| `j` or `↓` | Move down |
+| `k` or `↑` | Move up |
+| `h` or `←` | Go back |
+| `l` or `→` | Select/Enter |
+| `Enter` | Select item |
+| `q` or `Esc` | Quit/Back |
+| `t` | Toggle theme |
+
+## Creating Your First TUI App
+
+Create a new terminal application using siddcn:
+
+```tsx title="src/index.tsx"
+import React from 'react';
+import { render, Box, Text } from 'ink';
+import { SimpleButton, LinearProgress } from 'siddcn';
+
+function App() {
+  const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress(p => (p >= 100 ? 0 : p + 10));
+    }, 500);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <Box flexDirection="column" padding={1}>
+      <Text bold color="cyan">My TUI App</Text>
+      
+      <Box marginY={1}>
+        <LinearProgress value={progress} max={100} />
+      </Box>
+      
+      <SimpleButton 
+        label="Click Me" 
+        onPress={() => console.log('Pressed!')} 
+      />
+    </Box>
+  );
+}
+
+render(<App />);
+```
+
+Run your app:
+
+```bash title="Terminal"
+npx tsx src/index.tsx
+```
+
+## Next Steps
+
+Now that you have siddcn set up, explore the component library:
+
+<Cards>
+  <Card title="Buttons" href="/docs/components/buttons">
+    Interactive buttons with various styles and states.
+  </Card>
+  <Card title="Progress Bars" href="/docs/components/progress">
+    Linear, circular, and step progress indicators.
+  </Card>
+  <Card title="SSH Setup" href="/docs/ssh-setup">
+    Set up SSH access to browse components remotely.
+  </Card>
+</Cards>
