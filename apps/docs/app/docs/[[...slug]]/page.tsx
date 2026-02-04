@@ -1,4 +1,4 @@
-import { source } from '@/lib/source';
+import { source, getPageContent } from '@/lib/source';
 import {
   DocsPage,
   DocsBody,
@@ -7,6 +7,9 @@ import {
 } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
+import { compileMDX } from '@fumadocs/mdx-remote';
+import * as runtime from 'react/jsx-runtime';
+import matter from 'gray-matter';
 
 export default async function Page(props: {
   params: Promise<{ slug?: string[] }>;
@@ -15,14 +18,22 @@ export default async function Page(props: {
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  const MDX = page.data.body;
+  const content = getPageContent(params.slug);
+  if (!content) notFound();
+
+  const { content: mdxContent } = matter(content);
+
+  const compiled = await compileMDX({
+    source: mdxContent,
+    components: { ...defaultMdxComponents },
+  });
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage toc={compiled.toc} full={page.data.full}>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX components={{ ...defaultMdxComponents }} />
+        {compiled.content}
       </DocsBody>
     </DocsPage>
   );
