@@ -1,0 +1,66 @@
+---
+title: CLI
+description: Using the Siddcn command-line interface
+---
+
+# CLI
+
+The Siddcn CLI helps you quickly add components to your project.
+
+## Installation
+
+Install the CLI globally:
+
+```bash
+npm install -g siddcn
+```
+
+Or use it directly with npx:
+
+```bash
+npx siddcn
+```
+
+## Commands
+
+### Initialize Project
+
+Set up Siddcn in your project:
+
+```bash
+npx siddcn init
+```
+
+This will create the necessary configuration files and install dependencies.
+
+### Add Components
+
+Add a component to your project:
+
+```bash
+npx siddcn add button
+```
+
+Add multiple components:
+
+```bash
+npx siddcn add button input select
+```
+
+### List Components
+
+View all available components:
+
+```bash
+npx siddcn list
+```
+
+## SSH Preview
+
+You can preview components directly in your terminal via SSH:
+
+```bash
+ssh demo@siddcn.dev
+```
+
+This opens an interactive component browser where you can explore all available components.

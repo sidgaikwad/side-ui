@@ -1,0 +1,116 @@
+---
+title: Components
+description: Browse all Siddcn components
+---
+
+# Components
+
+Explore the full library of Siddcn terminal UI components.
+
+## Input Components
+
+### Button
+
+A clickable button component for terminal UIs.
+
+```tsx
+import { Button } from 'siddcn';
+
+<Button>Click Me</Button>
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+```
+
+### Input
+
+A text input field for terminal applications.
+
+```tsx
+import { Input } from 'siddcn';
+
+<Input placeholder="Enter text..." />
+<Input label="Username" />
+```
+
+### Select
+
+A dropdown selection component.
+
+```tsx
+import { Select } from 'siddcn';
+
+<Select
+  options={[
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+  ]}
+/>
+```
+
+### Checkbox
+
+A checkbox input component.
+
+```tsx
+import { Checkbox } from 'siddcn';
+
+<Checkbox label="Accept terms" />
+```
+
+## Display Components
+
+### Box
+
+A layout container component.
+
+```tsx
+import { Box } from 'siddcn';
+
+<Box padding={1} borderStyle="round">
+  Content here
+</Box>
+```
+
+### Text
+
+Styled text component with various formatting options.
+
+```tsx
+import { Text } from 'siddcn';
+
+<Text bold>Bold text</Text>
+<Text color="green">Colored text</Text>
+```
+
+### Spinner
+
+A loading spinner animation.
+
+```tsx
+import { Spinner } from 'siddcn';
+
+<Spinner label="Loading..." />
+```
+
+## Feedback Components
+
+### Alert
+
+Display alert messages to users.
+
+```tsx
+import { Alert } from 'siddcn';
+
+<Alert type="success">Operation completed!</Alert>
+<Alert type="error">Something went wrong</Alert>
+```
+
+### Progress
+
+A progress bar component.
+
+```tsx
+import { Progress } from 'siddcn';
+
+<Progress value={75} />
+```
