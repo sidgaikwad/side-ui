@@ -13,7 +13,8 @@ export default function Layout({ children }: { children: ReactNode }) {
         ),
       }}
       sidebar={{
-        defaultOpenLevel: 1,
+        defaultOpenLevel: 2,
+        collapsible: true,
       }}
       links={[
         {
