@@ -17,7 +17,7 @@
 
 ### Monorepo Structure (Turborepo)
 
-```
+\`\`\`
 siddcn-project/
 ├── apps/
 │   ├── website/      # Next.js showcase (placeholder)
@@ -25,11 +25,11 @@ siddcn-project/
 ├── packages/
 │   └── siddcn/       # Core TUI library ⭐
 └── [config files]
-```
+\`\`\`
 
 ### Core Package Structure
 
-```
+\`\`\`
 packages/siddcn/
 ├── src/
 │   ├── components/           # Component implementations
@@ -54,7 +54,7 @@ packages/siddcn/
 ├── tsup.config.ts
 ├── README.md
 └── ADDING_COMPONENTS.md
-```
+\`\`\`
 
 ## 🎨 Component Registry Pattern
 
@@ -68,7 +68,7 @@ The heart of siddcn is the **Component Registry** system. This is what makes it 
 
 ### Registry Structure
 
-```typescript
+\`\`\`typescript
 {
   'category-id': {
     id: 'category-id',
@@ -88,27 +88,27 @@ The heart of siddcn is the **Component Registry** system. This is what makes it 
     ]
   }
 }
-```
+\`\`\`
 
 ## 🚀 User Flow
 
 ### Via CLI
-```
+\`\`\`
 1. Run: siddcn
 2. See animated loader
 3. Browse main menu (categories)
 4. Select category (e.g., "Progress Bars")
 5. Select variant (e.g., "Linear Progress")
 6. View preview + press 'i' for install docs
-```
+\`\`\`
 
 ### Via SSH
-```
+\`\`\`
 1. Start server: siddcn-server
 2. Connect: ssh localhost -p 2222
 3. Same flow as CLI
 4. Multiple users can connect simultaneously
-```
+\`\`\`
 
 ## ⌨️ Navigation Controls
 
@@ -164,7 +164,7 @@ The heart of siddcn is the **Component Registry** system. This is what makes it 
 
 ### Quick Start
 
-```bash
+\`\`\`bash
 # 1. Clone and install
 git clone <repo>
 cd siddcn-project
@@ -182,7 +182,7 @@ npm run dev:server
 
 # 5. Connect via SSH (in another terminal)
 ssh localhost -p 2222
-```
+\`\`\`
 
 ### Adding a New Component Type
 
@@ -190,14 +190,14 @@ ssh localhost -p 2222
 2. Export component(s)
 3. Add to `registry.ts`:
 
-```typescript
+\`\`\`typescript
 'your-type': {
   id: 'your-type',
   name: 'Your Type',
   icon: '✨',
   variants: [{ preview: YourComponent, ... }]
 }
-```
+\`\`\`
 
 Done! The system handles the rest.
 
@@ -326,7 +326,7 @@ Done! The system handles the rest.
 
 ## 🚀 Getting Started (TL;DR)
 
-```bash
+\`\`\`bash
 # Install
 npm install
 
@@ -342,7 +342,7 @@ ssh localhost -p 2222    # Connect
 # 1. Create src/components/new-type/index.tsx
 # 2. Add to registry.ts
 # 3. Done!
-```
+\`\`\`
 
 ## 📞 Support
 

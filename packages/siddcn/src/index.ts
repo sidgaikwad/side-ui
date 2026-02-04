@@ -9,6 +9,9 @@ export * from './components/progress';
 export * from './components/badges';
 export * from './components/charts';
 export * from './components/trees';
+export * from './components/tabs';
+export * from './components/multiselect';
+export * from './components/table';
 
 // Export registry utilities
 export { componentRegistry, getCategories, getCategory, getVariant } from './components/registry';

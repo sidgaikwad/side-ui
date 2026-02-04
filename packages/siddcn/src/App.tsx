@@ -6,10 +6,11 @@ import { MainMenuScreen } from './screens/MainMenuScreen';
 import { CategoryScreen } from './screens/CategoryScreen';
 import { ComponentDetailScreen } from './screens/ComponentDetailScreen';
 import { ThemeSelectorScreen } from './screens/ThemeSelectorScreen';
+import { ThemeShowcaseScreen } from './screens/ThemeShowcaseScreen';
 import type { NavigationScreen } from './types';
 
 interface AppState {
-  screen: NavigationScreen | 'showcase' | 'theme-selector';
+  screen: NavigationScreen | 'showcase' | 'theme-selector' | 'theme-showcase';
   selectedCategory?: string;
   selectedVariant?: string;
   accordionOpen: boolean;
@@ -27,15 +28,15 @@ export const App: React.FC<AppProps> = ({ onExit }) => {
 
   // Global keyboard shortcuts
   useInput((input, key) => {
-    // Exit on 'q'
+    // Exit on 'q' (but not in loader)
     if (input === 'q' && state.screen !== 'loader') {
       onExit?.();
       process.exit(0);
     }
 
-    // Theme selector on 't'
-    if (input === 't' && state.screen === 'showcase') {
-      setState(prev => ({ ...prev, screen: 'theme-selector' as any }));
+    // Theme showcase on 'T' (uppercase) or 't' (lowercase)
+    if ((input === 't' || input === 'T') && state.screen !== 'loader' && state.screen !== 'theme-showcase') {
+      setState(prev => ({ ...prev, screen: 'theme-showcase' as any }));
     }
 
     // Back navigation with Escape
@@ -54,6 +55,10 @@ export const App: React.FC<AppProps> = ({ onExit }) => {
       screen: 'category',
       selectedCategory: categoryId
     }));
+  };
+
+  const handleThemeShowcaseOpen = () => {
+    setState(prev => ({ ...prev, screen: 'theme-showcase' as any }));
   };
 
   const handleCategorySelect = (categoryId: string) => {
@@ -90,6 +95,8 @@ export const App: React.FC<AppProps> = ({ onExit }) => {
       switch (prev.screen) {
         case 'theme-selector':
           return { ...prev, screen: 'showcase' as any };
+        case 'theme-showcase':
+          return { ...prev, screen: 'showcase' as any };
         case 'component-detail':
           return { ...prev, screen: 'category', selectedVariant: undefined, accordionOpen: false };
         case 'category':
@@ -108,10 +115,18 @@ export const App: React.FC<AppProps> = ({ onExit }) => {
       return <LoaderScreen onComplete={handleLoaderComplete} />;
 
     case 'showcase':
-      return <ShowcaseMenuScreen onSelect={handleShowcaseSelect} />;
+      return (
+        <ShowcaseMenuScreen 
+          onSelect={handleShowcaseSelect} 
+          onThemeSelect={handleThemeShowcaseOpen}
+        />
+      );
 
     case 'theme-selector':
       return <ThemeSelectorScreen onSelect={handleThemeSelect} onBack={handleBack} />;
+
+    case 'theme-showcase':
+      return <ThemeShowcaseScreen onBack={handleBack} />;
 
     case 'main-menu':
       return <MainMenuScreen onSelect={handleCategorySelect} />;

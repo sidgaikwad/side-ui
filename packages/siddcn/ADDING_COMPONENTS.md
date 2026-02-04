@@ -18,16 +18,16 @@ The navigation system automatically discovers and integrates your new components
 
 Create a new directory for your component type:
 
-```bash
+\`\`\`bash
 cd packages/siddcn/src/components
 mkdir accordions  # or whatever your component type is called
-```
+\`\`\`
 
 ### Step 2: Implement Your Components
 
 Create an `index.tsx` file with your component variants:
 
-```typescript
+\`\`\`typescript
 // packages/siddcn/src/components/accordions/index.tsx
 import React from 'react';
 import { Box, Text } from 'ink';
@@ -55,7 +55,7 @@ export const MultiAccordion: React.FC = () => {
     </Box>
   );
 };
-```
+\`\`\`
 
 **Tips for Component Implementation:**
 - Use Ink's `<Box>` and `<Text>` components
@@ -68,7 +68,7 @@ export const MultiAccordion: React.FC = () => {
 
 Add your component type to the registry:
 
-```typescript
+\`\`\`typescript
 // packages/siddcn/src/components/registry.ts
 
 // 1. Import your components
@@ -127,26 +127,26 @@ export const componentRegistry: ComponentRegistry = {
     ]
   }
 };
-```
+\`\`\`
 
 ### Step 4: Export Your Components (Optional)
 
 If you want users to be able to import your components:
 
-```typescript
+\`\`\`typescript
 // packages/siddcn/src/index.ts
 
 export * from './components/accordions';
-```
+\`\`\`
 
 ### Step 5: Test Your Components
 
 Run the CLI to see your new components:
 
-```bash
+\`\`\`bash
 cd packages/siddcn
 npm run dev
-```
+\`\`\`
 
 Navigate through the menu to find your new component type!
 
@@ -154,7 +154,7 @@ Navigate through the menu to find your new component type!
 
 Each component category has the following structure:
 
-```typescript
+\`\`\`typescript
 {
   id: string;              // Unique identifier (kebab-case)
   name: string;            // Display name
@@ -179,7 +179,7 @@ Each component category has the following structure:
     }
   ]
 }
-```
+\`\`\`
 
 ## 🎨 Best Practices
 
@@ -219,19 +219,19 @@ Each component category can have multiple variants. Use variants to show:
 - Different layouts (vertical, horizontal, grid)
 
 Example:
-```typescript
+\`\`\`typescript
 variants: [
   { id: 'small', name: 'Small Button', ... },
   { id: 'medium', name: 'Medium Button', ... },
   { id: 'large', name: 'Large Button', ... }
 ]
-```
+\`\`\`
 
 ## 🚀 Advanced: Interactive Components
 
 For components that need interactivity in the preview:
 
-```typescript
+\`\`\`typescript
 import { useState } from 'react';
 import { useInput } from 'ink';
 
@@ -257,7 +257,7 @@ export const InteractiveAccordion: React.FC = () => {
     </Box>
   );
 };
-```
+\`\`\`
 
 ## 📚 Examples
 

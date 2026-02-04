@@ -26,7 +26,7 @@ Before you begin, ensure you have:
 
 ### 1. Clone and Install
 
-```bash
+\`\`\`bash
 # Clone the repository
 git clone <repo-url>
 cd siddcn-project
@@ -39,30 +39,30 @@ npm install
 # - packages/siddcn
 # - apps/website (when created)
 # - apps/docs (when created)
-```
+\`\`\`
 
 ### 2. Generate SSH Host Key (for SSH server)
 
-```bash
+\`\`\`bash
 cd packages/siddcn
 ssh-keygen -t rsa -b 4096 -f host.key -N ""
-```
+\`\`\`
 
 This creates `host.key` and `host.key.pub` in the siddcn package directory.
 
 ### 3. Verify Setup
 
-```bash
+\`\`\`bash
 # Check that turborepo is working
 npx turbo --version
 
 # Try building everything
 npm run build
-```
+\`\`\`
 
 ## Project Structure
 
-```
+\`\`\`
 siddcn-project/
 ├── apps/
 │   ├── website/              # Next.js showcase (to be created)
@@ -91,13 +91,13 @@ siddcn-project/
 ├── turbo.json               # Turborepo config
 ├── tsconfig.json            # Shared TypeScript config
 └── README.md                # Project overview
-```
+\`\`\`
 
 ## Development Workflow
 
 ### Working on the Core Package
 
-```bash
+\`\`\`bash
 # Navigate to the package
 cd packages/siddcn
 
@@ -111,19 +111,19 @@ npm run dev:server
 ssh localhost -p 2222
 # Username: anything
 # Password: anything (in dev mode)
-```
+\`\`\`
 
 ### Adding a New Component
 
 1. **Create component files:**
-   ```bash
+   \`\`\`bash
    cd packages/siddcn/src/components
    mkdir my-component
    cd my-component
-   ```
+   \`\`\`
 
 2. **Create `index.tsx`:**
-   ```typescript
+   \`\`\`typescript
    import React from 'react';
    import { Box, Text } from 'ink';
 
@@ -134,10 +134,10 @@ ssh localhost -p 2222
        </Box>
      );
    };
-   ```
+   \`\`\`
 
 3. **Register in `registry.ts`:**
-   ```typescript
+   \`\`\`typescript
    import { MyComponent } from '../components/my-component';
 
    export const componentRegistry = {
@@ -156,40 +156,40 @@ ssh localhost -p 2222
        }]
      }
    };
-   ```
+   \`\`\`
 
 4. **Test it:**
-   ```bash
+   \`\`\`bash
    npm run dev
    # Navigate to your new component in the menu
-   ```
+   \`\`\`
 
 See [ADDING_COMPONENTS.md](./packages/siddcn/ADDING_COMPONENTS.md) for more details.
 
 ### Working on Multiple Packages
 
-```bash
+\`\`\`bash
 # From monorepo root, run dev for all packages
 npm run dev
 
 # Or target specific packages
 npx turbo dev --filter=siddcn
 npx turbo dev --filter=website
-```
+\`\`\`
 
 ## Testing
 
 ### Manual Testing
 
 1. **CLI Testing:**
-   ```bash
+   \`\`\`bash
    cd packages/siddcn
    npm run dev
    # Manually navigate and test all features
-   ```
+   \`\`\`
 
 2. **SSH Testing:**
-   ```bash
+   \`\`\`bash
    # Terminal 1: Start server
    npm run dev:server
 
@@ -197,7 +197,7 @@ npx turbo dev --filter=website
    ssh localhost -p 2222
 
    # Test from different terminals, different SSH clients
-   ```
+   \`\`\`
 
 3. **Component Testing:**
    - Navigate to each component
@@ -208,19 +208,19 @@ npx turbo dev --filter=website
 
 ### Automated Testing (Future)
 
-```bash
+\`\`\`bash
 # Unit tests (to be implemented)
 npm run test
 
 # E2E tests (to be implemented)
 npm run test:e2e
-```
+\`\`\`
 
 ## Building
 
 ### Build All Packages
 
-```bash
+\`\`\`bash
 # From monorepo root
 npm run build
 
@@ -228,11 +228,11 @@ npm run build
 # 1. Builds packages/siddcn
 # 2. Builds apps/website (when created)
 # 3. Builds apps/docs (when created)
-```
+\`\`\`
 
 ### Build Single Package
 
-```bash
+\`\`\`bash
 # Build just the core package
 cd packages/siddcn
 npm run build
@@ -242,13 +242,13 @@ npm run build
 # - dist/server.js (SSH server entry point)
 # - dist/index.js (Library exports)
 # - dist/*.d.ts (Type definitions)
-```
+\`\`\`
 
 ### Build Outputs
 
 After building `packages/siddcn`:
 
-```
+\`\`\`
 packages/siddcn/dist/
 ├── cli.js              # CLI executable
 ├── server.js           # SSH server executable
@@ -258,7 +258,7 @@ packages/siddcn/dist/
 ├── screens/            # All screens
 ├── types/              # Type definitions
 └── *.d.ts             # TypeScript declarations
-```
+\`\`\`
 
 ## Publishing
 
@@ -273,7 +273,7 @@ packages/siddcn/dist/
 
 ### Publishing to npm
 
-```bash
+\`\`\`bash
 cd packages/siddcn
 
 # Build
@@ -287,11 +287,11 @@ npm publish
 
 # Or for scoped package
 npm publish --access public
-```
+\`\`\`
 
 ### Version Management
 
-```bash
+\`\`\`bash
 # Patch version (bug fixes)
 npm version patch
 
@@ -300,7 +300,7 @@ npm version minor
 
 # Major version (breaking changes)
 npm version major
-```
+\`\`\`
 
 ## Troubleshooting
 
@@ -308,15 +308,15 @@ npm version major
 
 #### 1. Port Already in Use (SSH Server)
 
-```bash
+\`\`\`bash
 # Error: EADDRINUSE
 # Solution: Use different port
 SSH_PORT=3333 npm run dev:server
-```
+\`\`\`
 
 #### 2. Module Not Found Errors
 
-```bash
+\`\`\`bash
 # Clear node_modules and reinstall
 rm -rf node_modules
 npm install
@@ -324,21 +324,21 @@ npm install
 # For monorepo-wide clean
 npm run clean
 npm install
-```
+\`\`\`
 
 #### 3. TypeScript Errors
 
-```bash
+\`\`\`bash
 # Run type checking
 npm run typecheck
 
 # Regenerate declarations
 npm run build
-```
+\`\`\`
 
 #### 4. SSH Connection Refused
 
-```bash
+\`\`\`bash
 # Check server is running
 ps aux | grep node
 
@@ -348,7 +348,7 @@ sudo pfctl -s all
 
 # On Linux:
 sudo iptables -L
-```
+\`\`\`
 
 #### 5. Components Not Showing
 
@@ -366,13 +366,13 @@ sudo iptables -L
 
 ### Debug Mode
 
-```bash
+\`\`\`bash
 # Run with debug logging (to be implemented)
 DEBUG=siddcn:* npm run dev
 
 # Or for specific modules
 DEBUG=siddcn:registry npm run dev
-```
+\`\`\`
 
 ### Getting Help
 
@@ -421,7 +421,7 @@ DEBUG=siddcn:registry npm run dev
 
 ## Git Workflow
 
-```bash
+\`\`\`bash
 # Create feature branch
 git checkout -b feature/new-component
 
@@ -431,18 +431,18 @@ git commit -m "feat: add new component type"
 
 # Push and create PR
 git push origin feature/new-component
-```
+\`\`\`
 
 ### Commit Message Convention
 
-```
+\`\`\`
 feat: add new component
 fix: resolve rendering issue
 docs: update README
 chore: update dependencies
 refactor: simplify navigation logic
 test: add component tests
-```
+\`\`\`
 
 ## Next Steps
 

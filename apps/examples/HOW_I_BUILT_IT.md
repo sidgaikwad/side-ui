@@ -50,7 +50,7 @@ Create a standalone `examples` app in the monorepo where developers can:
 
 ### Step 1: Project Structure
 
-```
+\`\`\`
 apps/examples/
 ├── package.json          # Dependencies and scripts
 ├── tsconfig.json        # TypeScript config
@@ -62,7 +62,7 @@ apps/examples/
 │   ├── progress-demo.tsx
 │   └── playground.tsx
 └── README.md            # Documentation
-```
+\`\`\`
 
 **Reasoning**:
 - `src/` for the main entry point (selector)
@@ -72,7 +72,7 @@ apps/examples/
 
 ### Step 2: Package Configuration
 
-```json
+\`\`\`json
 {
   "name": "examples",
   "private": true,
@@ -89,7 +89,7 @@ apps/examples/
     "dev:playground": "tsx examples/playground.tsx"
   }
 }
-```
+\`\`\`
 
 **Key Points**:
 - `workspace:*` links to local siddcn package
@@ -120,7 +120,7 @@ apps/examples/
 ### Step 4: Building Dashboard Example
 
 **Approach**:
-```typescript
+\`\`\`typescript
 // 1. Define state for metrics
 const [cpuUsage, setCpuUsage] = useState(45);
 const [memoryUsage, setMemoryUsage] = useState(62);
@@ -137,7 +137,7 @@ useEffect(() => {
 // 3. Render with siddcn components
 <LinearProgress value={cpuUsage} max={100} />
 <StatusBadge status="success" />
-```
+\`\`\`
 
 **Why This Works**:
 - Simulates real data with random values
@@ -148,7 +148,7 @@ useEffect(() => {
 ### Step 5: Building Form Example
 
 **Approach**:
-```typescript
+\`\`\`typescript
 // 1. State for each field
 const [name, setName] = useState('');
 const [currentField, setCurrentField] = useState('name');
@@ -167,7 +167,7 @@ useInput((input, key) => {
 ) : (
   <Text>{name}</Text>
 )}
-```
+\`\`\`
 
 **Why This Works**:
 - Mimics web form behavior in terminal
@@ -178,7 +178,7 @@ useInput((input, key) => {
 ### Step 6: Building Progress Demo
 
 **Approach**:
-```typescript
+\`\`\`typescript
 // Multiple intervals at different speeds
 useEffect(() => {
   const interval1 = setInterval(() => {
@@ -194,7 +194,7 @@ useEffect(() => {
     clearInterval(interval2);
   };
 }, []);
-```
+\`\`\`
 
 **Why This Works**:
 - Shows different animation speeds
@@ -205,7 +205,7 @@ useEffect(() => {
 ### Step 7: Building Playground
 
 **Approach**:
-```typescript
+\`\`\`typescript
 // Component selection
 const components = ['Buttons', 'Progress', 'Badges'];
 const [selected, setSelected] = useState(0);
@@ -224,7 +224,7 @@ const renderComponent = () => {
     // ...
   }
 };
-```
+\`\`\`
 
 **Why This Works**:
 - Interactive component browser
@@ -242,13 +242,13 @@ Each example is self-contained:
 - Can run independently
 
 ### 2. **Composition Over Configuration**
-```typescript
+\`\`\`typescript
 // Compose Ink components with siddcn components
 <Box flexDirection="column">
   <Text bold>Title</Text>
   <LinearProgress value={50} />
 </Box>
-```
+\`\`\`
 
 ### 3. **Progressive Enhancement**
 - Start simple (static components)
@@ -257,7 +257,7 @@ Each example is self-contained:
 - Add advanced features (multi-component)
 
 ### 4. **State Management**
-```typescript
+\`\`\`typescript
 // Local state for UI
 const [progress, setProgress] = useState(0);
 
@@ -269,7 +269,7 @@ useEffect(() => {
 
 // Input handlers for interaction
 useInput((input, key) => {...});
-```
+\`\`\`
 
 ## 🔧 Technical Decisions
 
@@ -361,16 +361,16 @@ useInput((input, key) => {...});
 ## 🚀 Running Examples
 
 ### From Monorepo Root
-```bash
+\`\`\`bash
 pnpm install
 pnpm --filter examples dev:dashboard
-```
+\`\`\`
 
 ### From Examples Directory
-```bash
+\`\`\`bash
 cd apps/examples
 pnpm dev:dashboard
-```
+\`\`\`
 
 ### Why It Works
 1. `pnpm install` links workspace packages
@@ -399,23 +399,23 @@ Potential additions:
 ## 🔗 Integration Points
 
 ### With Main Package
-```typescript
+\`\`\`typescript
 // Direct import from workspace
 import { LinearProgress, StatusBadge } from 'siddcn';
-```
+\`\`\`
 
 ### With Monorepo
-```json
+\`\`\`json
 // pnpm-workspace.yaml includes:
 packages:
   - 'apps/*'  // ← This includes apps/examples
-```
+\`\`\`
 
 ### With Scripts
-```bash
+\`\`\`bash
 # Filter to specific workspace
 pnpm --filter examples dev:dashboard
-```
+\`\`\`
 
 ---
 

@@ -1,11 +1,7 @@
 /**
- * Component Registry
+ * Component Registry - COMPLETE & FIXED
  *
  * This is the central registry for all TUI components.
- * To add a new component type:
- * 1. Create your component files in src/components/[type]/
- * 2. Add an entry here with variants
- * 3. That's it! The navigation system auto-discovers it.
  */
 
 import React from "react";
@@ -16,25 +12,12 @@ import {
 } from "../types";
 
 // Import component variants
-import {
-  SimpleButton,
-  PrimaryButton,
-  DangerButton,
-} from "./buttons";
-import {
-  LinearProgress,
-  CircularProgress,
-  StepProgress,
-} from "./progress";
+import { SimpleButton, PrimaryButton, DangerButton } from "./buttons";
+import { LinearProgress, CircularProgress, StepProgress } from "./progress";
 import { StatusBadge, CountBadge, DotBadge } from "./badges";
 import { BarChart, LineChart } from "./charts";
 import { FileTree, DataTree } from "./trees";
-import {
-  Tabs,
-  DashboardTab,
-  AnalyticsTab,
-  SettingsTab,
-} from "./tabs";
+import { Tabs, DashboardTab, AnalyticsTab, SettingsTab } from "./tabs";
 import { Table } from "./table";
 import { MultiSelect } from "./multiselect";
 
@@ -51,11 +34,9 @@ const FileTreePreview: React.FC = () => (
           children: [
             { name: "index.tsx", type: "file" },
             { name: "App.tsx", type: "file" },
-            { name: "styles.css", type: "file" },
           ],
         },
         { name: "package.json", type: "file" },
-        { name: "README.md", type: "file" },
       ],
     }}
   />
@@ -70,42 +51,22 @@ const DataTreePreview: React.FC = () => (
         {
           name: "Branch 1",
           type: "dir",
-          children: [
-            { name: "Leaf 1", type: "file" },
-            { name: "Leaf 2", type: "file" },
-          ],
-        },
-        {
-          name: "Branch 2",
-          type: "dir",
-          children: [{ name: "Leaf 3", type: "file" }],
+          children: [{ name: "Leaf 1", type: "file" }],
         },
       ],
     }}
   />
 );
 
+// Create static tab content components to prevent re-rendering
+const TabPreviewContent: React.FC = () => <DashboardTab />;
+
 const TabsModernPreview: React.FC = () => (
   <Tabs
     tabs={[
-      {
-        id: "dashboard",
-        label: "Dashboard",
-        icon: "📊",
-        content: <DashboardTab />,
-      },
-      {
-        id: "analytics",
-        label: "Analytics",
-        icon: "📈",
-        content: <AnalyticsTab />,
-      },
-      {
-        id: "settings",
-        label: "Settings",
-        icon: "⚙️",
-        content: <SettingsTab />,
-      },
+      { id: "tab1", label: "Tab 1", content: <TabPreviewContent /> },
+      { id: "tab2", label: "Tab 2", content: <TabPreviewContent /> },
+      { id: "tab3", label: "Tab 3", content: <TabPreviewContent /> },
     ]}
     style="modern"
   />
@@ -114,9 +75,8 @@ const TabsModernPreview: React.FC = () => (
 const TabsRoundedPreview: React.FC = () => (
   <Tabs
     tabs={[
-      { id: "tab1", label: "Tab 1", content: <DashboardTab /> },
-      { id: "tab2", label: "Tab 2", content: <AnalyticsTab /> },
-      { id: "tab3", label: "Tab 3", content: <SettingsTab /> },
+      { id: "tab1", label: "Tab 1", content: <TabPreviewContent /> },
+      { id: "tab2", label: "Tab 2", content: <TabPreviewContent /> },
     ]}
     style="rounded"
   />
@@ -125,9 +85,8 @@ const TabsRoundedPreview: React.FC = () => (
 const TabsPillsPreview: React.FC = () => (
   <Tabs
     tabs={[
-      { id: "tab1", label: "Tab 1", content: <DashboardTab /> },
-      { id: "tab2", label: "Tab 2", content: <AnalyticsTab /> },
-      { id: "tab3", label: "Tab 3", content: <SettingsTab /> },
+      { id: "tab1", label: "Tab 1", content: <TabPreviewContent /> },
+      { id: "tab2", label: "Tab 2", content: <TabPreviewContent /> },
     ]}
     style="pills"
   />
@@ -136,33 +95,14 @@ const TabsPillsPreview: React.FC = () => (
 const TablePreview: React.FC = () => (
   <Table
     columns={[
-      { key: "name", header: "Name", width: 20 },
-      { key: "email", header: "Email", width: 30 },
+      { key: "name", header: "Name", width: 15 },
       { key: "status", header: "Status", width: 10 },
     ]}
     data={[
-      {
-        name: "John Doe",
-        email: "john@example.com",
-        status: "Active",
-      },
-      {
-        name: "Jane Smith",
-        email: "jane@example.com",
-        status: "Pending",
-      },
-      {
-        name: "Bob Johnson",
-        email: "bob@example.com",
-        status: "Active",
-      },
-      {
-        name: "Alice Brown",
-        email: "alice@example.com",
-        status: "Inactive",
-      },
+      { name: "John Doe", status: "Active" },
+      { name: "Jane Smith", status: "Pending" },
     ]}
-    maxVisibleRows={10}
+    maxVisibleRows={5}
   />
 );
 
@@ -170,16 +110,10 @@ const MultiSelectPreview: React.FC = () => (
   <MultiSelect
     items={[
       { value: "react", label: "React", desc: "UI Library" },
-      { value: "vue", label: "Vue", desc: "Progressive Framework" },
-      {
-        value: "angular",
-        label: "Angular",
-        desc: "Full Framework",
-      },
-      { value: "svelte", label: "Svelte", desc: "Compiler" },
+      { value: "vue", label: "Vue", desc: "Framework" },
     ]}
     maxSelect={2}
-    showProgress={true}
+    showProgress={false}
   />
 );
 
@@ -196,21 +130,14 @@ export const componentRegistry: ComponentRegistry = {
         description: "A basic button component",
         preview: SimpleButton,
         installCommand: "npx siddcn add button-simple",
-        usage: `import { Button } from 'siddcn/button';
+        usage: `import { SimpleButton } from 'siddcn';
 
-<Button onPress={() => console.log('Clicked!')}>
-  Click me
-</Button>`,
+<SimpleButton label="Click me" />`,
         props: {
           label: {
             type: "string",
             required: true,
             description: "Button label text",
-          },
-          onPress: {
-            type: "() => void",
-            required: false,
-            description: "Click handler function",
           },
         },
       },
@@ -220,24 +147,9 @@ export const componentRegistry: ComponentRegistry = {
         description: "A styled primary action button",
         preview: PrimaryButton,
         installCommand: "npx siddcn add button-primary",
-        usage: `import { PrimaryButton } from 'siddcn/button';
+        usage: `import { PrimaryButton } from 'siddcn';
 
-<PrimaryButton onPress={handleSubmit}>
-  Submit
-</PrimaryButton>`,
-        props: {
-          label: {
-            type: "string",
-            required: true,
-            description: "Button label text",
-          },
-          variant: {
-            type: '"primary" | "secondary"',
-            required: false,
-            default: "primary",
-            description: "Button variant style",
-          },
-        },
+<PrimaryButton label="Submit" />`,
       },
       {
         id: "danger",
@@ -245,11 +157,9 @@ export const componentRegistry: ComponentRegistry = {
         description: "A button for destructive actions",
         preview: DangerButton,
         installCommand: "npx siddcn add button-danger",
-        usage: `import { DangerButton } from 'siddcn/button';
+        usage: `import { DangerButton } from 'siddcn';
 
-<DangerButton onPress={handleDelete}>
-  Delete
-</DangerButton>`,
+<DangerButton label="Delete" />`,
       },
     ],
   },
@@ -266,22 +176,9 @@ export const componentRegistry: ComponentRegistry = {
         description: "A horizontal progress bar",
         preview: LinearProgress,
         installCommand: "npx siddcn add progress-linear",
-        usage: `import { LinearProgress } from 'siddcn/progress';
+        usage: `import { LinearProgress } from 'siddcn';
 
 <LinearProgress value={75} max={100} />`,
-        props: {
-          value: {
-            type: "number",
-            required: true,
-            description: "Current progress value",
-          },
-          max: {
-            type: "number",
-            required: false,
-            default: "100",
-            description: "Maximum value",
-          },
-        },
       },
       {
         id: "circular",
@@ -289,7 +186,7 @@ export const componentRegistry: ComponentRegistry = {
         description: "A circular/spinner progress indicator",
         preview: CircularProgress,
         installCommand: "npx siddcn add progress-circular",
-        usage: `import { CircularProgress } from 'siddcn/progress';
+        usage: `import { CircularProgress } from 'siddcn';
 
 <CircularProgress percentage={60} />`,
       },
@@ -299,12 +196,9 @@ export const componentRegistry: ComponentRegistry = {
         description: "Multi-step progress indicator",
         preview: StepProgress,
         installCommand: "npx siddcn add progress-step",
-        usage: `import { StepProgress } from 'siddcn/progress';
+        usage: `import { StepProgress } from 'siddcn';
 
-<StepProgress 
-  steps={['Step 1', 'Step 2', 'Step 3']} 
-  currentStep={2} 
-/>`,
+<StepProgress />`,
       },
     ],
   },
@@ -321,9 +215,9 @@ export const componentRegistry: ComponentRegistry = {
         description: "Display status with color coding",
         preview: StatusBadge,
         installCommand: "npx siddcn add badge-status",
-        usage: `import { StatusBadge } from 'siddcn/badge';
+        usage: `import { StatusBadge } from 'siddcn';
 
-<StatusBadge status="success">Active</StatusBadge>`,
+<StatusBadge status="success" />`,
       },
       {
         id: "count",
@@ -331,7 +225,7 @@ export const componentRegistry: ComponentRegistry = {
         description: "Display numerical count",
         preview: CountBadge,
         installCommand: "npx siddcn add badge-count",
-        usage: `import { CountBadge } from 'siddcn/badge';
+        usage: `import { CountBadge } from 'siddcn';
 
 <CountBadge count={42} />`,
       },
@@ -341,7 +235,7 @@ export const componentRegistry: ComponentRegistry = {
         description: "Simple dot indicator",
         preview: DotBadge,
         installCommand: "npx siddcn add badge-dot",
-        usage: `import { DotBadge } from 'siddcn/badge';
+        usage: `import { DotBadge } from 'siddcn';
 
 <DotBadge color="green" />`,
       },
@@ -360,15 +254,9 @@ export const componentRegistry: ComponentRegistry = {
         description: "Display data as vertical bars",
         preview: BarChart,
         installCommand: "npx siddcn add chart-bar",
-        usage: `import { BarChart } from 'siddcn/chart';
+        usage: `import { BarChart } from 'siddcn';
 
-<BarChart 
-  data={[
-    { label: 'Jan', value: 30 },
-    { label: 'Feb', value: 45 },
-    { label: 'Mar', value: 60 }
-  ]} 
-/>`,
+<BarChart />`,
       },
       {
         id: "line",
@@ -376,11 +264,9 @@ export const componentRegistry: ComponentRegistry = {
         description: "Display data as a line graph",
         preview: LineChart,
         installCommand: "npx siddcn add chart-line",
-        usage: `import { LineChart } from 'siddcn/chart';
+        usage: `import { LineChart } from 'siddcn';
 
-<LineChart 
-  data={[10, 20, 15, 30, 25]} 
-/>`,
+<LineChart />`,
       },
     ],
   },
@@ -394,83 +280,30 @@ export const componentRegistry: ComponentRegistry = {
       {
         id: "file",
         name: "File Tree",
-        description: "Display file system hierarchy with vim-style navigation",
+        description: "File system hierarchy with vim navigation",
         preview: FileTreePreview,
         installCommand: "npx siddcn add tree-file",
-        usage: `import { FileTree } from 'siddcn/tree';
+        usage: `import { FileTree } from 'siddcn';
 
-const fileStructure = {
+const tree = {
   name: 'project',
   type: 'dir',
   children: [
-    {
-      name: 'src',
-      type: 'dir',
-      children: [
-        { name: 'index.tsx', type: 'file' },
-        { name: 'App.tsx', type: 'file' }
-      ]
-    },
-    { name: 'package.json', type: 'file' }
+    { name: 'src', type: 'dir', children: [] }
   ]
 };
 
-<FileTree 
-  data={fileStructure}
-  onSelect={(node) => console.log('Selected:', node)}
-/>`,
-        props: {
-          data: {
-            type: "TreeNode",
-            required: true,
-            description:
-              "Tree data structure with name, type, and optional children",
-          },
-          onSelect: {
-            type: "(node: TreeNode) => void",
-            required: false,
-            description: "Callback when a node is selected",
-          },
-        },
+<FileTree data={tree} />`,
       },
       {
         id: "data",
         name: "Data Tree",
-        description: "Display hierarchical data with expandable nodes",
+        description: "Hierarchical data with expandable nodes",
         preview: DataTreePreview,
         installCommand: "npx siddcn add tree-data",
-        usage: `import { DataTree } from 'siddcn/tree';
+        usage: `import { DataTree } from 'siddcn';
 
-const treeData = {
-  name: 'Root',
-  type: 'dir',
-  children: [
-    {
-      name: 'Branch 1',
-      type: 'dir',
-      children: [
-        { name: 'Leaf 1', type: 'file' }
-      ]
-    }
-  ]
-};
-
-<DataTree 
-  data={treeData}
-  onSelect={(node) => console.log('Selected:', node)}
-/>`,
-        props: {
-          data: {
-            type: "TreeNode",
-            required: true,
-            description: "Tree data structure",
-          },
-          onSelect: {
-            type: "(node: TreeNode) => void",
-            required: false,
-            description: "Callback when a node is selected",
-          },
-        },
+<DataTree data={treeData} />`,
       },
     ],
   },
@@ -478,63 +311,22 @@ const treeData = {
   tabs: {
     id: "tabs",
     name: "Tabs",
-    description: "Tabbed navigation with multiple style variants",
+    description: "Tabbed navigation with multiple styles",
     icon: "📑",
     variants: [
       {
         id: "modern",
         name: "Modern Tabs",
-        description: "Clean modern tab interface with bold borders",
+        description: "Clean modern tab interface",
         preview: TabsModernPreview,
         installCommand: "npx siddcn add tabs-modern",
-        usage: `import { Tabs } from 'siddcn/tabs';
+        usage: `import { Tabs } from 'siddcn';
 
 const tabs = [
-  {
-    id: 'dashboard',
-    label: 'Dashboard',
-    icon: '📊',
-    content: <DashboardContent />
-  },
-  {
-    id: 'analytics',
-    label: 'Analytics',
-    icon: '📈',
-    content: <AnalyticsContent />
-  }
+  { id: 'tab1', label: 'Tab 1', content: <YourContent /> }
 ];
 
-<Tabs 
-  tabs={tabs}
-  defaultTab={0}
-  style="modern"
-  onTabChange={(index) => console.log('Tab changed:', index)}
-/>`,
-        props: {
-          tabs: {
-            type: "Tab[]",
-            required: true,
-            description:
-              "Array of tab objects with id, label, icon, and content",
-          },
-          defaultTab: {
-            type: "number",
-            required: false,
-            default: "0",
-            description: "Index of initially active tab",
-          },
-          style: {
-            type: '"modern" | "rounded" | "underline" | "pills" | "blocks"',
-            required: false,
-            default: "modern",
-            description: "Visual style of the tabs",
-          },
-          onTabChange: {
-            type: "(index: number) => void",
-            required: false,
-            description: "Callback when active tab changes",
-          },
-        },
+<Tabs tabs={tabs} style="modern" />`,
       },
       {
         id: "rounded",
@@ -542,7 +334,7 @@ const tabs = [
         description: "Tabs with rounded borders",
         preview: TabsRoundedPreview,
         installCommand: "npx siddcn add tabs-rounded",
-        usage: `import { Tabs } from 'siddcn/tabs';
+        usage: `import { Tabs } from 'siddcn';
 
 <Tabs tabs={tabs} style="rounded" />`,
       },
@@ -552,7 +344,7 @@ const tabs = [
         description: "Pill-shaped tab buttons",
         preview: TabsPillsPreview,
         installCommand: "npx siddcn add tabs-pills",
-        usage: `import { Tabs } from 'siddcn/tabs';
+        usage: `import { Tabs } from 'siddcn';
 
 <Tabs tabs={tabs} style="pills" />`,
       },
@@ -562,58 +354,22 @@ const tabs = [
   table: {
     id: "table",
     name: "Table",
-    description: "Data tables with sorting and navigation",
+    description: "Scrollable data grid",
     icon: "📋",
     variants: [
       {
         id: "default",
         name: "Data Table",
-        description: "Scrollable data table with row selection",
+        description: "Scrollable table with row selection",
         preview: TablePreview,
         installCommand: "npx siddcn add table",
-        usage: `import { Table } from 'siddcn/table';
+        usage: `import { Table } from 'siddcn';
 
 const columns = [
-  { key: 'name', header: 'Name', width: 20 },
-  { key: 'email', header: 'Email', width: 30 },
-  { key: 'status', header: 'Status', width: 10 }
+  { key: 'name', header: 'Name', width: 20 }
 ];
 
-const data = [
-  { name: 'John Doe', email: 'john@example.com', status: 'Active' },
-  { name: 'Jane Smith', email: 'jane@example.com', status: 'Pending' }
-];
-
-<Table 
-  columns={columns}
-  data={data}
-  maxVisibleRows={10}
-  onSelect={(row, index) => console.log('Selected:', row)}
-/>`,
-        props: {
-          columns: {
-            type: "TableColumn[]",
-            required: true,
-            description:
-              "Array of column definitions with key, header, and width",
-          },
-          data: {
-            type: "TableRow[]",
-            required: true,
-            description: "Array of row data objects",
-          },
-          maxVisibleRows: {
-            type: "number",
-            required: false,
-            default: "10",
-            description: "Maximum number of visible rows before scrolling",
-          },
-          onSelect: {
-            type: "(row: TableRow, index: number) => void",
-            required: false,
-            description: "Callback when a row is selected",
-          },
-        },
+<Table columns={columns} data={data} />`,
       },
     ],
   },
@@ -621,76 +377,35 @@ const data = [
   multiselect: {
     id: "multiselect",
     name: "Multi-Select",
-    description: "Multiple item selection with limits and progress",
+    description: "Multiple item selection with limits",
     icon: "☑️",
     variants: [
       {
         id: "default",
         name: "Multi-Select List",
-        description: "Select multiple items from a list with optional limits",
+        description: "Select multiple items with optional limits",
         preview: MultiSelectPreview,
         installCommand: "npx siddcn add multiselect",
-        usage: `import { MultiSelect } from 'siddcn/multiselect';
+        usage: `import { MultiSelect } from 'siddcn';
 
 const items = [
-  { value: 'react', label: 'React', desc: 'UI Library' },
-  { value: 'vue', label: 'Vue', desc: 'Progressive Framework' },
-  { value: 'angular', label: 'Angular', desc: 'Full Framework' }
+  { value: 'opt1', label: 'Option 1', desc: 'Description' }
 ];
 
-<MultiSelect 
-  items={items}
-  maxSelect={2}
-  showProgress={true}
-  onConfirm={(selected) => console.log('Selected:', selected)}
-/>`,
-        props: {
-          items: {
-            type: "SelectItem[]",
-            required: true,
-            description:
-              "Array of items with value, label, and optional description",
-          },
-          maxSelect: {
-            type: "number",
-            required: false,
-            default: "0",
-            description: "Maximum selectable items (0 = unlimited)",
-          },
-          showProgress: {
-            type: "boolean",
-            required: false,
-            default: "true",
-            description: "Show progress bar for selections",
-          },
-          onConfirm: {
-            type: "(selected: string[]) => void",
-            required: false,
-            description: "Callback when selection is confirmed",
-          },
-        },
+<MultiSelect items={items} maxSelect={2} />`,
       },
     ],
   },
 };
 
-/**
- * Get all component categories
- */
 export function getCategories(): ComponentCategory[] {
   return Object.values(componentRegistry);
 }
 
-/**
- * Get a specific category by ID
- */
 export function getCategory(categoryId: string): ComponentCategory | undefined {
   return componentRegistry[categoryId];
 }
 
-/**
- * Get a specific component variant
- */
 export function getVariant(
   categoryId: string,
   variantId: string,
