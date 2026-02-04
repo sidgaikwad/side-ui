@@ -97,47 +97,97 @@ export default function ThemesPage() {
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Theme Grid */}
           <div className="grid gap-4 sm:grid-cols-2">
-            {themes.map((theme) => (
-              <button
-                key={theme.id}
-                onClick={() => setSelectedTheme(theme)}
-                className={`rounded-lg border p-4 text-left transition-all ${
-                  selectedTheme.id === theme.id
-                    ? "border-terminal-cyan bg-terminal-cyan/10"
-                    : "border-terminal-cyan/20 bg-terminal-bg/50 hover:border-terminal-cyan/50"
-                }`}
-              >
-                <div
-                  className="mb-3 h-2 rounded-full"
-                  style={{ backgroundColor: theme.colors.primary }}
-                />
-                <h3 className="font-semibold text-terminal-text">
-                  {theme.name}
-                </h3>
-                <p className="mt-1 text-sm text-terminal-text/60">
-                  {theme.description}
-                </p>
-                <div className="mt-3 flex gap-2">
-                  {Object.values(theme.colors).map((color, idx) => (
+            {themes.map((theme, idx) => {
+              const isActive = selectedTheme.id === theme.id;
+
+              return (
+                <button
+                  key={theme.id}
+                  onClick={() => setSelectedTheme(theme)}
+                  className="group relative block text-left outline-none"
+                  style={{ animationDelay: `${idx * 0.05}s` }}
+                >
+                  {/* Hover Gradient Glow Effect */}
+                  <div
+                    className={`absolute -inset-0.5 rounded-xl blur transition-opacity duration-300 ${
+                      isActive
+                        ? "opacity-75"
+                        : "opacity-0 group-hover:opacity-100"
+                    }`}
+                    style={{
+                      background: `linear-gradient(to right, ${theme.colors.primary}33, ${theme.colors.secondary}33)`,
+                    }}
+                  />
+
+                  {/* Card Content */}
+                  <div
+                    className={`relative h-full rounded-lg border p-4 transition-all ${
+                      isActive
+                        ? "border-terminal-cyan/50 bg-terminal-bg"
+                        : "border-terminal-cyan/20 bg-terminal-bg/50 group-hover:border-terminal-cyan/40"
+                    }`}
+                  >
                     <div
-                      key={idx}
-                      className="h-4 w-4 rounded border border-white/20"
-                      style={{ backgroundColor: color }}
+                      className="mb-3 h-2 rounded-full transition-transform duration-300 group-hover:scale-105"
+                      style={{ backgroundColor: theme.colors.primary }}
                     />
-                  ))}
-                </div>
-              </button>
-            ))}
+
+                    <h3
+                      className={`font-semibold transition-colors ${
+                        isActive
+                          ? "text-terminal-cyan"
+                          : "text-terminal-text group-hover:text-white"
+                      }`}
+                    >
+                      {theme.name}
+                    </h3>
+
+                    <p className="mt-1 text-sm text-terminal-text/60 group-hover:text-terminal-text/80 transition-colors">
+                      {theme.description}
+                    </p>
+
+                    <div className="mt-3 flex gap-2">
+                      {Object.values(theme.colors).map((color, idx) => (
+                        <div
+                          key={idx}
+                          className="h-4 w-4 rounded border border-white/10 shadow-sm"
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Active Indicator Arrow */}
+                    {isActive && (
+                      <div className="absolute bottom-3 right-3 text-terminal-cyan animate-pulse">
+                        <svg
+                          className="h-4 w-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Theme Preview */}
-          <div className="rounded-lg border border-terminal-cyan/30 bg-terminal-bg/80 p-6">
+          {/* Theme Preview - No changes needed here, keeping logic same */}
+          <div className="rounded-lg border border-terminal-cyan/30 bg-terminal-bg/80 p-6 sticky top-6 h-fit backdrop-blur-sm">
             <h3 className="mb-4 text-xl font-semibold text-terminal-cyan">
               Preview: {selectedTheme.name}
             </h3>
 
             <div
-              className="rounded-lg p-4 font-mono text-sm"
+              className="rounded-lg p-4 font-mono text-sm transition-all duration-300"
               style={{
                 borderWidth: "2px",
                 borderStyle: "solid",
@@ -157,7 +207,7 @@ export default function ThemesPage() {
               </div>
 
               <div
-                className="mb-4 rounded p-2"
+                className="mb-4 rounded p-2 transition-colors duration-300"
                 style={{
                   borderWidth: "1px",
                   borderStyle: "solid",
