@@ -138,13 +138,14 @@ export function getTheme(): Theme {
   return currentTheme;
 }
 
-export function getAvailableThemes(): string[] {
+export function getAvailableThemes(): Theme[] {
+  return Object.values(themes);
+}
+
+export function getThemeNames(): string[] {
   return Object.keys(themes);
 }
 
-export function getThemeNames(): Array<{ id: string; name: string }> {
-  return Object.entries(themes).map(([id, theme]) => ({
-    id,
-    name: theme.name,
-  }));
+export function getThemeById(id: string): Theme | undefined {
+  return themes[id];
 }
