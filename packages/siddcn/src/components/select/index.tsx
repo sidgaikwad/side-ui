@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Box, Text, useInput } from 'ink';
-import { getTheme } from '../../utils/theme';
+import React, { useState } from "react";
+import { Box, Text, useInput } from "ink";
+import { getTheme } from "../../utils/theme";
 
 export interface SelectOption {
   value: string;
@@ -25,12 +25,12 @@ export const BasicSelect: React.FC<SelectProps> = ({
 }) => {
   const theme = getTheme();
   const [selectedIndex, setSelectedIndex] = useState(
-    value ? options.findIndex(o => o.value === value) : 0
+    value ? options.findIndex((o) => o.value === value) : 0,
   );
 
   useInput((input, key) => {
-    if (key.upArrow || input === 'k') {
-      setSelectedIndex(prev => {
+    if (key.upArrow || input === "k") {
+      setSelectedIndex((prev) => {
         let newIndex = Math.max(0, prev - 1);
         // Skip disabled options
         while (newIndex > 0 && options[newIndex].disabled) {
@@ -38,8 +38,8 @@ export const BasicSelect: React.FC<SelectProps> = ({
         }
         return newIndex;
       });
-    } else if (key.downArrow || input === 'j') {
-      setSelectedIndex(prev => {
+    } else if (key.downArrow || input === "j") {
+      setSelectedIndex((prev) => {
         let newIndex = Math.min(options.length - 1, prev + 1);
         // Skip disabled options
         while (newIndex < options.length - 1 && options[newIndex].disabled) {
@@ -58,12 +58,14 @@ export const BasicSelect: React.FC<SelectProps> = ({
     <Box flexDirection="column">
       {label && (
         <Box marginBottom={1}>
-          <Text color={theme.colors.primary} bold>{label}</Text>
+          <Text color={theme.colors.primary} bold>
+            {label}
+          </Text>
         </Box>
       )}
-      <Box 
-        flexDirection="column" 
-        borderStyle={theme.borderStyle} 
+      <Box
+        flexDirection="column"
+        borderStyle={theme.borderStyle}
         borderColor={theme.colors.border}
         paddingX={1}
       >
@@ -71,17 +73,19 @@ export const BasicSelect: React.FC<SelectProps> = ({
           const isSelected = index === selectedIndex;
           return (
             <Box key={option.value}>
-              <Text 
+              <Text
                 color={
-                  option.disabled ? theme.colors.dimText :
-                  isSelected ? theme.colors.primary : 
-                  theme.colors.text
+                  option.disabled
+                    ? theme.colors.dimText
+                    : isSelected
+                      ? theme.colors.primary
+                      : theme.colors.text
                 }
                 bold={isSelected}
               >
-                {isSelected ? '> ' : '  '}
+                {isSelected ? "> " : "  "}
                 {option.label}
-                {option.disabled && ' (disabled)'}
+                {option.disabled && " (disabled)"}
               </Text>
             </Box>
           );
@@ -99,16 +103,16 @@ export const RadioSelect: React.FC<SelectProps> = ({
 }) => {
   const theme = getTheme();
   const [selectedIndex, setSelectedIndex] = useState(
-    value ? options.findIndex(o => o.value === value) : 0
+    value ? options.findIndex((o) => o.value === value) : 0,
   );
   const [confirmedIndex, setConfirmedIndex] = useState(-1);
 
   useInput((input, key) => {
-    if (key.upArrow || input === 'k') {
-      setSelectedIndex(prev => Math.max(0, prev - 1));
-    } else if (key.downArrow || input === 'j') {
-      setSelectedIndex(prev => Math.min(options.length - 1, prev + 1));
-    } else if (key.return || input === ' ') {
+    if (key.upArrow || input === "k") {
+      setSelectedIndex((prev) => Math.max(0, prev - 1));
+    } else if (key.downArrow || input === "j") {
+      setSelectedIndex((prev) => Math.min(options.length - 1, prev + 1));
+    } else if (key.return || input === " ") {
       setConfirmedIndex(selectedIndex);
       onChange?.(options[selectedIndex].value);
     }
@@ -118,7 +122,9 @@ export const RadioSelect: React.FC<SelectProps> = ({
     <Box flexDirection="column">
       {label && (
         <Box marginBottom={1}>
-          <Text color={theme.colors.primary} bold>{label}</Text>
+          <Text color={theme.colors.primary} bold>
+            {label}
+          </Text>
         </Box>
       )}
       <Box flexDirection="column">
@@ -127,14 +133,17 @@ export const RadioSelect: React.FC<SelectProps> = ({
           const isConfirmed = index === confirmedIndex;
           return (
             <Box key={option.value}>
-              <Text color={isSelected ? theme.colors.primary : theme.colors.text}>
-                {isConfirmed ? '(*)' : '( )'} 
+              <Text
+                color={isSelected ? theme.colors.primary : theme.colors.text}
+              >
+                {isConfirmed ? "(*)" : "( )"}
               </Text>
-              <Text 
+              <Text
                 color={isSelected ? theme.colors.primary : theme.colors.text}
                 bold={isSelected}
               >
-                {' '}{option.label}
+                {" "}
+                {option.label}
               </Text>
               {option.description && (
                 <Text dimColor> - {option.description}</Text>
@@ -152,12 +161,12 @@ export const DropdownSelect: React.FC<SelectProps & { isOpen?: boolean }> = ({
   value,
   onChange,
   label,
-  placeholder = 'Select an option...',
+  placeholder = "Select an option...",
 }) => {
   const theme = getTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(
-    value ? options.findIndex(o => o.value === value) : -1
+    value ? options.findIndex((o) => o.value === value) : -1,
   );
   const [hoverIndex, setHoverIndex] = useState(Math.max(0, selectedIndex));
 
@@ -173,10 +182,10 @@ export const DropdownSelect: React.FC<SelectProps & { isOpen?: boolean }> = ({
     } else if (key.escape) {
       setIsOpen(false);
     } else if (isOpen) {
-      if (key.upArrow || input === 'k') {
-        setHoverIndex(prev => Math.max(0, prev - 1));
-      } else if (key.downArrow || input === 'j') {
-        setHoverIndex(prev => Math.min(options.length - 1, prev + 1));
+      if (key.upArrow || input === "k") {
+        setHoverIndex((prev) => Math.max(0, prev - 1));
+      } else if (key.downArrow || input === "j") {
+        setHoverIndex((prev) => Math.min(options.length - 1, prev + 1));
       }
     }
   });
@@ -187,27 +196,29 @@ export const DropdownSelect: React.FC<SelectProps & { isOpen?: boolean }> = ({
     <Box flexDirection="column">
       {label && (
         <Box marginBottom={1}>
-          <Text color={theme.colors.primary} bold>{label}</Text>
+          <Text color={theme.colors.primary} bold>
+            {label}
+          </Text>
         </Box>
       )}
-      
+
       {/* Dropdown trigger */}
-      <Box 
-        borderStyle={theme.borderStyle} 
+      <Box
+        borderStyle={theme.borderStyle}
         borderColor={isOpen ? theme.colors.primary : theme.colors.border}
         paddingX={1}
       >
         <Text color={selectedOption ? theme.colors.text : theme.colors.dimText}>
           {selectedOption?.label || placeholder}
         </Text>
-        <Text color={theme.colors.dimText}> {isOpen ? '^' : 'v'}</Text>
+        <Text color={theme.colors.dimText}> {isOpen ? "^" : "v"}</Text>
       </Box>
 
       {/* Dropdown menu */}
       {isOpen && (
-        <Box 
-          flexDirection="column" 
-          borderStyle="single" 
+        <Box
+          flexDirection="column"
+          borderStyle="single"
           borderColor={theme.colors.primary}
           marginTop={0}
         >
@@ -215,11 +226,12 @@ export const DropdownSelect: React.FC<SelectProps & { isOpen?: boolean }> = ({
             const isHovered = index === hoverIndex;
             return (
               <Box key={option.value} paddingX={1}>
-                <Text 
+                <Text
                   color={isHovered ? theme.colors.primary : theme.colors.text}
                   bold={isHovered}
                 >
-                  {isHovered ? '> ' : '  '}{option.label}
+                  {isHovered ? "> " : "  "}
+                  {option.label}
                 </Text>
               </Box>
             );
@@ -233,15 +245,15 @@ export const DropdownSelect: React.FC<SelectProps & { isOpen?: boolean }> = ({
 // Preview component
 export const SelectPreview: React.FC = () => {
   const theme = getTheme();
-  
+
   return (
     <Box flexDirection="column">
       <Box>
-        <Text color={theme.colors.primary}>> </Text>
+        <Text color={theme.colors.primary}> </Text>
         <Text bold>Option 1</Text>
       </Box>
       <Box>
-        <Text>  Option 2</Text>
+        <Text> Option 2</Text>
       </Box>
     </Box>
   );
