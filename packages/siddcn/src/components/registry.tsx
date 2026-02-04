@@ -27,6 +27,20 @@ import { BasicSelect, SelectPreview } from "./select";
 import { TwinklingStars, MatrixRain } from "./backgrounds";
 import { TypewriterText, LoadingDots, AnimatedTextPreview } from "./animated-text";
 import { Toast, Banner, InlineNotification, ProgressNotification, NotificationPreview } from "./notifications";
+import { 
+  HtopDashboard, 
+  HtopDashboardPreview,
+  NetworkDashboard, 
+  NetworkDashboardPreview,
+  ServerDashboard, 
+  ServerDashboardPreview,
+  VerticalDashboard, 
+  VerticalDashboardPreview,
+  HorizontalDashboard, 
+  HorizontalDashboardPreview,
+  PagedDashboard, 
+  PagedDashboardPreview 
+} from "./dashboards";
 
 // Preview wrapper components with default props
 const FileTreePreview: React.FC = () => (
@@ -831,6 +845,75 @@ const options = [
   progress={45}
   status="Uploading file.txt..."
 />`,
+      },
+    ],
+  },
+
+  dashboards: {
+    id: "dashboards",
+    name: "Dashboards",
+    description: "System monitor and dashboard layouts",
+    icon: "~",
+    variants: [
+      {
+        id: "htop",
+        name: "Htop Dashboard",
+        description: "htop-style CPU, memory and process monitor",
+        preview: HtopDashboardPreview,
+        installCommand: "npx siddcn add dashboard-htop",
+        usage: `import { HtopDashboard } from 'siddcn';
+
+<HtopDashboard width={80} cpuCores={4} animated={true} />`,
+      },
+      {
+        id: "network",
+        name: "Network Dashboard",
+        description: "Network traffic and interface monitor",
+        preview: NetworkDashboardPreview,
+        installCommand: "npx siddcn add dashboard-network",
+        usage: `import { NetworkDashboard } from 'siddcn';
+
+<NetworkDashboard width={70} animated={true} />`,
+      },
+      {
+        id: "server",
+        name: "Server Dashboard",
+        description: "Server health and metrics display",
+        preview: ServerDashboardPreview,
+        installCommand: "npx siddcn add dashboard-server",
+        usage: `import { ServerDashboard } from 'siddcn';
+
+<ServerDashboard width={75} animated={true} />`,
+      },
+      {
+        id: "vertical",
+        name: "Vertical Dashboard",
+        description: "Vertical stacked metrics bars",
+        preview: VerticalDashboardPreview,
+        installCommand: "npx siddcn add dashboard-vertical",
+        usage: `import { VerticalDashboard } from 'siddcn';
+
+<VerticalDashboard width={50} animated={true} />`,
+      },
+      {
+        id: "horizontal",
+        name: "Horizontal Dashboard",
+        description: "Side-by-side service status panels",
+        preview: HorizontalDashboardPreview,
+        installCommand: "npx siddcn add dashboard-horizontal",
+        usage: `import { HorizontalDashboard } from 'siddcn';
+
+<HorizontalDashboard width={90} animated={true} />`,
+      },
+      {
+        id: "paged",
+        name: "Paged Dashboard",
+        description: "Auto-rotating flipbook style dashboard",
+        preview: PagedDashboardPreview,
+        installCommand: "npx siddcn add dashboard-paged",
+        usage: `import { PagedDashboard } from 'siddcn';
+
+<PagedDashboard width={60} animated={true} />`,
       },
     ],
   },
