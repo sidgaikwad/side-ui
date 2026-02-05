@@ -4,80 +4,17 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 
-// Grid Items with Colors and Links
+// Items data - No colors here, style is handled in the component for consistency
 const GRID_ITEMS = [
-  {
-    id: "button",
-    label: "Buttons",
-    desc: "Styled variants",
-    icon: "◉",
-    color: "text-emerald-400",
-    border: "group-hover:border-emerald-500/50",
-  },
-  {
-    id: "select",
-    label: "Select",
-    desc: "Single-select",
-    icon: "◎",
-    color: "text-blue-400",
-    border: "group-hover:border-blue-500/50",
-  },
-  {
-    id: "checkbox",
-    label: "Multi-Select",
-    desc: "Checkboxes",
-    icon: "☑",
-    color: "text-purple-400",
-    border: "group-hover:border-purple-500/50",
-  },
-  {
-    id: "input",
-    label: "Text Input",
-    desc: "Live typing",
-    icon: "✎",
-    color: "text-amber-400",
-    border: "group-hover:border-amber-500/50",
-  },
-  {
-    id: "tree",
-    label: "Tree",
-    desc: "Hierarchy",
-    icon: "◫",
-    color: "text-pink-400",
-    border: "group-hover:border-pink-500/50",
-  },
-  {
-    id: "tabs",
-    label: "Tabs",
-    desc: "Tab interface",
-    icon: "⊟",
-    color: "text-cyan-400",
-    border: "group-hover:border-cyan-500/50",
-  },
-  {
-    id: "table",
-    label: "Table",
-    desc: "Data grid",
-    icon: "▦",
-    color: "text-rose-400",
-    border: "group-hover:border-rose-500/50",
-  },
-  {
-    id: "card",
-    label: "Cards",
-    desc: "Panel layout",
-    icon: "◇",
-    color: "text-indigo-400",
-    border: "group-hover:border-indigo-500/50",
-  },
-  {
-    id: "badge",
-    label: "Badges",
-    desc: "Status tags",
-    icon: "◆",
-    color: "text-lime-400",
-    border: "group-hover:border-lime-500/50",
-  },
+  { id: "button", label: "Buttons", desc: "Styled variants", icon: "◉" },
+  { id: "select", label: "Select", desc: "Single-select", icon: "◎" },
+  { id: "checkbox", label: "Multi-Select", desc: "Checkboxes", icon: "☑" },
+  { id: "input", label: "Text Input", desc: "Live typing", icon: "✎" },
+  { id: "tree", label: "Tree", desc: "Hierarchy", icon: "◫" },
+  { id: "tabs", label: "Tabs", desc: "Tab interface", icon: "⊟" },
+  { id: "table", label: "Table", desc: "Data grid", icon: "▦" },
+  { id: "card", label: "Cards", desc: "Panel layout", icon: "◇" },
+  { id: "badge", label: "Badges", desc: "Status tags", icon: "◆" },
 ];
 
 export function TerminalDemo() {
@@ -92,7 +29,6 @@ export function TerminalDemo() {
   }, []);
 
   const handleNavigate = (id: string) => {
-    // Navigate to the actual component page
     router.push(`/components/${id}`);
   };
 
@@ -101,10 +37,9 @@ export function TerminalDemo() {
     if (view !== "boot") return;
 
     const timers: NodeJS.Timeout[] = [];
-
-    timers.push(setTimeout(() => setBootStep(1), 500)); // Logo
-    timers.push(setTimeout(() => setBootStep(2), 1200)); // Loading bar
-    timers.push(setTimeout(() => setView("grid"), 3000)); // Show grid
+    timers.push(setTimeout(() => setBootStep(1), 500));
+    timers.push(setTimeout(() => setBootStep(2), 1200));
+    timers.push(setTimeout(() => setView("grid"), 3000));
 
     return () => timers.forEach(clearTimeout);
   }, [view]);
@@ -120,8 +55,8 @@ export function TerminalDemo() {
 
   return (
     <div className="relative mx-auto w-full max-w-4xl h-full group">
-      {/* Glow effect */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {/* Glow effect - STRICTLY EMERALD NOW */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-emerald-900/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
       <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#0c0c0c] shadow-2xl h-full flex flex-col">
         {/* Terminal Header */}
@@ -209,7 +144,7 @@ export function TerminalDemo() {
               </motion.div>
             )}
 
-            {/* --- VIEW 2: GRID INTERACTIVE (No Scrollbar) --- */}
+            {/* --- VIEW 2: GRID INTERACTIVE --- */}
             {view === "grid" && (
               <motion.div
                 key="grid"
@@ -228,34 +163,31 @@ export function TerminalDemo() {
                   </div>
                 </div>
 
-                {/* Grid - Adjusted gap and padding to fit perfectly without scroll */}
+                {/* Grid */}
                 <div className="grid grid-cols-3 gap-3 flex-1 min-h-0">
                   {GRID_ITEMS.map((item) => (
                     <motion.button
                       key={item.id}
                       onClick={() => handleNavigate(item.id)}
-                      whileHover={{
-                        scale: 1.02,
-                        backgroundColor: "rgba(255,255,255,0.03)",
-                      }}
+                      whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className={`
-                        relative p-3 border border-white/5 text-left rounded 
+                        relative p-3 text-left rounded border border-white/5
                         transition-all duration-200 group flex flex-col justify-center
-                        hover:bg-white/[0.02] ${item.border}
+                        hover:border-emerald-500/50 hover:bg-emerald-500/10
                       `}
                     >
                       <div className="flex items-center gap-2 mb-1.5">
-                        <span
-                          className={`${item.color} opacity-80 group-hover:opacity-100 transition-opacity`}
-                        >
+                        {/* Icon is Emerald to match loader */}
+                        <span className="text-emerald-500/80 group-hover:text-emerald-400 transition-colors">
                           {item.icon}
                         </span>
+                        {/* Text goes from gray to white */}
                         <span className="font-bold text-slate-400 group-hover:text-white transition-colors">
                           {item.label}
                         </span>
                       </div>
-                      <div className="text-xs text-slate-600 pl-6 truncate group-hover:text-slate-500">
+                      <div className="text-xs text-slate-600 pl-6 truncate group-hover:text-emerald-500/60 transition-colors">
                         {item.desc}
                       </div>
                     </motion.button>
@@ -266,7 +198,7 @@ export function TerminalDemo() {
                   <span>9 modules loaded</span>
                   <button
                     onClick={reboot}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-emerald-400 transition-colors"
                   >
                     [R] REBOOT SYSTEM
                   </button>
