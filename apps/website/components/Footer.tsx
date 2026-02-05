@@ -1,20 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import { Wordmark } from "./WordMark";
-// Define the Docs URL with a fallback
+import Image from "next/image"; // <--- Import Image
+import { useRef, useEffect } from "react";
+import { Wordmark } from "./WordMark"; // Assuming this is where you put it
+
 const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL || "http://localhost:3001";
 
 export function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = footer.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      footer.style.setProperty("--x", `${x}px`);
+      footer.style.setProperty("--y", `${y}px`);
+    };
+
+    footer.addEventListener("mousemove", handleMouseMove);
+    return () => footer.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <footer className="border-t border-white/10 bg-black px-4 pt-16 pb-8 sm:px-6 lg:px-8 relative z-10 overflow-hidden">
-      <div className="mx-auto max-w-7xl relative z-10">
-        <div className="grid gap-12 md:grid-cols-4 mb-12">
-          {/* Brand Column */}
+    <footer
+      ref={footerRef}
+      className="relative border-t border-white/10 bg-black pt-20 pb-10 overflow-hidden"
+    >
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 md:grid-cols-4 mb-16">
+          {/* Brand Column with Image Logo */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 group cursor-default">
-              <div className="flex h-8 w-8 items-center justify-center rounded bg-white shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-transform group-hover:scale-110">
-                <span className="text-lg font-bold text-black">S</span>
+              <div className="h-8 w-8 relative transition-transform group-hover:scale-110">
+                {/* Using your icon.png */}
+                <Image
+                  src="/icon.png"
+                  alt="siddcn logo"
+                  fill
+                  className="object-contain"
+                />
               </div>
               <span className="font-bold text-xl text-white tracking-tight group-hover:text-emerald-400 transition-colors">
                 siddcn
@@ -22,8 +51,15 @@ export function Footer() {
             </div>
             <p className="text-sm text-slate-500 max-w-xs leading-relaxed">
               The ultimate Terminal UI component library for modern developers.
-              Build beautiful CLIs in minutes.
             </p>
+
+            <div className="flex items-center gap-2 text-xs font-mono text-emerald-500 mt-4 bg-emerald-500/5 px-3 py-1.5 rounded-full w-fit border border-emerald-500/10">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+              </span>
+              System Online
+            </div>
           </div>
 
           {/* Links Columns */}
@@ -83,10 +119,9 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Bottom Bar: Copyright + Legal */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-600 mb-8">
+        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-600">
           <p>Built with React Ink. MIT License.</p>
-          <div className="flex gap-6 mt-4 md:mt-0 font-mono text-xs">
+          <div className="flex gap-6 mt-4 md:mt-0 font-mono text-xs z-20">
             <span>© {new Date().getFullYear()} siddcn</span>
             <span className="hover:text-white cursor-pointer transition-colors">
               Privacy
