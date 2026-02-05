@@ -6,7 +6,7 @@ import {
   useMotionValue,
 } from "framer-motion";
 import React, { useCallback, useEffect, useRef } from "react";
-import { cn } from "../../../lib/utils";
+import { cn } from "@/lib/utils";
 
 /**
  * The specific wordmark implementation for "siddcn"
