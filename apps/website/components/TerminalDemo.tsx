@@ -44,15 +44,6 @@ export function TerminalDemo() {
     return () => timers.forEach(clearTimeout);
   }, [view]);
 
-  // --- Keyboard Shortcuts ---
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key.toLowerCase() === "r") reboot();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [reboot]);
-
   return (
     <div className="relative mx-auto w-full max-w-4xl h-full group">
       {/* Glow effect - STRICTLY EMERALD NOW */}

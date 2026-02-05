@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ComponentGrid } from "@/components/ComponentGrid";
 import { TerminalDemo } from "@/components/TerminalDemo";
+import { SshTerminal } from "@/components/SshTerminal";
 import { Features } from "@/components/Features";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { FadeIn } from "@/components/FadeIn";
@@ -342,51 +343,9 @@ export default function Home() {
           </FadeIn>
 
           <FadeIn delay={200} direction="up">
-            <div className="mt-10 relative mx-auto max-w-2xl transform transition-all hover:scale-[1.01]">
-              {/* Glowing Border Container */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl opacity-30 blur-sm group-hover:opacity-60 transition duration-500" />
-
-              <div className="relative rounded-xl bg-[#1a1b26] border border-white/10 overflow-hidden shadow-2xl text-left">
-                {/* Mac-style Window Header */}
-                <div className="flex items-center gap-2 border-b border-white/5 bg-[#1f2335] px-4 py-3">
-                  <div className="flex gap-2">
-                    <div className="h-3 w-3 rounded-full bg-[#ff5f56]" />
-                    <div className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
-                    <div className="h-3 w-3 rounded-full bg-[#27c93f]" />
-                  </div>
-                  <div className="flex-1 text-center text-xs font-mono text-white/30">
-                    user@localhost:~
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6 font-mono text-sm leading-relaxed">
-                  <div className="flex gap-2 text-emerald-400 font-bold">
-                    <span>$</span>
-                    <span className="text-white typing-effect">
-                      ssh localhost -p 2222
-                    </span>
-                  </div>
-                  <div className="mt-4 text-purple-400">
-                    Component Categories
-                  </div>
-                  <div className="text-slate-500">
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━
-                  </div>
-                  <div className="text-white/80 space-y-1 mt-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-emerald-500">❯</span> Buttons
-                    </div>
-                    <div className="pl-4 text-slate-400">Progress Bars</div>
-                    <div className="pl-4 text-slate-400">Badges</div>
-                    <div className="pl-4 text-slate-400">Charts</div>
-                    <div className="pl-4 text-slate-400">Trees</div>
-                  </div>
-                  <div className="mt-6 text-slate-500 italic text-xs">
-                    Navigate with arrow keys • Select with Enter • Exit with q
-                  </div>
-                </div>
-              </div>
+            <div className="mt-12">
+              {/* REPLACED THE STATIC JSX WITH THE NEW COMPONENT */}
+              <SshTerminal />
             </div>
           </FadeIn>
 
