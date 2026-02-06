@@ -58,5 +58,5 @@ Add to `packages/siddcn/src/components/registry.tsx`:
 - `useFocus()` - Focus management
 
 ## Guidelines
-✅ Use Ink components, follow React hooks rules, add chalk colors
+✅ Use Ink components, follow React hooks rules, use Ink color props or styles
 ❌ No browser APIs, no complex components, don't skip registry
