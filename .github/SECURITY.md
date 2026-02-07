@@ -23,7 +23,7 @@ Instead, please report privately via one of these methods:
    - Fill out the private security advisory form
 
 2. **Email**
-   - Send details to: **security@example.com** *(replace with your email)*
+   - Send details to: **gaikwadsiddharth039@gmail.com**
    - Use subject line: `[SECURITY] Brief description`
 
 ### 📝 What to Include in Your Report
