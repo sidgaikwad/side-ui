@@ -1,0 +1,93 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new feature! 🚀
+
+  - type: input
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A brief one-line summary of the feature
+      placeholder: e.g., Add dark mode toggle to settings
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: A clear and detailed description of the feature you'd like
+      placeholder: Describe the feature in detail...
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve?
+      placeholder: |
+        I'm always frustrated when...
+        Currently there's no way to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How do you envision this feature working?
+      placeholder: |
+        1. User clicks on...
+        2. A modal appears...
+        3. User can then...
+    validations:
+      required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions or features?
+      placeholder: |
+        - Alternative 1: ...
+        - Alternative 2: ...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: feature-type
+    attributes:
+      label: Feature Type
+      description: What type of feature is this?
+      options:
+        - label: New component
+        - label: Enhancement to existing feature
+        - label: Performance improvement
+        - label: Developer experience (DX)
+        - label: Accessibility improvement
+        - label: Other
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to help with this feature?
+      options:
+        - label: I'm willing to submit a PR for this feature
+        - label: I can help with testing
+        - label: I can help with documentation
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any mockups, screenshots, code examples, or links here
+      placeholder: Drag and drop images or paste links...
+    validations:
+      required: false

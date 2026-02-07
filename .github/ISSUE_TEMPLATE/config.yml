@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 General Question
+    url: https://github.com/sidgaikwad/siddcn/discussions
+    about: Use GitHub Discussions for questions and general discussions
