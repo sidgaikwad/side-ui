@@ -1,0 +1,88 @@
+name: 📚 Documentation Change
+description: Suggest improvements or report issues with documentation
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping us improve our documentation! 📚
+
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: A brief one-line summary of the documentation change
+      placeholder: e.g., Add usage examples for Button component
+    validations:
+      required: true
+
+  - type: input
+    id: page-url
+    attributes:
+      label: Documentation Page URL
+      description: Link to the documentation page (if applicable)
+      placeholder: https://siddcn.dev/docs/...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: change-type
+    attributes:
+      label: Type of Change
+      description: What type of documentation change is this?
+      options:
+        - label: Fix typo/grammatical error
+        - label: Add missing information
+        - label: Clarify existing content
+        - label: Add new documentation
+        - label: Update outdated information
+        - label: Add code examples
+        - label: Fix broken links
+        - label: Improve formatting/structure
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: What does the documentation currently say? (if applicable)
+      placeholder: |
+        The current documentation says:
+        "..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggested-change
+    attributes:
+      label: Suggested Change
+      description: What should the documentation say instead?
+      placeholder: |
+        The documentation should instead say:
+        "..."
+        
+        Or add a new section about:
+        ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to help with this change?
+      options:
+        - label: I'm willing to submit a PR for this documentation change
+        - label: I can help review the documentation
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any relevant links, screenshots, or additional context
+      placeholder: |
+        - Related docs: ...
+        - Code examples: ...
+        - Screenshots: (drag and drop)
+    validations:
+      required: false
