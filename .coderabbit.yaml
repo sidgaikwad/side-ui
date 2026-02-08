@@ -116,7 +116,7 @@ reviews:
   # TOOLS - Enable EVERYTHING. Maximum coverage.
   tools:
     # AST pattern matching
-    ast_grep:
+    ast-grep:
       essential_rules: true
     
     # Shell scripts
@@ -136,7 +136,7 @@ reviews:
       enabled: true
     
     # GitHub checks
-    github_checks:
+    github-checks:
       enabled: true
       timeout_ms: 120000
     
@@ -163,7 +163,7 @@ reviews:
     
     # PHP
     phpstan:
-      enabled: true
+      enabled: false  # Disabled - no PHP in this project
       level: "max"  # Maximum strictness
     phpmd:
       enabled: true
@@ -171,7 +171,7 @@ reviews:
       enabled: true
     
     # Go
-    golangci_lint:
+    golangci-lint:
       enabled: true
     
     # YAML
@@ -185,7 +185,7 @@ reviews:
       enabled: true
     trivy:
       enabled: true
-    osv_scanner:
+    osv-scanner:
       enabled: true
     brakeman:
       enabled: true
@@ -239,11 +239,11 @@ reviews:
       enabled: true
     
     # Prisma
-    prisma_lint:
+    prisma-lint:
       enabled: true
     
     # Shopify
-    shopify_theme_check:
+    shopify-theme-check:
       enabled: true
     
     # Lua
@@ -251,7 +251,7 @@ reviews:
       enabled: true
     
     # Env files
-    dotenv_lint:
+    dotenv-lint:
       enabled: true
     
     # HTML
@@ -263,7 +263,7 @@ reviews:
       enabled: true
     
     # Fortran
-    fortitude_lint:
+    fortitude-lint:
       enabled: true
     
     # Blinter
