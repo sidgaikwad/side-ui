@@ -4,6 +4,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrainsMono = JetBrains_Mono({
@@ -24,13 +25,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    // suppressHydrationWarning is required for next-themes
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased gradient-bg`}
+        className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased bg-background text-foreground`}
       >
-        <Navigation />
-        <div className="grid-pattern min-h-screen">{children}</div>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navigation />
+          {/* Grid pattern container */}
+          <div className="relative min-h-screen">
+             <div className="absolute inset-0 grid-pattern pointer-events-none" />
+             {children}
+          </div>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
