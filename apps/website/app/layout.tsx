@@ -37,9 +37,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navigation />
-          {/* Grid pattern container */}
           <div className="relative min-h-screen">
-             <div className="absolute inset-0 grid-pattern pointer-events-none" />
+             {/* Gradient Background Pattern */}
+             <div className="absolute inset-0 grid-pattern pointer-events-none -z-10" />
              {children}
           </div>
           <Footer />
