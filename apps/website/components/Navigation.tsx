@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "next-themes"; // 1. Import useTheme
 
 const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL || "http://localhost:3001";
 
@@ -13,9 +14,14 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
-  const [stars, setStars] = useState<number | null>(null); // State for stars
+  const [stars, setStars] = useState<number | null>(null);
+  
+  // 2. Theme State
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true); // Avoid hydration mismatch
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
 
@@ -66,7 +72,7 @@ export function Navigation() {
 
         {/* --- RIGHT SIDE CONTAINER (Links + Socials) --- */}
         <div className="flex items-center gap-6">
-          {/* DESKTOP LINKS (Now on the right) */}
+          {/* DESKTOP LINKS */}
           <nav className="hidden md:flex items-center gap-1">
             {links.map((link) => {
               const isActive =
@@ -114,6 +120,28 @@ export function Navigation() {
 
           {/* SOCIALS & MOBILE TOGGLE */}
           <div className="flex items-center gap-3 pl-6 border-l border-white/10">
+            
+            {/* Theme Toggle Button */}
+            {mounted && (
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="group p-2 text-zinc-400 hover:text-white transition-colors relative"
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? (
+                  // Sun Icon (Show when Dark)
+                  <svg className="w-5 h-5 fill-current transition-transform group-hover:rotate-90" viewBox="0 0 24 24">
+                    <path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z" />
+                  </svg>
+                ) : (
+                  // Moon Icon (Show when Light)
+                  <svg className="w-5 h-5 fill-current transition-transform group-hover:-rotate-12" viewBox="0 0 24 24">
+                    <path fillRule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" clipRule="evenodd" />
+                  </svg>
+                )}
+              </button>
+            )}
+
             {/* X (Twitter) */}
             <a
               href="https://x.com/_sidd24_"
@@ -152,33 +180,9 @@ export function Navigation() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               ) : (
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>
               )}
             </button>
           </div>
@@ -208,18 +212,8 @@ export function Navigation() {
               ))}
               <div className="h-px bg-white/10 my-2" />
               <div className="flex gap-4 px-4 py-2">
-                <a
-                  href="https://x.com/_sidd24_"
-                  target="_blank"
-                  className="text-zinc-400 hover:text-white"
-                >
-                  X (Twitter)
-                </a>
-                <a
-                  href="https://github.com/sidgaikwad/siddcn"
-                  target="_blank"
-                  className="text-zinc-400 hover:text-white flex items-center gap-2"
-                >
+                <a href="https://x.com/_sidd24_" target="_blank" className="text-zinc-400 hover:text-white">X (Twitter)</a>
+                <a href="https://github.com/sidgaikwad/siddcn" target="_blank" className="text-zinc-400 hover:text-white flex items-center gap-2">
                   GitHub
                   <span className="text-xs bg-white/10 px-2 py-0.5 rounded text-white/80">
                     ★ {stars !== null ? stars : "-"}
