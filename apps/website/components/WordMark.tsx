@@ -1,25 +1,17 @@
 "use client";
 
-import {
-  animate,
-  motion,
-  useMotionValue,
-} from "framer-motion";
+import { animate, motion, useMotionValue } from "framer-motion";
 import React, { useCallback, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-/**
- * The specific wordmark implementation for "siddcn"
- */
 export const Wordmark = () => {
   return (
-    <div className="relative w-full overflow-hidden pt-2">
+    <div className="relative w-full overflow-hidden pt-2 pointer-events-none select-none">
       <div className="flex w-full items-center justify-center">
-        {/* CHANGED: Removed max-w-3xl/4xl. Now it takes full width. */}
         <div className="w-full px-4">
           <MagicSVG
             className="h-auto w-full"
-            gradientSize={150} // Increased light size slightly for the bigger text
+            gradientSize={150}
             width={1200}
             height={300}
           >
@@ -28,7 +20,7 @@ export const Wordmark = () => {
               y="50%"
               textAnchor="middle"
               dominantBaseline="middle"
-              fontFamily="var(--font-geist-sans), system-ui, sans-serif"
+              fontFamily="var(--font-mono), monospace"
               fontWeight="900"
               fontSize="280"
               letterSpacing="-0.06em"
@@ -60,7 +52,7 @@ export function MagicSVG({
   className,
   gradientSize = 100,
   gradientFrom = "#10b981", // Emerald-500
-  gradientTo = "#34d399", // Emerald-400
+  gradientTo = "#34d399",   // Emerald-400
 }: MagicSVGProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const mouseX = useMotionValue(-gradientSize * 2);
@@ -74,7 +66,7 @@ export function MagicSVG({
         mouseY.set(e.clientY - top);
       }
     },
-    [mouseX, mouseY],
+    [mouseX, mouseY]
   );
 
   const handleMouseLeave = useCallback(() => {
@@ -133,12 +125,18 @@ export function MagicSVG({
         </mask>
       </defs>
 
-      {/* Layer 1: Visible dim outline */}
-      <g stroke="#525252" strokeWidth="1" fill="none" opacity="0.8">
+      {/* Layer 1: Visible dim outline (Adaptive Color) */}
+      {/* UPDATED: dark:stroke-zinc-600 makes it lighter/more visible in Dark Mode */}
+      <g 
+        className="stroke-zinc-900 dark:stroke-zinc-600 transition-colors duration-300" 
+        strokeWidth="1" 
+        fill="none" 
+        opacity="0.8"
+      >
         {children}
       </g>
 
-      {/* Layer 2: Glowing reveal */}
+      {/* Layer 2: Glowing reveal (Masked) */}
       <g mask={`url(#${maskId})`}>
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child)) {
@@ -148,7 +146,7 @@ export function MagicSVG({
                 stroke: `url(#${gradientId})`,
                 strokeWidth: 2,
                 fill: "none",
-              },
+              }
             );
           }
           return null;
