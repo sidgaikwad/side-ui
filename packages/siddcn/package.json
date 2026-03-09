@@ -10,8 +10,8 @@
     "siddcn-server": "./dist/server.js"
   },
   "scripts": {
-    "dev": "node --no-warnings --experimental-loader tsx/esm src/cli.tsx",
-    "dev:server": "node --no-warnings --experimental-loader tsx/esm src/server.ts",
+    "dev": "tsx src/cli.tsx",
+    "dev:server": "tsx src/server.ts",
     "start": "node dist/cli.js",
     "start:server": "node dist/server.js",
     "build": "tsup",
