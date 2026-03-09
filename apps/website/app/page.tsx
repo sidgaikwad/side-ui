@@ -6,7 +6,7 @@ import { Features } from "@/components/Features";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { FadeIn } from "@/components/FadeIn";
 import { ShimmerButton } from "@/components/ShimmerButton";
-import { ErrorTestButton, RageClickButton } from "@/components/TestButtons";
+
 
 // Define the Docs URL with a fallback
 const DOCS_URL = process.env.NEXT_PUBLIC_DOCS_URL || "http://localhost:3001";
@@ -123,9 +123,6 @@ export default function Home() {
                 Browse Components
               </ShimmerButton>
 
-              <div className="ml-4 mt-2 sm:mt-0 flex items-center">
-                 <ErrorTestButton />
-              </div>
             </div>
           </FadeIn>
         </div>
@@ -285,9 +282,6 @@ export default function Home() {
                   />
                 </svg>
               </ShimmerButton>
-              <div className="mt-6 flex justify-center">
-                <RageClickButton />
-              </div>
             </div>
           </FadeIn>
         </div>
