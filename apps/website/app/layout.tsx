@@ -5,6 +5,8 @@ import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
+import { CSPostHogProvider } from "./providers";
+import PostHogPageView from "@/components/PostHogPageView";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrainsMono = JetBrains_Mono({
@@ -30,8 +32,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} min-h-screen font-sans antialiased bg-background text-foreground`}
       >
-        <ThemeProvider
-          attribute="class"
+        <CSPostHogProvider>
+          <ThemeProvider
+            attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
@@ -40,10 +43,12 @@ export default function RootLayout({
           <div className="relative min-h-screen">
              {/* Gradient Background Pattern */}
              <div className="absolute inset-0 grid-pattern pointer-events-none -z-10" />
+             <PostHogPageView />
              {children}
           </div>
           <Footer />
         </ThemeProvider>
+        </CSPostHogProvider>
       </body>
     </html>
   );
